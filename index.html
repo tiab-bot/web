@@ -9,39 +9,93 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      background: #f9f9f9;
+      background: #f4f4f4;
       color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #1a73e8;
+      color: white;
+      padding: 2rem 1rem;
       text-align: center;
     }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+
+    header h1 {
+      margin: 0;
+      font-size: 2.8rem;
     }
-    p {
+
+    header p {
+      margin-top: 0.5rem;
       font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    section {
+      background: white;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    h2 {
       margin-top: 0;
-    }
-    a {
       color: #1a73e8;
-      text-decoration: none;
-      margin-top: 1rem;
-      display: inline-block;
-      font-weight: bold;
     }
-    a:hover {
-      text-decoration: underline;
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    .date {
+      font-weight: bold;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to Abhay Bhatia’s Page</h1>
-  <p>You may now log off. Bless. </strong></p>
-  <p>Welcome to my think tank.</p>
-  <p>Here you can find my latest research and analysis.</p>
+
+  <header>
+    <h1>Abhay Bhatia</h1>
+    <p>You may now log off. Bless.</p>
+  </header>
+
+  <div class="container">
+
+    <section>
+      <h2>About Me</h2>
+      <p>Welcome to my think tank — a space where I explore ideas, build things, and occasionally overshare.</p>
+    </section>
+
+    <section>
+      <h2>Facts About Me</h2>
+      <ul>
+        <li>I enjoy building cool projects and experimenting with tech.</li>
+        <li>Perth-based, but mentally on holiday most of the time.</li>
+        <li>Always down for good food, good company, and a spontaneous adventure.</li>
+        <li>Believer in simple design, clean code, and chaotic energy.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What I'm Up To This Weekend</h2>
+      <ul>
+        <li><span class="date">25 Dec:</span> Busy with Christmas lunch</li>
+        <li><span class="date">26 Dec:</span> Boxing Day Big Bash</li>
+        <li><span class="date">27 Dec:</span> Camping in Dwellingup</li>
+        <li><span class="date">29 Dec:</span> Back to work</li>
+      </ul>
+    </section>
+
+  </div>
+
 </body>
 </html>
