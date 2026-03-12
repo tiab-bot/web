@@ -47,6 +47,12 @@ section {
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
+.category {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #666;
+}
+
 .quiz-question {
   margin-bottom: 2rem;
 }
@@ -65,53 +71,94 @@ section {
   font-size: 0.9rem;
   color: #555;
 }
-</style>
 
+.rickroll {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.rickroll a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.rickroll a:hover {
+  text-decoration: underline;
+}
+</style>
 </head>
 
 <body>
 
 <header>
 <h1>Welcome to AbhayBhatia.com</h1>
-<p>Here’s a snap of 13 March’s trivia</p>
+<p>A short general knowledge trivia quiz — 13 March edition</p>
 </header>
 
 <div class="container">
+
+<div class="rickroll">
+Bonus link:  
+<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
+Click here for a free prize
+</a>
+</div>
+
 <section>
 
 <div class="quiz-question">
-<h3>1. Investment Analysis</h3>
-<p>If IRR stands for Internal Rate of Return, what does VIR stand for?</p>
+<div class="category">Pop Culture</div>
+<h3>1. Music</h3>
+<p>Which Queen song contains the lyric “I want to ride my bicycle”?</p>
 <ul class="options">
-<li>A. Value to Income Ratio</li>
-<li>B. Value Index Return</li>
-<li>C. Value Internal Rate</li>
-<li>D. Value to Investment Ratio</li>
-</ul>
-<div class="answer">Correct Answer: A</div>
-<div class="verification">
-Verification: VIR commonly refers to Value-to-Income Ratio in investment or asset analysis contexts.
-</div>
-</div>
-
-<div class="quiz-question">
-<h3>2. Queen Music Trivia</h3>
-<p>Which Queen song begins with the lyric: “Is this the real life? Is this just fantasy?”</p>
-<ul class="options">
-<li>A. Somebody to Love</li>
-<li>B. Bohemian Rhapsody</li>
-<li>C. Don’t Stop Me Now</li>
-<li>D. We Are the Champions</li>
+<li>A. Don't Stop Me Now</li>
+<li>B. Bicycle Race</li>
+<li>C. Another One Bites the Dust</li>
+<li>D. Fat Bottomed Girls</li>
 </ul>
 <div class="answer">Correct Answer: B</div>
 <div class="verification">
-Verification: “Bohemian Rhapsody” was released in 1975 and written by Freddie Mercury.
+Verification: “Bicycle Race” was released by Queen in 1978 on the album Jazz.
 </div>
 </div>
 
 <div class="quiz-question">
-<h3>3. Australian Coat of Arms</h3>
-<p>Which native animals appear on Australia’s coat of arms?</p>
+<div class="category">Film</div>
+<h3>2. Animation</h3>
+<p>Which of the following is NOT one of the penguins from the Madagascar films?</p>
+<ul class="options">
+<li>A. Skipper</li>
+<li>B. Kowalski</li>
+<li>C. Rico</li>
+<li>D. Santiago</li>
+</ul>
+<div class="answer">Correct Answer: D</div>
+<div class="verification">
+Verification: The four penguins are Skipper, Kowalski, Rico, and Private.
+</div>
+</div>
+
+<div class="quiz-question">
+<div class="category">Technology</div>
+<h3>3. Apple iPhone</h3>
+<p>Which iPhone model first introduced Face ID?</p>
+<ul class="options">
+<li>A. iPhone 8</li>
+<li>B. iPhone X</li>
+<li>C. iPhone 11</li>
+<li>D. iPhone 12</li>
+</ul>
+<div class="answer">Correct Answer: B</div>
+<div class="verification">
+Verification: Face ID debuted on the iPhone X in 2017.
+</div>
+</div>
+
+<div class="quiz-question">
+<div class="category">Australia</div>
+<h3>4. National Symbols</h3>
+<p>Which animals appear on Australia's coat of arms?</p>
 <ul class="options">
 <li>A. Kangaroo and Emu</li>
 <li>B. Koala and Wombat</li>
@@ -120,42 +167,45 @@ Verification: “Bohemian Rhapsody” was released in 1975 and written by Freddi
 </ul>
 <div class="answer">Correct Answer: A</div>
 <div class="verification">
-Verification: The Australian coat of arms features a kangaroo and an emu.
+Verification: The animals are popularly interpreted as symbols of national progress because they rarely move backwards.
 </div>
 </div>
 
 <div class="quiz-question">
-<h3>4. Horror Film Trivia</h3>
-<p>The supposedly haunted Annabelle doll, featured in The Conjuring films, is what type of doll in real life?</p>
+<div class="category">Science</div>
+<h3>5. Physics</h3>
+<p>What is a hydrofoil?</p>
 <ul class="options">
-<li>A. Porcelain doll</li>
-<li>B. Raggedy Ann doll</li>
-<li>C. Barbie doll</li>
-<li>D. Antique wooden doll</li>
+<li>A. A submarine navigation device</li>
+<li>B. A boat lifted above the water by underwater wings that generate lift</li>
+<li>C. A reinforced ship hull plate</li>
+<li>D. A waterproof aircraft wing</li>
 </ul>
 <div class="answer">Correct Answer: B</div>
 <div class="verification">
-Verification: The real Annabelle doll investigated by Ed and Lorraine Warren is a Raggedy Ann doll.
+Verification: Hydrofoils use submerged wings to lift the hull above the water, reducing drag and increasing speed.
 </div>
 </div>
 
 <div class="quiz-question">
-<h3>5. Geography</h3>
-<p>What island is often described as the “ball” being kicked by Italy’s boot-shaped peninsula?</p>
+<div class="category">Geography</div>
+<h3>6. Political Geography</h3>
+<p>Which of these is NOT a widely recognised sovereign country?</p>
 <ul class="options">
-<li>A. Sardinia</li>
-<li>B. Malta</li>
-<li>C. Sicily</li>
-<li>D. Corsica</li>
+<li>A. Bhutan</li>
+<li>B. Estonia</li>
+<li>C. Tuvalu</li>
+<li>D. Transnistria</li>
 </ul>
-<div class="answer">Correct Answer: C</div>
+<div class="answer">Correct Answer: D</div>
 <div class="verification">
-Verification: Sicily sits just south of mainland Italy and is commonly described as the ball being kicked by the “boot”.
+Verification: Transnistria is a breakaway region of Moldova and is not internationally recognised as a sovereign state.
 </div>
 </div>
 
 <div class="quiz-question">
-<h3>6. Australian Literature</h3>
+<div class="category">Literature</div>
+<h3>7. Australian Fiction</h3>
 <p>Who wrote the bestselling Australian novel <em>Boy Swallows Universe</em>?</p>
 <ul class="options">
 <li>A. Matthew Reilly</li>
@@ -170,62 +220,50 @@ Verification: The novel was written by Australian journalist Trent Dalton and pu
 </div>
 
 <div class="quiz-question">
-<h3>7. Mission: Impossible</h3>
-<p>Which Mission: Impossible film features Tom Cruise climbing the Burj Khalifa?</p>
+<div class="category">Film</div>
+<h3>8. Mission: Impossible</h3>
+<p>How many times has Tom Cruise used a stunt double for his major stunts in the Mission: Impossible films?</p>
 <ul class="options">
-<li>A. Mission: Impossible III</li>
-<li>B. Mission: Impossible – Ghost Protocol</li>
-<li>C. Mission: Impossible – Rogue Nation</li>
-<li>D. Mission: Impossible – Fallout</li>
+<li>A. 0</li>
+<li>B. 1</li>
+<li>C. 3</li>
+<li>D. 5</li>
+</ul>
+<div class="answer">Correct Answer: A</div>
+<div class="verification">
+Verification: Tom Cruise performs the major stunt sequences himself in the Mission: Impossible series.
+</div>
+</div>
+
+<div class="quiz-question">
+<div class="category">Sports</div>
+<h3>9. Cricket</h3>
+<p>Which stadium in Perth hosts the Big Bash League team the Perth Scorchers?</p>
+<ul class="options">
+<li>A. WACA Ground</li>
+<li>B. Optus Stadium</li>
+<li>C. Perth Oval</li>
+<li>D. Subiaco Oval</li>
 </ul>
 <div class="answer">Correct Answer: B</div>
 <div class="verification">
-Verification: The Burj Khalifa sequence appears in Mission: Impossible – Ghost Protocol (2011).
+Verification: The Perth Scorchers play their Big Bash League home matches at Optus Stadium.
 </div>
 </div>
 
 <div class="quiz-question">
-<h3>8. Hydrofoil</h3>
-<p>What is a hydrofoil?</p>
+<div class="category">Finance</div>
+<h3>10. Investment Analysis</h3>
+<p>If IRR stands for Internal Rate of Return, what does VIR stand for?</p>
 <ul class="options">
-<li>A. A submarine navigation device</li>
-<li>B. A vessel whose hull is lifted above the water by underwater hydrofoil wings</li>
-<li>C. A reinforced ship hull foil</li>
-<li>D. A waterproof aircraft wing</li>
+<li>A. Value Investment Ratio</li>
+<li>B. Value Income Return</li>
+<li>C. Variable Interest Rate</li>
+<li>D. Value Indexed Return</li>
 </ul>
-<div class="answer">Correct Answer: B</div>
+<div class="answer">Correct Answer: A</div>
 <div class="verification">
-Verification: Hydrofoils lift a vessel’s hull above water using underwater wings to reduce drag.
-</div>
-</div>
-
-<div class="quiz-question">
-<h3>9. Madagascar Penguins</h3>
-<p>Which of these is not one of the penguins from Madagascar?</p>
-<ul class="options">
-<li>A. Skipper</li>
-<li>B. Kowalski</li>
-<li>C. Rico</li>
-<li>D. Santiago</li>
-</ul>
-<div class="answer">Correct Answer: D</div>
-<div class="verification">
-Verification: The penguins are Skipper, Kowalski, Rico, and Private.
-</div>
-</div>
-
-<div class="quiz-question">
-<h3>10. Big Bash League</h3>
-<p>What was the attendance at the 2026 BBL Final at Optus Stadium?</p>
-<ul class="options">
-<li>A. 42,620</li>
-<li>B. 48,608</li>
-<li>C. 55,018</li>
-<li>D. 63,450</li>
-</ul>
-<div class="answer">Correct Answer: C</div>
-<div class="verification">
-Verification: The 2026 Big Bash League Final recorded a crowd of 55,018 spectators.
+Verification: VIR refers to Value Investment Ratio used in investment analysis.
 </div>
 </div>
 
