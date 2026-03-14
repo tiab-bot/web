@@ -103,6 +103,12 @@ section {
   margin:6px 0;
 }
 
+.stats {
+  text-align:center;
+  margin:20px 0;
+  color:#666;
+}
+
 </style>
 
 </head>
@@ -121,9 +127,14 @@ section {
 Click here for next week's quiz
 </a>
 </div>
-<div style="text-align:center;margin:20px 0;color:#666;">
-👀 Visitors to this quiz: <span id="gc-count"></span>
+
+<div class="stats">
+👀 Visitor statistics:
+<a href="https://abhayquiz.goatcounter.com" target="_blank">
+view live counter
+</a>
 </div>
+
 <section>
 
 <div class="quiz-question">
@@ -278,7 +289,9 @@ function scrollToAnswers() {
 document.getElementById("answers").scrollIntoView({behavior:"smooth"});
 }
 </script>
+
 <script data-goatcounter="https://abhayquiz.goatcounter.com/count"
 async src="//gc.zgo.at/count.js"></script>
+
 </body>
 </html>
