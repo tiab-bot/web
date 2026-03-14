@@ -61,17 +61,6 @@ section {
   margin: 4px 0;
 }
 
-.answer {
-  margin-top: 8px;
-  font-weight: bold;
-  color: #1a73e8;
-}
-
-.verification {
-  font-size: 0.9rem;
-  color: #555;
-}
-
 .rickroll {
   text-align: center;
   margin-bottom: 1.5rem;
@@ -83,20 +72,24 @@ section {
   text-decoration: none;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.answer-key li {
+  margin: 6px 0;
 }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #1a73e8;
+.reveal-btn {
+  display: block;
+  margin: 30px auto;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  background: #1a73e8;
   color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.reveal-btn:hover {
+  background: #1557b0;
 }
 </style>
 </head>
@@ -118,73 +111,6 @@ Click here for next week's quiz
 
 <section>
 
-<h2>Trivia Winners</h2>
-
-<table>
-<thead>
-<tr>
-<th>Date</th>
-<th>Winner</th>
-<th>Comments</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>23-Jan</td>
-<td>Ben K</td>
-<td>The infamous Estee Lauder is not a fashion house quiz</td>
-</tr>
-
-<tr>
-<td>30-Jan</td>
-<td>Janelle</td>
-<td>Angelo came in second - Steve was last again</td>
-</tr>
-
-<tr>
-<td>6-Feb</td>
-<td>Adele</td>
-<td>A few Steve's came last again</td>
-</tr>
-
-<tr>
-<td>13-Feb</td>
-<td>Adele</td>
-<td>Adele "Steven Bradbury" wins again</td>
-</tr>
-
-<tr>
-<td>20-Feb</td>
-<td>Damo</td>
-<td>Tim volunteers to run the following week's quiz</td>
-</tr>
-
-<tr>
-<td>27-Feb</td>
-<td>Rob</td>
-<td>Was Rob the winner? The Bitcoin controversy results in Tim being labelled "Worst quiz master ever"</td>
-</tr>
-
-<tr>
-<td>6-Mar</td>
-<td>Luc</td>
-<td>10/12 RearDON takes the win</td>
-</tr>
-
-<tr>
-<td>13-Mar</td>
-<td>Ashleigh & Nora</td>
-<td>"Risky Business" two way tie as DK fumbles the bag</td>
-</tr>
-
-</tbody>
-</table>
-
-</section>
-
-<section>
-
 <div class="quiz-question">
 <div class="category">Film</div>
 <h3>1. Mamma Mia</h3>
@@ -195,10 +121,6 @@ Click here for next week's quiz
 <li>C. Fleetwood Mac</li>
 <li>D. Queen</li>
 </ul>
-<div class="answer">Correct Answer: A</div>
-<div class="verification">
-Verification: The Mamma Mia musical and film are built entirely around songs written and performed by ABBA.
-</div>
 </div>
 
 <div class="quiz-question">
@@ -211,10 +133,6 @@ Verification: The Mamma Mia musical and film are built entirely around songs wri
 <li>C. Rico</li>
 <li>D. Santiago</li>
 </ul>
-<div class="answer">Correct Answer: D</div>
-<div class="verification">
-Verification: The four penguins are Skipper, Kowalski, Rico, and Private.
-</div>
 </div>
 
 <div class="quiz-question">
@@ -227,10 +145,6 @@ Verification: The four penguins are Skipper, Kowalski, Rico, and Private.
 <li>C. iPhone 11</li>
 <li>D. iPhone 12</li>
 </ul>
-<div class="answer">Correct Answer: B</div>
-<div class="verification">
-Verification: Face ID debuted on the iPhone X in 2017.
-</div>
 </div>
 
 <div class="quiz-question">
@@ -243,10 +157,6 @@ Verification: Face ID debuted on the iPhone X in 2017.
 <li>C. Kangaroo and Platypus</li>
 <li>D. Emu and Cassowary</li>
 </ul>
-<div class="answer">Correct Answer: A</div>
-<div class="verification">
-Verification: The animals are popularly interpreted as symbols of progress because they rarely move backwards.
-</div>
 </div>
 
 <div class="quiz-question">
@@ -259,10 +169,6 @@ Verification: The animals are popularly interpreted as symbols of progress becau
 <li>C. A reinforced ship hull plate</li>
 <li>D. A waterproof aircraft wing</li>
 </ul>
-<div class="answer">Correct Answer: B</div>
-<div class="verification">
-Verification: Hydrofoils use submerged wings to lift the hull above the water, reducing drag and increasing speed.
-</div>
 </div>
 
 <div class="quiz-question">
@@ -275,10 +181,6 @@ Verification: Hydrofoils use submerged wings to lift the hull above the water, r
 <li>C. Tuvalu</li>
 <li>D. Transnistria</li>
 </ul>
-<div class="answer">Correct Answer: D</div>
-<div class="verification">
-Verification: Transnistria is a breakaway region of Moldova and is not internationally recognised as a sovereign state.
-</div>
 </div>
 
 <div class="quiz-question">
@@ -291,10 +193,6 @@ Verification: Transnistria is a breakaway region of Moldova and is not internati
 <li>C. Tim Winton</li>
 <li>D. Richard Flanagan</li>
 </ul>
-<div class="answer">Correct Answer: B</div>
-<div class="verification">
-Verification: The novel was written by Australian journalist Trent Dalton and published in 2018.
-</div>
 </div>
 
 <div class="quiz-question">
@@ -307,10 +205,6 @@ Verification: The novel was written by Australian journalist Trent Dalton and pu
 <li>C. Mission: Impossible – Rogue Nation</li>
 <li>D. Mission: Impossible – Fallout</li>
 </ul>
-<div class="answer">Correct Answer: B</div>
-<div class="verification">
-Verification: The Burj Khalifa climbing scene appears in Mission: Impossible – Ghost Protocol (2011).
-</div>
 </div>
 
 <div class="quiz-question">
@@ -323,10 +217,6 @@ Verification: The Burj Khalifa climbing scene appears in Mission: Impossible –
 <li>C. 55,018</li>
 <li>D. 63,450</li>
 </ul>
-<div class="answer">Correct Answer: C</div>
-<div class="verification">
-Verification: The 2026 Big Bash League Final recorded a crowd of 55,018 spectators at Optus Stadium.
-</div>
 </div>
 
 <div class="quiz-question">
@@ -339,14 +229,40 @@ Verification: The 2026 Big Bash League Final recorded a crowd of 55,018 spectato
 <li>C. Variable Interest Rate</li>
 <li>D. Value Indexed Return</li>
 </ul>
-<div class="answer">Correct Answer: A</div>
-<div class="verification">
-Verification: VIR (Value Investment Ratio) compares the value of an investment relative to the capital invested.
-</div>
 </div>
 
+<button class="reveal-btn" onclick="scrollToAnswers()">
+Reveal Answers
+</button>
+
 </section>
+
+<section id="answers">
+
+<h2>Answer Key</h2>
+
+<ul class="answer-key">
+<li>1 — A</li>
+<li>2 — D</li>
+<li>3 — B</li>
+<li>4 — A</li>
+<li>5 — B</li>
+<li>6 — D</li>
+<li>7 — B</li>
+<li>8 — B</li>
+<li>9 — C</li>
+<li>10 — A</li>
+</ul>
+
+</section>
+
 </div>
+
+<script>
+function scrollToAnswers() {
+  document.getElementById("answers").scrollIntoView({behavior: "smooth"});
+}
+</script>
 
 </body>
 </html>
