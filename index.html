@@ -1,97 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VXQMT8LWCF"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-VXQMT8LWCF');
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abhay Bhatia</title>
 
 <style>
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f4f4f4;
-  color: #333;
-  line-height: 1.6;
+  margin:0;
+  padding:0;
+  background:#f4f4f4;
+  color:#333;
+  line-height:1.6;
 }
 
 header {
-  background: #1a73e8;
-  color: white;
-  padding: 2rem 1rem;
-  text-align: center;
+  background:#1a73e8;
+  color:white;
+  padding:2rem 1rem;
+  text-align:center;
 }
 
 header h1 {
-  margin: 0;
-  font-size: 2.8rem;
+  margin:0;
+  font-size:2.8rem;
 }
 
 header p {
-  margin-top: 0.5rem;
-  font-size: 1.2rem;
-  opacity: 0.9;
+  margin-top:.5rem;
+  font-size:1.2rem;
+  opacity:.9;
 }
 
 .container {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  max-width:900px;
+  margin:2rem auto;
+  padding:0 1rem;
 }
 
 section {
-  background: white;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-.category {
-  font-size: 0.85rem;
-  font-weight: bold;
-  color: #666;
+  background:white;
+  padding:1.5rem;
+  margin-bottom:1.5rem;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
 }
 
 .quiz-question {
-  margin-bottom: 2rem;
+  margin-bottom:2rem;
+}
+
+.category {
+  font-size:.85rem;
+  font-weight:bold;
+  color:#666;
 }
 
 .options li {
-  margin: 4px 0;
+  margin:4px 0;
 }
 
 .rickroll {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-weight: bold;
+  text-align:center;
+  margin-bottom:1.5rem;
+  font-weight:bold;
 }
 
 .rickroll a {
-  color: #1a73e8;
-  text-decoration: none;
-}
-
-.answer-key li {
-  margin: 6px 0;
+  color:#1a73e8;
+  text-decoration:none;
 }
 
 .reveal-btn {
-  display: block;
-  margin: 30px auto;
-  padding: 12px 24px;
-  font-size: 16px;
-  border: none;
-  background: #1a73e8;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
+  display:block;
+  margin:30px auto;
+  padding:12px 24px;
+  font-size:16px;
+  border:none;
+  background:#1a73e8;
+  color:white;
+  border-radius:6px;
+  cursor:pointer;
 }
 
 .reveal-btn:hover {
-  background: #1557b0;
+  background:#1557b0;
 }
+
+.answer-key li {
+  margin:6px 0;
+}
+
 </style>
+
 </head>
 
 <body>
@@ -260,7 +273,7 @@ Reveal Answers
 
 <script>
 function scrollToAnswers() {
-  document.getElementById("answers").scrollIntoView({behavior: "smooth"});
+document.getElementById("answers").scrollIntoView({behavior:"smooth"});
 }
 </script>
 
