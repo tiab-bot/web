@@ -11,27 +11,88 @@ gtag('js', new Date());
 gtag('config', 'G-VXQMT8LWCF');
 </script>
 
-<!-- Clippy -->
-<link rel="stylesheet" href="https://unpkg.com/clippyjs@latest/build/clippy.css">
-<script src="https://unpkg.com/clippyjs@latest/build/clippy.min.js"></script>
-
 <!-- Confetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AbhayBhatia Quiz</title>
+<title>Abhay Quiz</title>
 
 <style>
 body {font-family:Segoe UI;background:#f4f4f4;margin:0;}
-.container {max-width:900px;margin:auto;padding:20px;}
-header {background:#1a73e8;color:white;text-align:center;padding:20px;}
-.quiz-question {background:white;padding:15px;margin-bottom:15px;border-radius:10px;}
-button.option {display:block;width:100%;margin:5px 0;padding:10px;border:none;border-radius:6px;cursor:pointer;background:#eee;}
+
+header {
+  background:#1a73e8;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+
+.container {
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.score {
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:20px;
+}
+
+.quiz-question {
+  background:white;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:10px;
+}
+
+button.option {
+  display:block;
+  width:100%;
+  margin:5px 0;
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  background:#eee;
+}
+
 button.correct {background:#c8f7c5;}
 button.wrong {background:#f7c5c5;}
+
 .result {margin-top:5px;font-weight:bold;}
-.score {text-align:center;font-size:20px;font-weight:bold;margin:20px 0;}
+
+/* 🤖 Assistant */
+.assistant {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:60px;
+  height:60px;
+  background:#1a73e8;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:24px;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.bubble {
+  position:fixed;
+  bottom:90px;
+  right:20px;
+  background:white;
+  padding:10px 15px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  max-width:200px;
+  display:none;
+}
 </style>
 
 </head>
@@ -40,14 +101,14 @@ button.wrong {background:#f7c5c5;}
 
 <header>
 <h1>AbhayBhatia.com Quiz</h1>
-<p>Clippy Edition 📎</p>
+<p>Interactive Edition</p>
 </header>
 
 <div class="container">
 
 <div class="score" id="score">Score: 0 / 10</div>
 
-<!-- ALL 10 QUESTIONS -->
+<!-- QUESTIONS (same 10) -->
 
 <div class="quiz-question" data-answer="A">
 <h3>1. Mamma Mia</h3>
@@ -81,7 +142,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="A">
 <h3>4. Australia</h3>
-<p>Which animals are on the coat of arms?</p>
+<p>Which animals?</p>
 <button class="option" onclick="check(this,'A')">A. Kangaroo and Emu</button>
 <button class="option" onclick="check(this,'B')">B. Koala and Wombat</button>
 <button class="option" onclick="check(this,'C')">C. Kangaroo and Platypus</button>
@@ -90,18 +151,18 @@ button.wrong {background:#f7c5c5;}
 </div>
 
 <div class="quiz-question" data-answer="B">
-<h3>5. Physics</h3>
-<p>What is a hydrofoil?</p>
+<h3>5. Hydrofoil</h3>
+<p>What is it?</p>
 <button class="option" onclick="check(this,'A')">A. Submarine device</button>
 <button class="option" onclick="check(this,'B')">B. Boat lifted by underwater wings</button>
 <button class="option" onclick="check(this,'C')">C. Ship plate</button>
-<button class="option" onclick="check(this,'D')">D. Waterproof wing</button>
+<button class="option" onclick="check(this,'D')">D. Aircraft wing</button>
 <div class="result"></div>
 </div>
 
 <div class="quiz-question" data-answer="D">
 <h3>6. Geography</h3>
-<p>Which is NOT widely recognised as a country?</p>
+<p>Not a country?</p>
 <button class="option" onclick="check(this,'A')">A. Bhutan</button>
 <button class="option" onclick="check(this,'B')">B. Estonia</button>
 <button class="option" onclick="check(this,'C')">C. Tuvalu</button>
@@ -111,7 +172,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="B">
 <h3>7. Literature</h3>
-<p>Who wrote Boy Swallows Universe?</p>
+<p>Author?</p>
 <button class="option" onclick="check(this,'A')">A. Matthew Reilly</button>
 <button class="option" onclick="check(this,'B')">B. Trent Dalton</button>
 <button class="option" onclick="check(this,'C')">C. Tim Winton</button>
@@ -121,7 +182,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="B">
 <h3>8. Mission Impossible</h3>
-<p>Which film features Burj Khalifa?</p>
+<p>Burj Khalifa?</p>
 <button class="option" onclick="check(this,'A')">A. MI3</button>
 <button class="option" onclick="check(this,'B')">B. Ghost Protocol</button>
 <button class="option" onclick="check(this,'C')">C. Rogue Nation</button>
@@ -131,7 +192,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="C">
 <h3>9. Cricket</h3>
-<p>BBL Final attendance 2026?</p>
+<p>Attendance?</p>
 <button class="option" onclick="check(this,'A')">A. 42,620</button>
 <button class="option" onclick="check(this,'B')">B. 48,608</button>
 <button class="option" onclick="check(this,'C')">C. 55,018</button>
@@ -141,7 +202,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="A">
 <h3>10. Finance</h3>
-<p>What does VIR stand for?</p>
+<p>VIR?</p>
 <button class="option" onclick="check(this,'A')">A. Value Investment Ratio</button>
 <button class="option" onclick="check(this,'B')">B. Value Income Return</button>
 <button class="option" onclick="check(this,'C')">C. Variable Interest Rate</button>
@@ -151,20 +212,25 @@ button.wrong {background:#f7c5c5;}
 
 </div>
 
+<!-- Assistant -->
+<div class="assistant" onclick="talk()">🤖</div>
+<div class="bubble" id="bubble"></div>
+
 <script>
 let score = 0;
 let answered = 0;
-let agent;
 
-// Load Clippy
-clippy.load('Clippy', function(a) {
-  agent = a;
-  agent.show();
-  agent.speak("Let's see how smart you really are.");
-});
+function talk(msg="Try not to fail this quiz.") {
+  const bubble = document.getElementById("bubble");
+  bubble.innerText = msg;
+  bubble.style.display = "block";
+  setTimeout(()=>bubble.style.display="none",3000);
+}
+
+setTimeout(()=>talk("Let's see how smart you are."),1000);
 
 function fireConfetti() {
-  confetti({ particleCount: 80, spread: 70 });
+  confetti({ particleCount:80, spread:70 });
 }
 
 function check(btn, answer) {
@@ -182,11 +248,11 @@ function check(btn, answer) {
     result.innerHTML = "✅ Correct";
     score++;
     fireConfetti();
-    agent && agent.speak("Nice!");
+    talk("Nice one.");
   } else {
     btn.classList.add("wrong");
     result.innerHTML = "❌ Wrong";
-    agent && agent.speak("Hmm... not quite.");
+    talk("That was rough.");
   }
 
   answered++;
@@ -194,9 +260,8 @@ function check(btn, answer) {
 
   document.getElementById("score").innerText = `Score: ${score} / 10`;
 
-  if (answered === 10 && agent) {
-    agent.speak(`Final score: ${score} out of 10.`);
-    agent.animate("Wave");
+  if (answered === 10) {
+    talk(`Final score: ${score}/10`);
   }
 }
 </script>
