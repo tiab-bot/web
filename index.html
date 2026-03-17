@@ -11,19 +11,38 @@ gtag('js', new Date());
 gtag('config', 'G-VXQMT8LWCF');
 </script>
 
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abhay Bhatia Quiz</title>
+<title>AbhayBhatia.com Quiz</title>
 
 <style>
-body {font-family:Segoe UI; background:#f4f4f4; margin:0;}
-.container {max-width:900px;margin:auto;padding:20px;}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin:0;
+  background:#f4f4f4;
+}
 
 header {
   background:#1a73e8;
   color:white;
-  padding:20px;
   text-align:center;
+  padding:20px;
+}
+
+.container {
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.score {
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:20px;
 }
 
 .quiz-question {
@@ -44,21 +63,22 @@ button.option {
   background:#eee;
 }
 
-button.correct {background:#c8f7c5;}
-button.wrong {background:#f7c5c5;}
+button.option:hover {
+  background:#ddd;
+}
+
+button.correct {
+  background:#c8f7c5;
+}
+
+button.wrong {
+  background:#f7c5c5;
+}
 
 .result {
   margin-top:5px;
   font-weight:bold;
 }
-
-.score {
-  text-align:center;
-  font-size:20px;
-  margin:20px 0;
-  font-weight:bold;
-}
-
 </style>
 
 </head>
@@ -66,8 +86,8 @@ button.wrong {background:#f7c5c5;}
 <body>
 
 <header>
-<h1>AbhayBhatia.com Quiz</h1>
-<p>13 March Edition</p>
+<h1>Welcome to AbhayBhatia.com</h1>
+<p>Interactive Trivia Quiz</p>
 </header>
 
 <div class="container">
@@ -182,6 +202,14 @@ button.wrong {background:#f7c5c5;}
 let score = 0;
 let answered = 0;
 
+function fireConfetti() {
+  confetti({
+    particleCount: 80,
+    spread: 70,
+    origin: { y: 0.6 }
+  });
+}
+
 function check(btn, answer) {
   const q = btn.parentElement;
   if (q.classList.contains("done")) return;
@@ -196,6 +224,7 @@ function check(btn, answer) {
     btn.classList.add("correct");
     result.innerHTML = "✅ Correct";
     score++;
+    fireConfetti();
   } else {
     btn.classList.add("wrong");
     result.innerHTML = "❌ Wrong";
@@ -205,6 +234,11 @@ function check(btn, answer) {
   q.classList.add("done");
 
   document.getElementById("score").innerText = `Score: ${score} / 10`;
+
+  // 🎉 Big confetti if finished strong
+  if (answered === 10 && score >= 8) {
+    confetti({ particleCount: 200, spread: 120 });
+  }
 }
 </script>
 
