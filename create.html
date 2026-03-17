@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Quiz Question</title>
+
+<style>
+body {
+  font-family:Segoe UI;
+  background:#f4f4f4;
+  padding:20px;
+}
+
+.container {
+  max-width:600px;
+  margin:auto;
+  background:white;
+  padding:20px;
+  border-radius:10px;
+}
+
+input, textarea, select {
+  width:100%;
+  margin:8px 0;
+  padding:10px;
+}
+
+button {
+  background:#1a73e8;
+  color:white;
+  border:none;
+  padding:10px;
+  cursor:pointer;
+  border-radius:6px;
+  width:100%;
+}
+
+.output {
+  margin-top:20px;
+  background:#eee;
+  padding:10px;
+  font-family:monospace;
+  white-space:pre-wrap;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Create Your Own Quiz Question</h2>
+
+<input id="question" placeholder="Enter your question">
+
+<input id="a" placeholder="Option A">
+<input id="b" placeholder="Option B">
+<input id="c" placeholder="Option C">
+<input id="d" placeholder="Option D">
+
+<select id="correct">
+<option value="A">Correct Answer: A</option>
+<option value="B">Correct Answer: B</option>
+<option value="C">Correct Answer: C</option>
+<option value="D">Correct Answer: D</option>
+</select>
+
+<button onclick="generate()">Generate Question Code</button>
+
+<div class="output" id="output"></div>
+
+</div>
+
+<script>
+function generate() {
+  const q = document.getElementById("question").value;
+  const a = document.getElementById("a").value;
+  const b = document.getElementById("b").value;
+  const c = document.getElementById("c").value;
+  const d = document.getElementById("d").value;
+  const correct = document.getElementById("correct").value;
+
+  const code = `
+<div class="quiz-question" data-answer="${correct}">
+<h3>NEW QUESTION</h3>
+<p>${q}</p>
+<button class="option" onclick="check(this,'A')">A. ${a}</button>
+<button class="option" onclick="check(this,'B')">B. ${b}</button>
+<button class="option" onclick="check(this,'C')">C. ${c}</button>
+<button class="option" onclick="check(this,'D')">D. ${d}</button>
+<div class="result"></div>
+</div>
+`;
+
+  document.getElementById("output").innerText = code;
+}
+</script>
+
+</body>
+</html>
