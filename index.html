@@ -13,108 +13,52 @@ gtag('config', 'G-VXQMT8LWCF');
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abhay Bhatia</title>
+<title>Abhay Bhatia Quiz</title>
 
 <style>
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin:0;
-  padding:0;
-  background:#f4f4f4;
-  color:#333;
-  line-height:1.6;
-}
+body {font-family:Segoe UI; background:#f4f4f4; margin:0;}
+.container {max-width:900px;margin:auto;padding:20px;}
 
 header {
   background:#1a73e8;
   color:white;
-  padding:2rem 1rem;
+  padding:20px;
   text-align:center;
-}
-
-header h1 {
-  margin:0;
-  font-size:2.8rem;
-}
-
-header p {
-  margin-top:.5rem;
-  font-size:1.2rem;
-  opacity:.9;
-}
-
-.container {
-  max-width:900px;
-  margin:2rem auto;
-  padding:0 1rem;
-}
-
-section {
-  background:white;
-  padding:1.5rem;
-  margin-bottom:1.5rem;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.08);
 }
 
 .quiz-question {
-  margin-bottom:2rem;
+  background:white;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:10px;
 }
 
-.category {
-  font-size:.85rem;
-  font-weight:bold;
-  color:#666;
-}
-
-.options li {
-  margin:4px 0;
-}
-
-.rickroll {
-  text-align:center;
-  margin-bottom:1.5rem;
-  font-weight:bold;
-}
-
-.rickroll a {
-  color:#1a73e8;
-  text-decoration:none;
-}
-
-.reveal-btn {
+button.option {
   display:block;
-  margin:30px auto;
-  padding:12px 24px;
-  font-size:16px;
+  width:100%;
+  margin:5px 0;
+  padding:10px;
   border:none;
-  background:#1a73e8;
-  color:white;
   border-radius:6px;
   cursor:pointer;
+  background:#eee;
 }
 
-.reveal-btn:hover {
-  background:#1557b0;
+button.correct {background:#c8f7c5;}
+button.wrong {background:#f7c5c5;}
+
+.result {
+  margin-top:5px;
+  font-weight:bold;
 }
 
-.answer-key li {
-  margin:6px 0;
-}
-
-.stats {
+.score {
   text-align:center;
+  font-size:20px;
   margin:20px 0;
-  color:#666;
+  font-weight:bold;
 }
 
-.announcement {
-  background:#fff3cd;
-  border-left:5px solid #ffc107;
-  padding:15px;
-  margin-bottom:20px;
-  border-radius:8px;
-}
 </style>
 
 </head>
@@ -122,182 +66,147 @@ section {
 <body>
 
 <header>
-<h1>Welcome to AbhayBhatia.com</h1>
-<p>A short general knowledge trivia quiz — 13 March edition</p>
+<h1>AbhayBhatia.com Quiz</h1>
+<p>13 March Edition</p>
 </header>
 
 <div class="container">
 
-<div class="rickroll">
-<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
-Click here for next week's quiz
-</a>
-</div>
+<div class="score" id="score">Score: 0 / 10</div>
 
-<div class="stats">
-👀 Visitor statistics:
-<a href="https://abhayquiz.goatcounter.com" target="_blank">
-view live counter
-</a>
-</div>
+<!-- QUESTIONS -->
 
-<section>
-
-<div class="quiz-question">
-<div class="category">Film</div>
+<div class="quiz-question" data-answer="A">
 <h3>1. Mamma Mia</h3>
-<p>The musical film <em>Mamma Mia!</em> features songs from which famous band?</p>
-<ul class="options">
-<li>A. ABBA</li>
-<li>B. Bee Gees</li>
-<li>C. Fleetwood Mac</li>
-<li>D. Queen</li>
-</ul>
+<p>The musical features songs from which band?</p>
+<button class="option" onclick="check(this,'A')">A. ABBA</button>
+<button class="option" onclick="check(this,'B')">B. Bee Gees</button>
+<button class="option" onclick="check(this,'C')">C. Fleetwood Mac</button>
+<button class="option" onclick="check(this,'D')">D. Queen</button>
+<div class="result"></div>
 </div>
 
-<div class="quiz-question">
-<div class="category">Film</div>
-<h3>2. Animation</h3>
-<p>Which of the following is NOT one of the penguins from the Madagascar films?</p>
-<ul class="options">
-<li>A. Skipper</li>
-<li>B. Kowalski</li>
-<li>C. Rico</li>
-<li>D. Santiago</li>
-</ul>
+<div class="quiz-question" data-answer="D">
+<h3>2. Madagascar</h3>
+<p>Which is NOT a penguin?</p>
+<button class="option" onclick="check(this,'A')">A. Skipper</button>
+<button class="option" onclick="check(this,'B')">B. Kowalski</button>
+<button class="option" onclick="check(this,'C')">C. Rico</button>
+<button class="option" onclick="check(this,'D')">D. Santiago</button>
+<div class="result"></div>
 </div>
 
-<div class="quiz-question">
-<div class="category">Technology</div>
-<h3>3. Apple iPhone</h3>
-<p>Which iPhone model first introduced Face ID?</p>
-<ul class="options">
-<li>A. iPhone 8</li>
-<li>B. iPhone X</li>
-<li>C. iPhone 11</li>
-<li>D. iPhone 12</li>
-</ul>
+<div class="quiz-question" data-answer="B">
+<h3>3. iPhone</h3>
+<p>Which model introduced Face ID?</p>
+<button class="option" onclick="check(this,'A')">A. iPhone 8</button>
+<button class="option" onclick="check(this,'B')">B. iPhone X</button>
+<button class="option" onclick="check(this,'C')">C. iPhone 11</button>
+<button class="option" onclick="check(this,'D')">D. iPhone 12</button>
+<div class="result"></div>
 </div>
 
-<div class="quiz-question">
-<div class="category">Australia</div>
-<h3>4. National Symbols</h3>
-<p>Which animals appear on Australia's coat of arms?</p>
-<ul class="options">
-<li>A. Kangaroo and Emu</li>
-<li>B. Koala and Wombat</li>
-<li>C. Kangaroo and Platypus</li>
-<li>D. Emu and Cassowary</li>
-</ul>
+<div class="quiz-question" data-answer="A">
+<h3>4. Australia</h3>
+<p>Which animals are on the coat of arms?</p>
+<button class="option" onclick="check(this,'A')">A. Kangaroo and Emu</button>
+<button class="option" onclick="check(this,'B')">B. Koala and Wombat</button>
+<button class="option" onclick="check(this,'C')">C. Kangaroo and Platypus</button>
+<button class="option" onclick="check(this,'D')">D. Emu and Cassowary</button>
+<div class="result"></div>
 </div>
 
-<div class="quiz-question">
-<div class="category">Science</div>
+<div class="quiz-question" data-answer="B">
 <h3>5. Physics</h3>
 <p>What is a hydrofoil?</p>
-<ul class="options">
-<li>A. A submarine navigation device</li>
-<li>B. A boat lifted above the water by underwater wings that generate lift</li>
-<li>C. A reinforced ship hull plate</li>
-<li>D. A waterproof aircraft wing</li>
-</ul>
+<button class="option" onclick="check(this,'A')">A. Submarine device</button>
+<button class="option" onclick="check(this,'B')">B. Boat lifted by underwater wings</button>
+<button class="option" onclick="check(this,'C')">C. Ship plate</button>
+<button class="option" onclick="check(this,'D')">D. Waterproof wing</button>
+<div class="result"></div>
 </div>
 
-<div class="quiz-question">
-<div class="category">Geography</div>
-<h3>6. Political Geography</h3>
-<p>Which of these is NOT a widely recognised sovereign country?</p>
-<ul class="options">
-<li>A. Bhutan</li>
-<li>B. Estonia</li>
-<li>C. Tuvalu</li>
-<li>D. Transnistria</li>
-</ul>
+<div class="quiz-question" data-answer="D">
+<h3>6. Geography</h3>
+<p>Which is NOT widely recognised as a country?</p>
+<button class="option" onclick="check(this,'A')">A. Bhutan</button>
+<button class="option" onclick="check(this,'B')">B. Estonia</button>
+<button class="option" onclick="check(this,'C')">C. Tuvalu</button>
+<button class="option" onclick="check(this,'D')">D. Transnistria</button>
+<div class="result"></div>
 </div>
 
-<div class="quiz-question">
-<div class="category">Literature</div>
-<h3>7. Australian Fiction</h3>
-<p>Who wrote the bestselling Australian novel <em>Boy Swallows Universe</em>?</p>
-<ul class="options">
-<li>A. Matthew Reilly</li>
-<li>B. Trent Dalton</li>
-<li>C. Tim Winton</li>
-<li>D. Richard Flanagan</li>
-</ul>
+<div class="quiz-question" data-answer="B">
+<h3>7. Literature</h3>
+<p>Who wrote Boy Swallows Universe?</p>
+<button class="option" onclick="check(this,'A')">A. Matthew Reilly</button>
+<button class="option" onclick="check(this,'B')">B. Trent Dalton</button>
+<button class="option" onclick="check(this,'C')">C. Tim Winton</button>
+<button class="option" onclick="check(this,'D')">D. Richard Flanagan</button>
+<div class="result"></div>
 </div>
 
-<div class="quiz-question">
-<div class="category">Film</div>
-<h3>8. Mission: Impossible</h3>
-<p>Which Mission: Impossible film features Tom Cruise climbing the Burj Khalifa?</p>
-<ul class="options">
-<li>A. Mission: Impossible III</li>
-<li>B. Mission: Impossible – Ghost Protocol</li>
-<li>C. Mission: Impossible – Rogue Nation</li>
-<li>D. Mission: Impossible – Fallout</li>
-</ul>
+<div class="quiz-question" data-answer="B">
+<h3>8. Mission Impossible</h3>
+<p>Which film features Burj Khalifa?</p>
+<button class="option" onclick="check(this,'A')">A. MI3</button>
+<button class="option" onclick="check(this,'B')">B. Ghost Protocol</button>
+<button class="option" onclick="check(this,'C')">C. Rogue Nation</button>
+<button class="option" onclick="check(this,'D')">D. Fallout</button>
+<div class="result"></div>
 </div>
 
-<div class="quiz-question">
-<div class="category">Sports</div>
+<div class="quiz-question" data-answer="C">
 <h3>9. Cricket</h3>
-<p>What was the attendance at the 2026 Big Bash League Final at Optus Stadium?</p>
-<ul class="options">
-<li>A. 42,620</li>
-<li>B. 48,608</li>
-<li>C. 55,018</li>
-<li>D. 63,450</li>
-</ul>
+<p>BBL Final attendance 2026?</p>
+<button class="option" onclick="check(this,'A')">A. 42,620</button>
+<button class="option" onclick="check(this,'B')">B. 48,608</button>
+<button class="option" onclick="check(this,'C')">C. 55,018</button>
+<button class="option" onclick="check(this,'D')">D. 63,450</button>
+<div class="result"></div>
 </div>
 
-<div class="quiz-question">
-<div class="category">Finance</div>
-<h3>10. Investment Analysis</h3>
-<p>If IRR stands for Internal Rate of Return, what does VIR stand for?</p>
-<ul class="options">
-<li>A. Value Investment Ratio</li>
-<li>B. Value Income Return</li>
-<li>C. Variable Interest Rate</li>
-<li>D. Value Indexed Return</li>
-</ul>
+<div class="quiz-question" data-answer="A">
+<h3>10. Finance</h3>
+<p>What does VIR stand for?</p>
+<button class="option" onclick="check(this,'A')">A. Value Investment Ratio</button>
+<button class="option" onclick="check(this,'B')">B. Value Income Return</button>
+<button class="option" onclick="check(this,'C')">C. Variable Interest Rate</button>
+<button class="option" onclick="check(this,'D')">D. Value Indexed Return</button>
+<div class="result"></div>
 </div>
-
-<button class="reveal-btn" onclick="scrollToAnswers()">
-Reveal Answers
-</button>
-
-</section>
-
-<section id="answers">
-
-<h2>Answer Key</h2>
-
-<ul class="answer-key">
-<li>1 — A</li>
-<li>2 — D</li>
-<li>3 — B</li>
-<li>4 — A</li>
-<li>5 — B</li>
-<li>6 — D</li>
-<li>7 — B</li>
-<li>8 — B</li>
-<li>9 — C</li>
-<li>10 — A</li>
-</ul>
-
-</section>
 
 </div>
 
 <script>
-function scrollToAnswers() {
-document.getElementById("answers").scrollIntoView({behavior:"smooth"});
+let score = 0;
+let answered = 0;
+
+function check(btn, answer) {
+  const q = btn.parentElement;
+  if (q.classList.contains("done")) return;
+
+  const correct = q.dataset.answer;
+  const buttons = q.querySelectorAll("button");
+  const result = q.querySelector(".result");
+
+  buttons.forEach(b => b.disabled = true);
+
+  if (answer === correct) {
+    btn.classList.add("correct");
+    result.innerHTML = "✅ Correct";
+    score++;
+  } else {
+    btn.classList.add("wrong");
+    result.innerHTML = "❌ Wrong";
+  }
+
+  answered++;
+  q.classList.add("done");
+
+  document.getElementById("score").innerText = `Score: ${score} / 10`;
 }
 </script>
-
-<script data-goatcounter="https://abhayquiz.goatcounter.com/count"
-async src="//gc.zgo.at/count.js"></script>
 
 </body>
 </html>
