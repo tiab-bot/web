@@ -16,86 +16,22 @@ gtag('config', 'G-VXQMT8LWCF');
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abhay Quiz</title>
-
-<div style="text-align:center;margin:20px;">
-<a href="create.html">➕ Create Your Own Question</a>
-</div>
+<title>AbhayBhatia Quiz</title>
 
 <style>
 body {font-family:Segoe UI;background:#f4f4f4;margin:0;}
-
-header {
-  background:#1a73e8;
-  color:white;
-  text-align:center;
-  padding:20px;
-}
-
-.container {
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
-
-.score {
-  text-align:center;
-  font-size:20px;
-  font-weight:bold;
-  margin-bottom:20px;
-}
-
-.quiz-question {
-  background:white;
-  padding:15px;
-  margin-bottom:15px;
-  border-radius:10px;
-}
-
-button.option {
-  display:block;
-  width:100%;
-  margin:5px 0;
-  padding:10px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  background:#eee;
-}
-
+header {background:#1a73e8;color:white;text-align:center;padding:20px;}
+.container {max-width:900px;margin:auto;padding:20px;}
+.quiz-question {background:white;padding:15px;margin-bottom:15px;border-radius:10px;}
+button.option {display:block;width:100%;margin:5px 0;padding:10px;border:none;border-radius:6px;cursor:pointer;background:#eee;}
 button.correct {background:#c8f7c5;}
 button.wrong {background:#f7c5c5;}
-
 .result {margin-top:5px;font-weight:bold;}
+.score {text-align:center;font-size:20px;font-weight:bold;margin-bottom:20px;}
 
-/* 🤖 Assistant */
-.assistant {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:60px;
-  height:60px;
-  background:#1a73e8;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-size:24px;
-  cursor:pointer;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-
-.bubble {
-  position:fixed;
-  bottom:90px;
-  right:20px;
-  background:white;
-  padding:10px 15px;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
-  max-width:200px;
-  display:none;
+.link {
+  text-align:center;
+  margin:20px;
 }
 </style>
 
@@ -104,15 +40,19 @@ button.wrong {background:#f7c5c5;}
 <body>
 
 <header>
-<h1>AbhayBhatia.com Quiz</h1>
-<p>Interactive Edition</p>
+<h1>Welcome to AbhayBhatia.com</h1>
+<p>Interactive Trivia Quiz</p>
 </header>
+
+<div class="link">
+<a href="create.html">➕ Create Your Own Question</a>
+</div>
 
 <div class="container">
 
 <div class="score" id="score">Score: 0 / 10</div>
 
-<!-- QUESTIONS (same 10) -->
+<!-- ORIGINAL QUESTIONS -->
 
 <div class="quiz-question" data-answer="A">
 <h3>1. Mamma Mia</h3>
@@ -146,7 +86,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="A">
 <h3>4. Australia</h3>
-<p>Which animals?</p>
+<p>Which animals are on the coat of arms?</p>
 <button class="option" onclick="check(this,'A')">A. Kangaroo and Emu</button>
 <button class="option" onclick="check(this,'B')">B. Koala and Wombat</button>
 <button class="option" onclick="check(this,'C')">C. Kangaroo and Platypus</button>
@@ -155,8 +95,8 @@ button.wrong {background:#f7c5c5;}
 </div>
 
 <div class="quiz-question" data-answer="B">
-<h3>5. Hydrofoil</h3>
-<p>What is it?</p>
+<h3>5. Physics</h3>
+<p>What is a hydrofoil?</p>
 <button class="option" onclick="check(this,'A')">A. Submarine device</button>
 <button class="option" onclick="check(this,'B')">B. Boat lifted by underwater wings</button>
 <button class="option" onclick="check(this,'C')">C. Ship plate</button>
@@ -166,7 +106,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="D">
 <h3>6. Geography</h3>
-<p>Not a country?</p>
+<p>Which is NOT widely recognised as a country?</p>
 <button class="option" onclick="check(this,'A')">A. Bhutan</button>
 <button class="option" onclick="check(this,'B')">B. Estonia</button>
 <button class="option" onclick="check(this,'C')">C. Tuvalu</button>
@@ -176,7 +116,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="B">
 <h3>7. Literature</h3>
-<p>Author?</p>
+<p>Who wrote Boy Swallows Universe?</p>
 <button class="option" onclick="check(this,'A')">A. Matthew Reilly</button>
 <button class="option" onclick="check(this,'B')">B. Trent Dalton</button>
 <button class="option" onclick="check(this,'C')">C. Tim Winton</button>
@@ -186,7 +126,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="B">
 <h3>8. Mission Impossible</h3>
-<p>Burj Khalifa?</p>
+<p>Which film features Burj Khalifa?</p>
 <button class="option" onclick="check(this,'A')">A. MI3</button>
 <button class="option" onclick="check(this,'B')">B. Ghost Protocol</button>
 <button class="option" onclick="check(this,'C')">C. Rogue Nation</button>
@@ -196,7 +136,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="C">
 <h3>9. Cricket</h3>
-<p>Attendance?</p>
+<p>BBL Final attendance 2026?</p>
 <button class="option" onclick="check(this,'A')">A. 42,620</button>
 <button class="option" onclick="check(this,'B')">B. 48,608</button>
 <button class="option" onclick="check(this,'C')">C. 55,018</button>
@@ -206,7 +146,7 @@ button.wrong {background:#f7c5c5;}
 
 <div class="quiz-question" data-answer="A">
 <h3>10. Finance</h3>
-<p>VIR?</p>
+<p>What does VIR stand for?</p>
 <button class="option" onclick="check(this,'A')">A. Value Investment Ratio</button>
 <button class="option" onclick="check(this,'B')">B. Value Income Return</button>
 <button class="option" onclick="check(this,'C')">C. Variable Interest Rate</button>
@@ -214,27 +154,18 @@ button.wrong {background:#f7c5c5;}
 <div class="result"></div>
 </div>
 
-</div>
+<!-- USER QUESTIONS -->
+<h2>User Submitted Questions</h2>
+<div id="user-questions"></div>
 
-<!-- Assistant -->
-<div class="assistant" onclick="talk()">🤖</div>
-<div class="bubble" id="bubble"></div>
+</div>
 
 <script>
 let score = 0;
 let answered = 0;
 
-function talk(msg="Try not to fail this quiz.") {
-  const bubble = document.getElementById("bubble");
-  bubble.innerText = msg;
-  bubble.style.display = "block";
-  setTimeout(()=>bubble.style.display="none",3000);
-}
-
-setTimeout(()=>talk("Let's see how smart you are."),1000);
-
 function fireConfetti() {
-  confetti({ particleCount:80, spread:70 });
+  confetti({ particleCount: 80, spread: 70 });
 }
 
 function check(btn, answer) {
@@ -252,22 +183,44 @@ function check(btn, answer) {
     result.innerHTML = "✅ Correct";
     score++;
     fireConfetti();
-    talk("Nice one.");
   } else {
     btn.classList.add("wrong");
     result.innerHTML = "❌ Wrong";
-    talk("That was rough.");
   }
 
   answered++;
   q.classList.add("done");
 
-  document.getElementById("score").innerText = `Score: ${score} / 10`;
-
-  if (answered === 10) {
-    talk(`Final score: ${score}/10`);
-  }
+  document.getElementById("score").innerText = `Score: ${score} / ${10 + getUserCount()}`;
 }
+
+function getUserCount() {
+  return JSON.parse(localStorage.getItem("quizQuestions") || "[]").length;
+}
+
+function loadUserQuestions() {
+  const container = document.getElementById("user-questions");
+  const data = JSON.parse(localStorage.getItem("quizQuestions")) || [];
+
+  data.forEach((q, i) => {
+    const div = document.createElement("div");
+    div.className = "quiz-question";
+    div.setAttribute("data-answer", q.correct);
+
+    div.innerHTML = `
+      <h3>${10 + i + 1}. ${q.question}</h3>
+      <button class="option" onclick="check(this,'A')">A. ${q.a}</button>
+      <button class="option" onclick="check(this,'B')">B. ${q.b}</button>
+      <button class="option" onclick="check(this,'C')">C. ${q.c}</button>
+      <button class="option" onclick="check(this,'D')">D. ${q.d}</button>
+      <div class="result"></div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+loadUserQuestions();
 </script>
 
 </body>
