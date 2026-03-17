@@ -11,74 +11,27 @@ gtag('js', new Date());
 gtag('config', 'G-VXQMT8LWCF');
 </script>
 
+<!-- Clippy -->
+<link rel="stylesheet" href="https://unpkg.com/clippyjs@latest/build/clippy.css">
+<script src="https://unpkg.com/clippyjs@latest/build/clippy.min.js"></script>
+
 <!-- Confetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AbhayBhatia.com Quiz</title>
+<title>AbhayBhatia Quiz</title>
 
 <style>
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin:0;
-  background:#f4f4f4;
-}
-
-header {
-  background:#1a73e8;
-  color:white;
-  text-align:center;
-  padding:20px;
-}
-
-.container {
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
-
-.score {
-  text-align:center;
-  font-size:20px;
-  font-weight:bold;
-  margin-bottom:20px;
-}
-
-.quiz-question {
-  background:white;
-  padding:15px;
-  margin-bottom:15px;
-  border-radius:10px;
-}
-
-button.option {
-  display:block;
-  width:100%;
-  margin:5px 0;
-  padding:10px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  background:#eee;
-}
-
-button.option:hover {
-  background:#ddd;
-}
-
-button.correct {
-  background:#c8f7c5;
-}
-
-button.wrong {
-  background:#f7c5c5;
-}
-
-.result {
-  margin-top:5px;
-  font-weight:bold;
-}
+body {font-family:Segoe UI;background:#f4f4f4;margin:0;}
+.container {max-width:900px;margin:auto;padding:20px;}
+header {background:#1a73e8;color:white;text-align:center;padding:20px;}
+.quiz-question {background:white;padding:15px;margin-bottom:15px;border-radius:10px;}
+button.option {display:block;width:100%;margin:5px 0;padding:10px;border:none;border-radius:6px;cursor:pointer;background:#eee;}
+button.correct {background:#c8f7c5;}
+button.wrong {background:#f7c5c5;}
+.result {margin-top:5px;font-weight:bold;}
+.score {text-align:center;font-size:20px;font-weight:bold;margin:20px 0;}
 </style>
 
 </head>
@@ -86,19 +39,19 @@ button.wrong {
 <body>
 
 <header>
-<h1>Welcome to AbhayBhatia.com</h1>
-<p>Interactive Trivia Quiz</p>
+<h1>AbhayBhatia.com Quiz</h1>
+<p>Clippy Edition 📎</p>
 </header>
 
 <div class="container">
 
 <div class="score" id="score">Score: 0 / 10</div>
 
-<!-- QUESTIONS -->
+<!-- ALL 10 QUESTIONS -->
 
 <div class="quiz-question" data-answer="A">
 <h3>1. Mamma Mia</h3>
-<p>The musical features songs from which band?</p>
+<p>Which band?</p>
 <button class="option" onclick="check(this,'A')">A. ABBA</button>
 <button class="option" onclick="check(this,'B')">B. Bee Gees</button>
 <button class="option" onclick="check(this,'C')">C. Fleetwood Mac</button>
@@ -201,13 +154,17 @@ button.wrong {
 <script>
 let score = 0;
 let answered = 0;
+let agent;
+
+// Load Clippy
+clippy.load('Clippy', function(a) {
+  agent = a;
+  agent.show();
+  agent.speak("Let's see how smart you really are.");
+});
 
 function fireConfetti() {
-  confetti({
-    particleCount: 80,
-    spread: 70,
-    origin: { y: 0.6 }
-  });
+  confetti({ particleCount: 80, spread: 70 });
 }
 
 function check(btn, answer) {
@@ -225,9 +182,11 @@ function check(btn, answer) {
     result.innerHTML = "✅ Correct";
     score++;
     fireConfetti();
+    agent && agent.speak("Nice!");
   } else {
     btn.classList.add("wrong");
     result.innerHTML = "❌ Wrong";
+    agent && agent.speak("Hmm... not quite.");
   }
 
   answered++;
@@ -235,9 +194,9 @@ function check(btn, answer) {
 
   document.getElementById("score").innerText = `Score: ${score} / 10`;
 
-  // 🎉 Big confetti if finished strong
-  if (answered === 10 && score >= 8) {
-    confetti({ particleCount: 200, spread: 120 });
+  if (answered === 10 && agent) {
+    agent.speak(`Final score: ${score} out of 10.`);
+    agent.animate("Wave");
   }
 }
 </script>
