@@ -11,27 +11,75 @@ gtag('js', new Date());
 gtag('config', 'G-VXQMT8LWCF');
 </script>
 
-<!-- Confetti -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AbhayBhatia Quiz</title>
+<title>Abhay Bhatia</title>
 
 <style>
-body {font-family:Segoe UI;background:#f4f4f4;margin:0;}
-header {background:#1a73e8;color:white;text-align:center;padding:20px;}
-.container {max-width:900px;margin:auto;padding:20px;}
-.quiz-question {background:white;padding:15px;margin-bottom:15px;border-radius:10px;}
-button.option {display:block;width:100%;margin:5px 0;padding:10px;border:none;border-radius:6px;cursor:pointer;background:#eee;}
-button.correct {background:#c8f7c5;}
-button.wrong {background:#f7c5c5;}
-.result {margin-top:5px;font-weight:bold;}
-.score {text-align:center;font-size:20px;font-weight:bold;margin-bottom:20px;}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+    margin: 0;
+    background: #f7f9fc;
+    color: #222;
+}
 
-.link {
-  text-align:center;
-  margin:20px;
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 5px;
+}
+
+h2 {
+    margin-top: 40px;
+    font-size: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+p {
+    line-height: 1.6;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.tagline {
+    color: #666;
+    font-size: 16px;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+a {
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 50px;
+    color: #888;
+    font-size: 14px;
 }
 </style>
 
@@ -39,189 +87,52 @@ button.wrong {background:#f7c5c5;}
 
 <body>
 
-<header>
-<h1>Welcome to AbhayBhatia.com</h1>
-<p>Interactive Trivia Quiz</p>
-</header>
-
-<div class="link">
-<a href="create.html">➕ Create Your Own Question</a>
-</div>
-
 <div class="container">
 
-<div class="score" id="score">Score: 0 / 10</div>
+    <div class="header">
+        <h1>Abhay Bhatia</h1>
+        <p class="tagline">Finance | Strategy | Analytical Thinking</p>
+    </div>
 
-<!-- ORIGINAL QUESTIONS -->
+    <div class="card section">
+        <h2>Profile</h2>
+        <p>
+            Finance professional with a focus on analytical decision-making, capital allocation,
+            and structured problem-solving. Interested in global markets, macro trends,
+            and the intersection of finance and technology.
+        </p>
+    </div>
 
-<div class="quiz-question" data-answer="A">
-<h3>1. Mamma Mia</h3>
-<p>Which band?</p>
-<button class="option" onclick="check(this,'A')">A. ABBA</button>
-<button class="option" onclick="check(this,'B')">B. Bee Gees</button>
-<button class="option" onclick="check(this,'C')">C. Fleetwood Mac</button>
-<button class="option" onclick="check(this,'D')">D. Queen</button>
-<div class="result"></div>
-</div>
+    <div class="card section">
+        <h2>Focus Areas</h2>
+        <ul>
+            <li>Financial analysis and valuation</li>
+            <li>Market trends and macroeconomics</li>
+            <li>Data-driven decision frameworks</li>
+            <li>Technology and automation in finance</li>
+        </ul>
+    </div>
 
-<div class="quiz-question" data-answer="D">
-<h3>2. Madagascar</h3>
-<p>Which is NOT a penguin?</p>
-<button class="option" onclick="check(this,'A')">A. Skipper</button>
-<button class="option" onclick="check(this,'B')">B. Kowalski</button>
-<button class="option" onclick="check(this,'C')">C. Rico</button>
-<button class="option" onclick="check(this,'D')">D. Santiago</button>
-<div class="result"></div>
-</div>
+    <div class="card section">
+        <h2>Projects</h2>
+        <p>
+            <a href="quiz.html">Interactive Trivia Quiz</a> — a lightweight web-based quiz platform
+            with user-generated questions and scoring logic.
+        </p>
+    </div>
 
-<div class="quiz-question" data-answer="B">
-<h3>3. iPhone</h3>
-<p>Which model introduced Face ID?</p>
-<button class="option" onclick="check(this,'A')">A. iPhone 8</button>
-<button class="option" onclick="check(this,'B')">B. iPhone X</button>
-<button class="option" onclick="check(this,'C')">C. iPhone 11</button>
-<button class="option" onclick="check(this,'D')">D. iPhone 12</button>
-<div class="result"></div>
-</div>
+    <div class="card section">
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:abhay@abhaybhatia.com">abhay@abhaybhatia.com</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/YOUR-LINKEDIN" target="_blank">
+            linkedin.com/in/YOUR-LINKEDIN</a></p>
+    </div>
 
-<div class="quiz-question" data-answer="A">
-<h3>4. Australia</h3>
-<p>Which animals are on the coat of arms?</p>
-<button class="option" onclick="check(this,'A')">A. Kangaroo and Emu</button>
-<button class="option" onclick="check(this,'B')">B. Koala and Wombat</button>
-<button class="option" onclick="check(this,'C')">C. Kangaroo and Platypus</button>
-<button class="option" onclick="check(this,'D')">D. Emu and Cassowary</button>
-<div class="result"></div>
-</div>
-
-<div class="quiz-question" data-answer="B">
-<h3>5. Physics</h3>
-<p>What is a hydrofoil?</p>
-<button class="option" onclick="check(this,'A')">A. Submarine device</button>
-<button class="option" onclick="check(this,'B')">B. Boat lifted by underwater wings</button>
-<button class="option" onclick="check(this,'C')">C. Ship plate</button>
-<button class="option" onclick="check(this,'D')">D. Aircraft wing</button>
-<div class="result"></div>
-</div>
-
-<div class="quiz-question" data-answer="D">
-<h3>6. Geography</h3>
-<p>Which is NOT widely recognised as a country?</p>
-<button class="option" onclick="check(this,'A')">A. Bhutan</button>
-<button class="option" onclick="check(this,'B')">B. Estonia</button>
-<button class="option" onclick="check(this,'C')">C. Tuvalu</button>
-<button class="option" onclick="check(this,'D')">D. Transnistria</button>
-<div class="result"></div>
-</div>
-
-<div class="quiz-question" data-answer="B">
-<h3>7. Literature</h3>
-<p>Who wrote Boy Swallows Universe?</p>
-<button class="option" onclick="check(this,'A')">A. Matthew Reilly</button>
-<button class="option" onclick="check(this,'B')">B. Trent Dalton</button>
-<button class="option" onclick="check(this,'C')">C. Tim Winton</button>
-<button class="option" onclick="check(this,'D')">D. Richard Flanagan</button>
-<div class="result"></div>
-</div>
-
-<div class="quiz-question" data-answer="B">
-<h3>8. Mission Impossible</h3>
-<p>Which film features Burj Khalifa?</p>
-<button class="option" onclick="check(this,'A')">A. MI3</button>
-<button class="option" onclick="check(this,'B')">B. Ghost Protocol</button>
-<button class="option" onclick="check(this,'C')">C. Rogue Nation</button>
-<button class="option" onclick="check(this,'D')">D. Fallout</button>
-<div class="result"></div>
-</div>
-
-<div class="quiz-question" data-answer="C">
-<h3>9. Cricket</h3>
-<p>BBL Final attendance 2026?</p>
-<button class="option" onclick="check(this,'A')">A. 42,620</button>
-<button class="option" onclick="check(this,'B')">B. 48,608</button>
-<button class="option" onclick="check(this,'C')">C. 55,018</button>
-<button class="option" onclick="check(this,'D')">D. 63,450</button>
-<div class="result"></div>
-</div>
-
-<div class="quiz-question" data-answer="A">
-<h3>10. Finance</h3>
-<p>What does VIR stand for?</p>
-<button class="option" onclick="check(this,'A')">A. Value Investment Ratio</button>
-<button class="option" onclick="check(this,'B')">B. Value Income Return</button>
-<button class="option" onclick="check(this,'C')">C. Variable Interest Rate</button>
-<button class="option" onclick="check(this,'D')">D. Value Indexed Return</button>
-<div class="result"></div>
-</div>
-
-<!-- USER QUESTIONS -->
-<h2>User Submitted Questions</h2>
-<div id="user-questions"></div>
+    <div class="footer">
+        © 2026 Abhay Bhatia
+    </div>
 
 </div>
-
-<script>
-let score = 0;
-let answered = 0;
-
-function fireConfetti() {
-  confetti({ particleCount: 80, spread: 70 });
-}
-
-function check(btn, answer) {
-  const q = btn.parentElement;
-  if (q.classList.contains("done")) return;
-
-  const correct = q.dataset.answer;
-  const buttons = q.querySelectorAll("button");
-  const result = q.querySelector(".result");
-
-  buttons.forEach(b => b.disabled = true);
-
-  if (answer === correct) {
-    btn.classList.add("correct");
-    result.innerHTML = "✅ Correct";
-    score++;
-    fireConfetti();
-  } else {
-    btn.classList.add("wrong");
-    result.innerHTML = "❌ Wrong";
-  }
-
-  answered++;
-  q.classList.add("done");
-
-  document.getElementById("score").innerText = `Score: ${score} / ${10 + getUserCount()}`;
-}
-
-function getUserCount() {
-  return JSON.parse(localStorage.getItem("quizQuestions") || "[]").length;
-}
-
-function loadUserQuestions() {
-  const container = document.getElementById("user-questions");
-  const data = JSON.parse(localStorage.getItem("quizQuestions")) || [];
-
-  data.forEach((q, i) => {
-    const div = document.createElement("div");
-    div.className = "quiz-question";
-    div.setAttribute("data-answer", q.correct);
-
-    div.innerHTML = `
-      <h3>${10 + i + 1}. ${q.question}</h3>
-      <button class="option" onclick="check(this,'A')">A. ${q.a}</button>
-      <button class="option" onclick="check(this,'B')">B. ${q.b}</button>
-      <button class="option" onclick="check(this,'C')">C. ${q.c}</button>
-      <button class="option" onclick="check(this,'D')">D. ${q.d}</button>
-      <div class="result"></div>
-    `;
-
-    container.appendChild(div);
-  });
-}
-
-loadUserQuestions();
-</script>
 
 </body>
 </html>
