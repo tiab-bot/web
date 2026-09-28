@@ -1,728 +1,525 @@
+html
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f4ee">
-  <meta name="description" content="SaunaCal estimates total energy for sauna and cold sessions.">
+  <meta name="theme-color" content="#f4f3ed">
+  <meta name="description" content="SaunaCal estimates total energy for sauna, cold and contrast sessions.">
   <link rel="canonical" href="https://abhaybhatia.com/sauna/">
-  <title>SaunaCal — Session energy estimate</title>
+  <title>SaunaCal — Make space for the reset</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      color-scheme: light;
-      --ink: #18241c;
-      --muted: #66736a;
-      --paper: #f5f4ee;
-      --white: #fffefa;
-      --line: #dce1d8;
-      --green: #294637;
-      --sage: #dfe8d9;
-      --orange: #d98754;
-      --blue: #6f9d9b;
-      --serif: Georgia, "Times New Roman", serif;
-      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+:root{--ink:#17221b;--muted:#737b73;--cream:#f4f3ed;--paper:#fbfaf6;--line:#dcded5;--green:#c5d995;--deep:#263f32;--orange:#e7a36d;--blue:#9dc8cf;--sans:'DM Sans',sans-serif;--display:'Manrope',sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}.topbar{height:78px;padding:0 max(6vw,24px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dadbd3}.brand{font:800 18px var(--display);letter-spacing:-.7px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}.brand-mark{display:grid;place-items:center;width:27px;height:27px;border-radius:50% 50% 50% 8px;background:var(--green);font:800 13px var(--display)}.top-link,.text-link{color:var(--ink);text-decoration:none;font-weight:600;font-size:13px}.top-link span{margin-left:8px}.hero{min-height:595px;padding:75px max(10vw,32px) 78px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:6vw}.eyebrow{font-size:10px;letter-spacing:1.9px;font-weight:700;color:var(--muted);margin:0 0 20px}.pulse{display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:50%;background:#8da870;box-shadow:0 0 0 4px #8da87022}.hero h1,.section-heading h2,.explainer h2{font:600 clamp(48px,6vw,78px)/1.02 var(--display);letter-spacing:-5px;margin:0}.hero h1 em{font-family:Georgia,serif;font-weight:400;color:#72885c}.intro{color:#616a62;line-height:1.75;max-width:370px;font-size:15px;margin:24px 0 28px}.text-link{display:inline-block;border-bottom:1px solid #65705e;padding-bottom:8px}.text-link span{margin-left:17px}.hero-art{position:relative;height:390px;border-radius:48% 48% 12px 12px;background:linear-gradient(165deg,#d7dfc5,#b2c3a1 52%,#657e6b);overflow:hidden}.sun{position:absolute;width:132px;height:132px;background:#f1c88e;border-radius:50%;top:55px;left:calc(50% - 66px);box-shadow:0 0 0 18px #f1c88e20}.moon{position:absolute;width:52px;height:52px;border-radius:50%;background:#e5ede0;right:18%;top:65px;box-shadow:-13px 2px 0 0 #aaba9f}.steam{position:absolute;z-index:1;top:118px;width:40px;height:80px;border-left:2px solid #f5f3e7a8;border-radius:50%;transform:rotate(19deg)}.steam-one{left:31%}.steam-two{left:38%;top:98px}.pool{position:absolute;bottom:-47px;left:-8%;width:116%;height:190px;background:linear-gradient(170deg,#385d56,#29443f 68%);border-radius:50% 50% 0 0}.waterline{position:absolute;top:25px;left:8%;width:84%;height:28px;border-top:1px solid #d1dfc17a;border-radius:50%}.art-caption{position:absolute;bottom:19px;left:24px;right:24px;z-index:2;display:flex;justify-content:space-between;color:#e6e8d9;font-size:9px;letter-spacing:1.6px}.tracker-section,.log-section{padding:82px max(10vw,32px);background:var(--paper)}.section-heading{display:flex;align-items:end;justify-content:space-between;margin-bottom:30px}.section-heading .eyebrow{margin-bottom:12px}.section-heading h2{font-size:35px;letter-spacing:-1.8px}.step-label{font:600 12px var(--display);color:#879080}.step-label i{font-style:normal;margin:0 6px;color:#aab09f}.tracker-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.panel{background:white;border:1px solid #e4e5dd;border-radius:12px;padding:27px}.panel-title{display:flex;gap:13px;align-items:flex-start;margin-bottom:25px}.number{font:700 10px var(--display);color:#879a72;padding-top:3px}.panel-title h3{font:700 17px var(--display);letter-spacing:-.5px;margin:0 0 5px}.panel-title p{color:var(--muted);font-size:12px;margin:0}.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px 13px}.field-grid label,.duration-row label{font-size:11px;font-weight:700;color:#475148}.unit{float:right;color:#999f94;font:600 9px var(--sans);letter-spacing:1px}.field-grid input{display:block;width:100%;height:43px;margin-top:8px;padding:0 12px;border:1px solid var(--line);border-radius:5px;background:#fcfcfa;color:var(--ink);font:500 14px var(--sans);outline:none}.field-grid input:focus,.duration-input input:focus{border-color:#829a70;box-shadow:0 0 0 3px #829a7019}.wide{grid-column:1/-1}.privacy-note{margin:24px 0 0;color:#868d83;font-size:10px}.privacy-note span{font-size:13px;margin-right:5px;color:#91a47a}.mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:25px}.mode-button{height:78px;display:grid;grid-template-columns:34px 1fr;grid-template-rows:1fr 1fr;align-content:center;text-align:left;padding:12px 13px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink);cursor:pointer}.mode-button.selected{border-color:#9eac8a;background:#f5f8ef}.mode-icon{grid-row:1/3;align-self:center;font-size:23px;color:#cb8d56}.mode-icon.snow{color:#74a9b2}.mode-button span:nth-child(2){font:700 13px var(--display);align-self:end}.mode-button small{font-size:8px;letter-spacing:1px;color:#879084;align-self:start;margin-top:3px}.duration-row{display:flex;align-items:center;justify-content:space-between}.duration-row label .unit{float:none;margin-left:10px}.duration-input{display:flex;align-items:center;width:114px;height:40px;border:1px solid var(--line);border-radius:5px;padding:0 10px}.duration-input input{width:100%;min-width:0;border:0;outline:0;background:transparent;font:600 14px var(--sans);color:var(--ink)}.duration-input span{font-size:10px;color:#879084}.primary-button,.secondary-button{width:100%;border:0;border-radius:5px;background:var(--deep);color:white;height:47px;margin-top:21px;font:600 12px var(--sans);cursor:pointer;transition:background .2s}.primary-button:hover,.secondary-button:hover{background:#385d47}.primary-button span{margin-left:12px}.result{margin-top:15px;display:grid;grid-template-columns:1fr 1fr;align-items:center;background:#eff2e8;border-color:#e0e4d5}.result[hidden]{display:none}.result-lead .eyebrow{font-size:9px;margin-bottom:10px}.result-lead h2{font:700 48px var(--display);letter-spacing:-3px;margin:0}.result-lead h2 small{font-size:15px;letter-spacing:0}.result-lead>p:last-child{font-size:11px;color:#737c70;margin:2px 0}.result-detail{border-left:1px solid #d4d9ca;padding-left:25px;display:grid;grid-template-columns:31px 1fr;align-items:start}.result-spark{color:#8ba06d;font-size:20px}.result-detail p{font-size:11px;color:#626c61;line-height:1.6;margin:0}.result-detail strong{color:var(--ink)}.secondary-button{grid-column:2;width:auto;padding:0 15px;height:37px;margin-top:12px;justify-self:start;background:#fff;color:var(--deep);border:1px solid #d9ddcf}.secondary-button:hover{color:white}.validation{color:#b15039;font-size:12px;margin:12px 0 0;min-height:15px}.log-section{padding-top:70px;border-top:1px solid #e8e8e0}.clear-button{background:none;border:0;color:#798174;font:600 11px var(--sans);text-decoration:underline;cursor:pointer}.log-summary{display:grid;grid-template-columns:repeat(3,1fr);padding:22px 0;border-block:1px solid var(--line)}.log-summary div{display:flex;flex-direction:column;gap:4px}.log-summary span{font:700 23px var(--display);letter-spacing:-1px}.log-summary small{font-size:9px;letter-spacing:1.1px;color:#81897d}.session-list{display:grid}.log-item{display:grid;grid-template-columns:1fr auto auto;gap:25px;align-items:center;padding:17px 0;border-bottom:1px solid #e8e8e0}.log-item strong{font:700 13px var(--display)}.log-item small{display:block;color:#8a9188;font-size:10px;margin-top:5px}.log-item .log-kcal{font:700 13px var(--display)}.log-item button{border:0;background:none;color:#899087;cursor:pointer;font-size:17px}.explainer{padding:90px max(10vw,32px);display:grid;grid-template-columns:1fr 1fr;gap:7vw;background:#e8eadf}.explainer .eyebrow{margin-bottom:15px}.explainer h2{font-size:43px;letter-spacing:-2.5px}.explainer-copy{max-width:480px;color:#626b61;font-size:13px;line-height:1.8}.explainer-copy p{margin:0 0 15px}.safety-note{padding-top:15px;border-top:1px solid #ced2c5;font-size:11px!important}.safety-note span{display:block;color:#667858;font-size:9px;letter-spacing:1.4px;font-weight:700;margin-bottom:6px}footer{padding:25px max(6vw,24px);display:flex;align-items:center;justify-content:space-between;color:#80877d;font-size:10px}footer .brand{font-size:14px}footer .brand-mark{width:23px;height:23px;font-size:11px}footer>a:last-child{color:inherit;text-decoration:none}@media(max-width:760px){.hero{padding-top:55px;grid-template-columns:1fr;gap:40px}.hero-art{height:300px;max-width:500px;width:100%;justify-self:center}.hero h1{font-size:59px}.tracker-section,.log-section{padding:65px 22px}.tracker-grid{grid-template-columns:1fr}.section-heading h2{font-size:30px}.explainer{padding:65px 24px;grid-template-columns:1fr;gap:25px}.explainer h2{font-size:39px}.result{grid-template-columns:1fr;gap:20px}.result-detail{border-left:0;border-top:1px solid #d4d9ca;padding:17px 0 0}.log-item{gap:12px}footer{gap:15px;flex-wrap:wrap}.topbar{height:65px}.top-link{font-size:11px}}
+.table-wrap{overflow-x:auto;margin:15px 0 18px}table{width:100%;border-collapse:collapse;background:#f5f6f0;font-size:10px}th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #dfe2d8}th{font-size:9px;letter-spacing:.6px;color:#52634b}td:not(:first-child){font-weight:600;color:#304535}
+.city-section{background:#f0f1ea}.city-card h3{font:700 34px var(--display);letter-spacing:-1.4px;margin:5px 0 13px}.city-card h3 small{font:500 12px var(--sans);letter-spacing:0;color:#7c8478}.city-card>p:last-child{font-size:12px;line-height:1.7;color:#70796e;margin:15px 0 0}.area-list{display:flex;flex-wrap:wrap;gap:8px}.area-list span{padding:8px 11px;border:1px solid #dce0d4;border-radius:99px;background:#fafbf7;font-size:11px;color:#465443}
 
-    * { box-sizing: border-box; }
+/* Interactive session builder and privacy-first analytics */
+[hidden]{display:none!important}
+.unit-select{display:grid;grid-template-columns:minmax(0,1fr) 94px;gap:7px;margin-top:8px}
+.unit-select input,.unit-select select,.field-grid select,.session-selects select{width:100%;height:43px;min-width:0;padding:0 10px;border:1px solid var(--line);border-radius:5px;background:#fcfcfa;color:var(--ink);font:500 13px var(--sans)}
+.unit-select input{margin:0}
+.unit-select select{margin:0;cursor:pointer}
+.field-grid select:focus,.unit-select input:focus,.unit-select select:focus,.session-selects select:focus{border-color:#829a70;box-shadow:0 0 0 3px #829a7019;outline:0}
+.session-selects{gap:14px 13px}
+.session-selects label{font-size:11px;font-weight:700;color:#475148}
+.session-selects select{display:block;margin-top:8px}
+.quick-starts{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:22px}
+.quick-starts>span{margin-right:3px;color:#81897d;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.preset-button{padding:7px 10px;border:1px solid #dce0d4;border-radius:99px;background:#fbfcf8;color:#41503f;font:600 10px var(--sans);cursor:pointer;transition:background .2s,border-color .2s}
+.preset-button:hover,.preset-button:focus-visible{border-color:#9eac8a;background:#f1f5e9}
+.live-summary{display:flex;align-items:flex-start;gap:10px;margin-top:20px;padding:12px;border-radius:6px;background:#f4f6ef;color:#53604f;font-size:11px;line-height:1.6}
+.summary-icon{color:#83976a;font-size:16px;line-height:1}
+.result-lead .cal-line{margin:3px 0 5px;color:#304535;font:600 17px var(--display)}
+.unit-explainer{color:#7d867a;font:400 10px var(--sans);letter-spacing:0}
+.result-duration{color:#737c70;font-size:10px}
+.result-detail{grid-template-columns:24px minmax(0,1fr);gap:8px}
+.result-detail>div{min-width:0}
+.energy-breakdown{display:grid;gap:5px;margin-top:12px}
+.energy-line{display:flex;justify-content:space-between;gap:15px;color:#737c70;font-size:10px}
+.energy-line strong{color:#364536;font-weight:700;white-space:nowrap}
+.secondary-button{grid-column:2}
+.copy-status{grid-column:2;margin:0;color:#64735d;font-size:10px}
+.validation{min-height:0}
+.experience-section{padding:78px max(10vw,32px);background:#f0f1ea}
+.experience-section .section-heading{margin-bottom:27px}
+.experience-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.experience-card{position:relative;min-height:260px;padding:28px;border:1px solid #e1e4da;border-radius:10px;background:#fbfcf8;overflow:hidden}
+.experience-card h3{max-width:360px;margin:0 0 13px;font:650 23px/1.2 var(--display);letter-spacing:-.8px}
+.experience-card p:not(.eyebrow){max-width:500px;color:#687267;font-size:12px;line-height:1.8}
+.experience-card .eyebrow{margin:0 0 12px;font-size:9px}
+.experience-card>a{display:inline-block;margin-top:5px;color:#536947;font-size:10px;font-weight:700;text-decoration:none;border-bottom:1px solid #aeb99e;padding-bottom:3px}
+.experience-icon{position:absolute;right:20px;top:14px;color:#b9c5a8;font-size:42px;opacity:.75}
+.hat-card{background:linear-gradient(140deg,#f8f8f0,#e9eee0)}
+.tips-card{background:#fbfaf6}
+.tip-list{display:grid;gap:7px;margin:10px 0 14px;padding-left:18px;color:#687267;font-size:11px;line-height:1.65}
+.explainer-copy details{margin:16px 0;padding:14px 15px;border:1px solid #d5d9cc;border-radius:6px;background:#f1f2e9}
+.explainer-copy details summary{color:#52634b;font-size:11px;font-weight:700;cursor:pointer}
+.explainer-copy details p{margin:12px 0 0;font-size:11px;line-height:1.75}
+.explainer-copy details a{color:#455e40}
+.reference-line{padding:12px 14px;border-left:2px solid #91a47a;background:#f2f4ed;color:#626b61;font-size:11px!important;line-height:1.7}
+.reference-line a{color:#455e40;font-weight:700}
+.contact-section{padding:48px max(10vw,32px);display:flex;align-items:center;justify-content:space-between;gap:24px;background:#dfe5d7}
+.contact-section .eyebrow{margin-bottom:10px}
+.contact-section h2{margin:0 0 7px;font:600 34px/1.05 var(--display);letter-spacing:-1.7px}
+.contact-section p:last-child{margin:0;color:#667064;font-size:12px}
+.contact-button{display:inline-flex;align-items:center;gap:13px;padding:13px 17px;border-radius:5px;background:var(--deep);color:#fff;text-decoration:none;font-size:11px;font-weight:700;white-space:nowrap}
+.contact-button:hover{background:#385d47}
+footer{gap:14px;flex-wrap:wrap}
+.privacy-settings{padding:0;border:0;background:none;color:inherit;font:inherit;text-decoration:underline;cursor:pointer}
+.analytics-banner{position:fixed;z-index:20;left:50%;bottom:18px;transform:translateX(-50%);width:min(760px,calc(100% - 28px));display:flex;justify-content:space-between;align-items:center;gap:24px;padding:18px 20px;border:1px solid #d9ddcf;border-radius:10px;background:#fffefa;box-shadow:0 12px 42px #18241c26}
+.analytics-banner .eyebrow{margin-bottom:5px;font-size:9px}
+.analytics-banner p:not(.eyebrow){margin:0;color:#657064;font-size:11px;line-height:1.6}
+.analytics-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.analytics-actions button{min-height:37px;padding:0 12px;border:1px solid #d9ddcf;border-radius:5px;font:600 10px var(--sans);cursor:pointer}
+.analytics-decline{background:#fff;color:#40503f}
+.analytics-accept{border-color:var(--deep)!important;background:var(--deep);color:white}
+.inches-field{margin-top:0}
+@media(max-width:760px){.experience-section{padding:62px 22px}.experience-grid{grid-template-columns:1fr}.experience-card{min-height:0}.contact-section{padding:38px 22px;align-items:flex-start;flex-direction:column}.contact-section h2{font-size:30px}.analytics-banner{align-items:flex-start;flex-direction:column;gap:13px}.analytics-actions{width:100%;justify-content:flex-end}.session-selects{grid-template-columns:1fr}}
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--sans);
-      line-height: 1.5;
-    }
-
-    a { color: inherit; }
-
-    .topbar {
-      max-width: 1080px;
-      margin: auto;
-      padding: 22px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .brand {
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-      text-decoration: none;
-      font-weight: 750;
-      letter-spacing: -.03em;
-      font-size: 20px;
-    }
-
-    .brand-mark {
-      width: 30px;
-      height: 30px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--green);
-      color: white;
-      font-family: var(--serif);
-    }
-
-    .top-link {
-      color: var(--green);
-      font-weight: 650;
-      text-decoration: none;
-    }
-
-    main {
-      max-width: 1080px;
-      margin: auto;
-      padding: 16px 24px 70px;
-    }
-
-    .hero {
-      padding: 62px 0 42px;
-      max-width: 760px;
-    }
-
-    .eyebrow {
-      margin: 0 0 12px;
-      color: var(--green);
-      font-size: 12px;
-      font-weight: 750;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-    }
-
-    h1, h2, h3, p { margin-top: 0; }
-
-    h1 {
-      margin-bottom: 16px;
-      font-family: var(--serif);
-      font-size: clamp(44px, 8vw, 76px);
-      font-weight: 500;
-      letter-spacing: -.055em;
-      line-height: .98;
-    }
-
-    .hero p:last-child {
-      max-width: 590px;
-      margin-bottom: 0;
-      color: var(--muted);
-      font-size: 18px;
-    }
-
-    .calculator {
-      padding: clamp(22px, 5vw, 42px);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: var(--white);
-      box-shadow: 0 18px 55px rgba(24, 36, 28, .06);
-    }
-
-    .calculator-heading {
-      margin-bottom: 28px;
-    }
-
-    .calculator-heading h2,
-    .method h2 {
-      margin-bottom: 7px;
-      font-family: var(--serif);
-      font-size: clamp(30px, 5vw, 42px);
-      font-weight: 500;
-      letter-spacing: -.04em;
-      line-height: 1.1;
-    }
-
-    .muted { color: var(--muted); }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    label {
-      display: block;
-      color: var(--ink);
-      font-size: 14px;
-      font-weight: 650;
-    }
-
-    input, select {
-      width: 100%;
-      min-height: 48px;
-      margin-top: 7px;
-      padding: 10px 12px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: white;
-      color: var(--ink);
-      font: inherit;
-    }
-
-    input:focus, select:focus, button:focus-visible, a:focus-visible {
-      outline: 3px solid rgba(111, 157, 155, .35);
-      outline-offset: 2px;
-    }
-
-    .input-with-unit {
-      display: grid;
-      grid-template-columns: 1fr 100px;
-      gap: 8px;
-    }
-
-    .input-with-unit input,
-    .input-with-unit select { min-width: 0; }
-
-    .subfield { margin-top: 10px; }
-
-    .mode-label {
-      margin: 28px 0 10px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .mode-buttons {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 9px;
-    }
-
-    .mode-button {
-      min-height: 52px;
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      background: white;
-      color: var(--ink);
-      font: inherit;
-      font-weight: 650;
-      cursor: pointer;
-    }
-
-    .mode-button[aria-pressed="true"] {
-      border-color: var(--green);
-      background: var(--green);
-      color: white;
-    }
-
-    .session-fields {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .temperature-control {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-top: 6px;
-    }
-
-    .temperature-control input {
-      margin: 0;
-      padding: 0;
-    }
-
-    .temperature-value {
-      min-width: 55px;
-      color: var(--green);
-      font-weight: 750;
-    }
-
-    .privacy {
-      margin: 22px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .primary-button {
-      width: 100%;
-      min-height: 54px;
-      margin-top: 26px;
-      border: 0;
-      border-radius: 12px;
-      background: var(--green);
-      color: white;
-      font: inherit;
-      font-size: 16px;
-      font-weight: 750;
-      cursor: pointer;
-    }
-
-    .primary-button:hover { background: #20382b; }
-
-    .error {
-      min-height: 24px;
-      margin: 12px 0 0;
-      color: #a23d2f;
-      font-size: 14px;
-    }
-
-    .result {
-      margin-top: 24px;
-      padding: clamp(22px, 5vw, 38px);
-      border-radius: 20px;
-      background: var(--sage);
-    }
-
-    .result h2 {
-      margin: 0;
-      color: var(--green);
-      font-family: var(--serif);
-      font-size: clamp(40px, 8vw, 66px);
-      font-weight: 500;
-      letter-spacing: -.05em;
-      line-height: 1;
-    }
-
-    .result .small-cal {
-      margin: 10px 0 20px;
-      color: var(--green);
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .result-explanation {
-      margin: 0 0 18px;
-      color: var(--muted);
-    }
-
-    .breakdown {
-      display: grid;
-      gap: 8px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(41, 70, 55, .2);
-    }
-
-    .breakdown-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    .breakdown-row span:last-child {
-      font-weight: 700;
-      text-align: right;
-    }
-
-    .method {
-      max-width: 760px;
-      margin: 62px auto 0;
-    }
-
-    .method p { color: var(--muted); }
-
-    details {
-      margin-top: 22px;
-      padding: 18px 20px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255, 254, 250, .7);
-    }
-
-    summary {
-      color: var(--green);
-      font-weight: 750;
-      cursor: pointer;
-    }
-
-    details p, details li {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    details ul {
-      display: grid;
-      gap: 8px;
-      padding-left: 20px;
-    }
-
-    .contact {
-      margin-top: 54px;
-      padding: 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      border-radius: 18px;
-      background: #ebece5;
-    }
-
-    .contact p { margin: 0; }
-
-    .contact a {
-      color: var(--green);
-      font-weight: 750;
-      white-space: nowrap;
-    }
-
-    footer {
-      max-width: 1080px;
-      margin: auto;
-      padding: 0 24px 30px;
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    footer a { text-decoration: none; }
-
-    [hidden] { display: none !important; }
-
-    @media (max-width: 620px) {
-      .topbar, main { padding-left: 18px; padding-right: 18px; }
-      .hero { padding-top: 44px; }
-      .form-grid, .session-fields { grid-template-columns: 1fr; }
-      .mode-buttons { grid-template-columns: 1fr; }
-      .contact, footer { align-items: flex-start; flex-direction: column; }
-      footer { padding-left: 18px; padding-right: 18px; }
-    }
-  </style>
+</style>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#top" aria-label="SaunaCal home">
-      <span class="brand-mark">S</span>SaunaCal
-    </a>
-    <a class="top-link" href="mailto:public.abhaybhatia@gmail.com?subject=SaunaCal%20question">
-      Email a question ↗
-    </a>
+    <a class="brand" href="#top" aria-label="SaunaCal home"><span class="brand-mark">S</span>SaunaCal</a>
+    <a class="top-link" href="mailto:public.abhaybhatia@gmail.com?subject=SaunaCal%20question">Email Abhay <span aria-hidden="true">↗</span></a>
   </header>
 
   <main id="top">
     <section class="hero">
-      <p class="eyebrow">SaunaCal session estimate</p>
-      <h1>Your session,<br>in numbers.</h1>
-      <p>Choose sauna, cold, or both. See an estimated total in kcal and cal.</p>
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="pulse"></span> HEAT · COLD · RECOVERY</p>
+        <h1>Make space<br>for the <em>reset.</em></h1>
+        <p class="intro">Build a sauna or ice bath session and see a simple estimate of total session energy, in kcal and cal.</p>
+        <a class="text-link" href="#tracker">Build your session <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="sun"></div><div class="moon"></div><div class="steam steam-one"></div><div class="steam steam-two"></div>
+        <div class="pool"><div class="waterline"></div></div>
+        <div class="art-caption"><span>SAUNA</span><span>FIND YOUR RHYTHM</span></div>
+      </div>
     </section>
 
-    <section class="calculator" aria-labelledby="calculator-title">
-      <div class="calculator-heading">
-        <p class="eyebrow">Your details</p>
-        <h2 id="calculator-title">Build your session.</h2>
-        <p class="muted">Your entries stay in this page. They aren’t saved or sent.</p>
+    <section class="tracker-section" id="tracker">
+      <div class="section-heading">
+        <div><p class="eyebrow">YOUR SESSION</p><h2>Set the scene.</h2></div>
+        <span class="step-label">01 <i>—</i> 02</span>
       </div>
 
-      <div class="form-grid">
-        <label for="age">
-          Age <span class="muted">(optional, years)</span>
-          <input id="age" type="number" min="18" max="100" placeholder="e.g. 35">
-        </label>
-
-        <label for="weight">
-          Weight
-          <div class="input-with-unit">
-            <input id="weight" type="number" min="35" max="250" step="0.1" placeholder="e.g. 86">
-            <select id="weight-unit" aria-label="Weight unit">
-              <option value="kg">kg</option>
-              <option value="lb">lb</option>
-            </select>
+      <div class="tracker-grid">
+        <section class="panel profile-panel" aria-labelledby="profile-title">
+          <div class="panel-title"><span class="number">01</span><div><h3 id="profile-title">Your profile</h3><p>Used for a personal size adjustment.</p></div></div>
+          <div class="field-grid">
+            <label for="age">Age <span class="unit">YEARS</span><input id="age" type="number" min="18" max="100" placeholder="e.g. 35" required></label>
+            <label for="weight">Weight
+              <span class="unit-select"><input id="weight" type="number" min="35" max="250" step="0.1" placeholder="e.g. 72" required><select id="weight-unit" aria-label="Weight unit"><option value="kg">kg</option><option value="lb">lb</option></select></span>
+            </label>
+            <label class="wide" for="height">Height
+              <span class="unit-select"><input id="height" type="number" min="120" max="230" step="any" placeholder="e.g. 175" required><select id="height-unit" aria-label="Height unit"><option value="cm">cm</option><option value="m">m</option><option value="ft">ft + in</option></select></span>
+            </label>
+            <label class="wide inches-field" id="inches-field" for="inches" hidden>Additional inches <input id="inches" type="number" min="0" max="11" step="1" placeholder="e.g. 8"></label>
           </div>
-        </label>
+          <p class="privacy-note"><span aria-hidden="true">◉</span> Calculator entries stay in this browser and aren’t sent or saved.</p>
+        </section>
 
-        <label for="height">
-          Height
-          <div class="input-with-unit">
-            <input id="height" type="number" min="1" max="300" step="any" placeholder="e.g. 180">
-            <select id="height-unit" aria-label="Height unit">
-              <option value="cm">cm</option>
-              <option value="m">m</option>
-              <option value="ft">ft</option>
-            </select>
+        <section class="panel session-panel" aria-labelledby="session-title">
+          <div class="panel-title"><span class="number">02</span><div><h3 id="session-title">Build your session</h3><p>Choose a starting point, then adjust it.</p></div></div>
+
+          <div class="field-grid session-selects">
+            <label class="wide" for="mode">Session type
+              <select id="mode">
+                <option value="sauna">Sauna</option>
+                <option value="cold">Ice bath</option>
+                <option value="both">Sauna + ice bath</option>
+              </select>
+            </label>
+            <label class="wide" for="sauna-rounds" id="rounds-field">Sauna rounds
+              <select id="sauna-rounds">
+                <option value="1">1 round · 10 minutes</option>
+                <option value="2">2 rounds · 20 minutes</option>
+                <option value="3" selected>3 rounds · 30 minutes</option>
+                <option value="4">4 rounds · 40 minutes</option>
+              </select>
+            </label>
+            <label class="wide" for="temperature" id="temperature-field">Sauna temperature
+              <select id="temperature"><option value="80">80°C</option><option value="85">85°C</option><option value="90" selected>90°C</option></select>
+            </label>
+            <label class="wide" for="cold-minutes" id="cold-field" hidden>Ice bath time
+              <select id="cold-minutes"><option value="1">1 minute</option><option value="2">2 minutes</option><option value="3" selected>3 minutes</option><option value="5">5 minutes</option><option value="10">10 minutes</option></select>
+            </label>
           </div>
-        </label>
 
-        <label id="inches-field" for="inches" hidden>
-          Extra inches
-          <input id="inches" type="number" min="0" max="11" step="1" placeholder="e.g. 10">
-        </label>
+          <div class="quick-starts" aria-label="Quick session presets">
+            <span>Quick start</span>
+            <button type="button" class="preset-button" data-preset="quick">Quick heat</button>
+            <button type="button" class="preset-button" data-preset="rounds">Three rounds</button>
+            <button type="button" class="preset-button" data-preset="contrast">Contrast</button>
+          </div>
+
+          <div class="live-summary" aria-live="polite"><span class="summary-icon">↗</span><span id="session-summary">3 sauna rounds at 90°C</span></div>
+          <button class="primary-button" id="estimate-button" type="button">See my estimate <span aria-hidden="true">↗</span></button>
+          <p class="validation" id="validation" role="alert"></p>
+        </section>
       </div>
 
-      <p class="mode-label">What are you doing?</p>
-      <div class="mode-buttons" role="group" aria-label="Session type">
-        <button class="mode-button" type="button" data-mode="sauna" aria-pressed="true">Sauna</button>
-        <button class="mode-button" type="button" data-mode="cold" aria-pressed="false">Ice bath</button>
-        <button class="mode-button" type="button" data-mode="both" aria-pressed="false">Sauna + ice bath</button>
-      </div>
-
-      <div class="session-fields">
-        <label id="sauna-field" for="sauna-minutes">
-          Sauna time
-          <select id="sauna-minutes">
-            <option value="10">10 minutes — 1 round</option>
-            <option value="20">20 minutes — 2 rounds</option>
-            <option value="30" selected>30 minutes — 3 rounds</option>
-            <option value="40">40 minutes — 4 rounds</option>
-          </select>
-        </label>
-
-        <label id="temperature-field" for="temperature">
-          Sauna temperature
-          <div class="temperature-control">
-            <input id="temperature" type="range" min="80" max="90" step="5" value="90">
-            <span class="temperature-value" id="temperature-value">90°C</span>
-          </div>
-        </label>
-
-        <label id="cold-field" for="cold-minutes" hidden>
-          Ice bath time
-          <div class="input-with-unit">
-            <input id="cold-minutes" type="number" min="1" max="20" value="3">
-            <span class="temperature-value" style="align-self:center">minutes</span>
-          </div>
-        </label>
-      </div>
-
-      <p class="privacy">No account needed. The estimate runs in your browser only.</p>
-      <button class="primary-button" id="estimate-button" type="button">Estimate my session</button>
-      <p class="error" id="error" role="alert"></p>
-
-      <section class="result" id="result" aria-live="polite" hidden>
-        <p class="eyebrow">Estimated total session energy</p>
-        <h2><span id="result-kcal">—</span> kcal</h2>
-        <p class="small-cal"><span id="result-cal">—</span> cal</p>
-        <p class="result-explanation" id="result-explanation"></p>
-        <div class="breakdown" id="breakdown"></div>
+      <section class="result panel" id="result" aria-live="polite" hidden>
+        <div class="result-lead">
+          <p class="eyebrow">ESTIMATED TOTAL SESSION ENERGY · <span id="result-mode">SAUNA</span></p>
+          <h2><span id="result-kcal">—</span> <small>kcal</small></h2>
+          <p class="cal-line"><span id="result-cal">—</span> cal <span class="unit-explainer">(small calories)</span></p>
+          <p class="result-duration" id="result-duration"></p>
+        </div>
+        <div class="result-detail">
+          <span class="result-spark" aria-hidden="true">✳</span>
+          <div><p>This is an estimate of <strong>total</strong> session energy, including a resting baseline. It is not a direct measurement.</p><div class="energy-breakdown" id="energy-breakdown"></div></div>
+          <button type="button" id="copy-result" class="secondary-button">Copy summary <span aria-hidden="true">⎘</span></button>
+          <p class="copy-status" id="copy-status" aria-live="polite"></p>
+        </div>
       </section>
     </section>
 
-    <section class="method">
-      <p class="eyebrow">How it works</p>
-      <h2>An estimate based on your session.</h2>
-      <p>The sauna estimate rises with each 10-minute round. Height and weight adjust it using an estimated body-surface-area ratio. Cold time adds a resting baseline only.</p>
-
-      <details>
-        <summary>See the model assumptions</summary>
-        <ul>
-          <li>At 90°C, the model uses reported monitor estimates of 73.04, 93.82, 114.91 and 131.40 kcal for successive 10-minute sauna rounds.</li>
-          <li>At 80°C, the round estimates are scaled to a separate study’s 20-minute monitor estimate. Temperatures between 80°C and 90°C are interpolated.</li>
-          <li>Body size is scaled against the 90°C study’s average height and weight using a body-surface-area formula. The study found associations with weight and body surface area, not height alone.</li>
-          <li>Each sauna round includes a five-minute recovery estimate. Cold-bath time adds a resting baseline; no additional cold-response calories are assumed.</li>
-          <li>Age is collected but does not change this estimate. The study data don’t support an age adjustment.</li>
-        </ul>
-        <p>These are heart-rate-monitor estimates from specific study groups, not direct calorimeter measurements. Individual results can differ.</p>
-        <p>
-          Sources:
-          <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6360547/" target="_blank" rel="noreferrer">90°C repeated-round study</a>,
-          <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10853428/" target="_blank" rel="noreferrer">80°C study</a>,
-          <a href="https://www.nist.gov/pml/special-publication-811/nist-guide-si-footnotes" target="_blank" rel="noreferrer">calorie units</a>.
-        </p>
-      </details>
+    <section class="experience-section">
+      <div class="section-heading">
+        <div><p class="eyebrow">A LITTLE SAUNA CULTURE</p><h2>Small things that make it yours.</h2></div>
+        <span class="step-label">A FEW IDEAS</span>
+      </div>
+      <div class="experience-grid">
+        <article class="experience-card hat-card">
+          <div class="experience-icon" aria-hidden="true">♨</div>
+          <p class="eyebrow">FUN FACT · SAUNA HATS</p>
+          <h3>Yes, people wear hats in the sauna.</h3>
+          <p>Felt sauna hats are a familiar accessory in Helsinki. The city’s sauna guide says some people wear them to help regulate temperature. Think of one as optional comfort, not safety gear.</p>
+          <a href="https://www.myhelsinki.fi/visit/sauna/no-right-way-to-sauna/" target="_blank" rel="noreferrer">MyHelsinki sauna guide ↗</a>
+        </article>
+        <article class="experience-card tips-card">
+          <div class="experience-icon" aria-hidden="true">✳</div>
+          <p class="eyebrow">A FEW SIMPLE POINTERS</p>
+          <h3>Make room for a reset.</h3>
+          <ul class="tip-list">
+            <li>Try one shorter round first, then adjust to what feels comfortable.</li>
+            <li>Leave time to cool down between sauna rounds.</li>
+            <li>Keep water nearby and follow the venue’s sauna and cold-plunge rules.</li>
+            <li>Step out if you feel unwell or uncomfortable.</li>
+          </ul>
+          <a href="https://www.healthdirect.gov.au/hot-weather-risks-and-staying-cool" target="_blank" rel="noreferrer">Heat and hydration information ↗</a>
+        </article>
+      </div>
     </section>
 
-    <section class="contact">
-      <div>
-        <p class="eyebrow">Questions or ideas?</p>
-        <p>Send Abhay a note about SaunaCal.</p>
+    <section class="explainer" id="how-it-works">
+      <div class="explainer-title"><p class="eyebrow">A NOTE ON THE NUMBERS</p><h2>A simple<br>starting model.</h2></div>
+      <div class="explainer-copy">
+        <p>The 90°C sauna estimate uses a published heart-rate-monitor estimate for each 10-minute round. Later rounds rise in the model, so three rounds are not treated as three identical blocks.</p>
+        <p class="reference-line">For the study’s average profile, three 10-minute rounds at 90°C plus recovery come to about <strong>303 kcal</strong>. For context, a 60-minute cycle at about 7 MET and 86 kg is roughly <strong>600 kcal</strong>. <a href="https://pacompendium.com/bicycling/" target="_blank" rel="noreferrer">Cycling activity values ↗</a></p>
+        <div class="table-wrap"><table><thead><tr><th>Sauna round</th><th>Estimated kcal at 90°C*</th></tr></thead><tbody><tr><td>First 10 minutes</td><td>73 kcal</td></tr><tr><td>Second 10 minutes</td><td>94 kcal</td></tr><tr><td>Third 10 minutes</td><td>115 kcal</td></tr><tr><td>Fourth 10 minutes</td><td>131 kcal</td></tr></tbody></table></div>
+        <details class="assumptions"><summary>How the estimate is adjusted</summary><p>The <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6360547/" target="_blank" rel="noreferrer">90°C study</a> used 45 young sedentary and overweight men, four 10-minute sauna rounds, and five-minute recovery periods. Energy was estimated indirectly with a heart-rate monitor. SaunaCal adjusts the values by estimated body surface area and adds a resting baseline for recovery. The <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10853428/" target="_blank" rel="noreferrer">80°C adjustment</a> is anchored to a separate 20-minute study; 85°C is interpolated. Age does not change the estimate. Cold time adds resting baseline only—no extra cold-response calories are assumed.</p><p>One kcal equals 1,000 small calories (cal). Study results vary by person and equipment.</p></details>
+        <p class="safety-note"><span>KEEP IT COMFORTABLE</span> Drink water, take breaks and follow the rules at your sauna or plunge venue. This page estimates energy; it does not measure body-fat loss or fluid loss.</p>
       </div>
-      <a href="mailto:public.abhaybhatia@gmail.com?subject=SaunaCal%20question&body=Hi%20Abhay%2C%0A%0AI%20have%20a%20question%20or%20suggestion%20about%20SaunaCal%3A%0A">
-        Email Abhay ↗
-      </a>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div><p class="eyebrow">QUESTIONS OR IDEAS?</p><h2>Let’s talk sauna.</h2><p>Send Abhay a question or suggestion about SaunaCal.</p></div>
+      <a class="contact-button" href="mailto:public.abhaybhatia@gmail.com?subject=SaunaCal%20question&amp;body=Hi%20Abhay%2C%0A%0AI%20have%20a%20question%20or%20suggestion%20about%20SaunaCal%3A%0A">Email Abhay <span aria-hidden="true">↗</span></a>
     </section>
   </main>
 
   <footer>
     <a class="brand" href="#top"><span class="brand-mark">S</span>SaunaCal</a>
+    <span>Calculator entries stay on this page.</span>
+    <button type="button" class="privacy-settings" id="privacy-settings">Analytics settings</button>
     <a href="https://abhaybhatia.com">abhaybhatia.com ↗</a>
   </footer>
 
+  <section class="analytics-banner" id="analytics-banner" aria-labelledby="analytics-title" hidden>
+    <div><p class="eyebrow" id="analytics-title">YOUR PRIVACY</p><p>May Google Analytics collect general site-usage information, such as page visits? Your calculator entries are never sent. Your choice is saved on this device.</p></div>
+    <div class="analytics-actions"><button type="button" id="analytics-decline" class="analytics-decline">No thanks</button><button type="button" id="analytics-accept" class="analytics-accept">Allow analytics</button></div>
+  </section>
+
   <script>
-    const modeButtons = [...document.querySelectorAll(".mode-button")];
-    const saunaField = document.getElementById("sauna-field");
-    const temperatureField = document.getElementById("temperature-field");
-    const coldField = document.getElementById("cold-field");
-    const heightUnit = document.getElementById("height-unit");
-    const heightInput = document.getElementById("height");
-    const inchesField = document.getElementById("inches-field");
-    const temperature = document.getElementById("temperature");
-    const temperatureValue = document.getElementById("temperature-value");
-    const result = document.getElementById("result");
-    const error = document.getElementById("error");
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const ROUND_KCAL_AT_90C = [73.04, 93.82, 114.91, 131.40];
+  const ANALYTICS_ID = 'G-VXQMT8LWCF';
+  const CONSENT_KEY = 'saunacal-analytics-consent-v1';
+  let mode = $('mode').value;
+  let lastSummary = '';
+  let analyticsLoaded = false;
 
-    let selectedMode = "sauna";
+  function setMode(nextMode) {
+    mode = nextMode;
+    $('rounds-field').hidden = mode === 'cold';
+    $('temperature-field').hidden = mode === 'cold';
+    $('cold-field').hidden = mode === 'sauna';
+    updatePreview();
+  }
 
-    function setMode(mode) {
-      selectedMode = mode;
-      modeButtons.forEach(button => {
-        const selected = button.dataset.mode === mode;
-        button.setAttribute("aria-pressed", selected ? "true" : "false");
-      });
+  function weightKg() {
+    const value = Number($('weight').value);
+    if (!Number.isFinite(value) || value <= 0) return NaN;
+    return $('weight-unit').value === 'lb' ? value * 0.45359237 : value;
+  }
 
-      saunaField.hidden = mode === "cold";
-      temperatureField.hidden = mode === "cold";
-      coldField.hidden = mode === "sauna";
+  function heightCm() {
+    const value = Number($('height').value);
+    if (!Number.isFinite(value) || value <= 0) return NaN;
+    if ($('height-unit').value === 'm') return value * 100;
+    if ($('height-unit').value === 'ft') {
+      return (value * 12 + Number($('inches').value || 0)) * 2.54;
+    }
+    return value;
+  }
+
+  function updateHeightControl() {
+    const unit = $('height-unit').value;
+    $('inches-field').hidden = unit !== 'ft';
+    if (unit === 'ft') {
+      $('height').min = '4';
+      $('height').max = '8';
+      $('height').step = '1';
+      $('height').placeholder = 'e.g. 5';
+    } else if (unit === 'm') {
+      $('height').min = '1.2';
+      $('height').max = '2.3';
+      $('height').step = '0.01';
+      $('height').placeholder = 'e.g. 1.75';
+    } else {
+      $('height').min = '120';
+      $('height').max = '230';
+      $('height').step = '1';
+      $('height').placeholder = 'e.g. 175';
+    }
+  }
+
+  function updateWeightControl() {
+    if ($('weight-unit').value === 'lb') {
+      $('weight').min = '77';
+      $('weight').max = '551';
+      $('weight').placeholder = 'e.g. 159';
+    } else {
+      $('weight').min = '35';
+      $('weight').max = '250';
+      $('weight').placeholder = 'e.g. 72';
+    }
+  }
+
+  function updatePreview() {
+    const rounds = Number($('sauna-rounds').value);
+    const temperature = $('temperature').value;
+    const coldMinutes = $('cold-minutes').value;
+    const parts = [];
+
+    if (mode !== 'cold') {
+      parts.push(rounds + ' sauna round' + (rounds === 1 ? '' : 's') + ' at ' + temperature + '°C');
+    }
+    if (mode !== 'sauna') {
+      parts.push(coldMinutes + ' min ice bath');
+    }
+    $('session-summary').textContent = parts.join(' + ');
+  }
+
+  function formatKcal(value) {
+    return value.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  }
+
+  function formatCal(value) {
+    return Math.round(value).toLocaleString('en-US');
+  }
+
+  function addBreakdownLine(label, value) {
+    const line = document.createElement('div');
+    line.className = 'energy-line';
+    const name = document.createElement('span');
+    const amount = document.createElement('strong');
+    name.textContent = label;
+    amount.textContent = formatKcal(value) + ' kcal';
+    line.append(name, amount);
+    $('energy-breakdown').appendChild(line);
+  }
+
+  function calculate() {
+    $('validation').textContent = '';
+    $('result').hidden = true;
+
+    const age = Number($('age').value);
+    const kg = weightKg();
+    const cm = heightCm();
+    if (!age || age < 18 || age > 100) {
+      $('validation').textContent = 'Enter an age between 18 and 100.';
+      return;
+    }
+    if (!Number.isFinite(kg) || kg < 35 || kg > 250) {
+      $('validation').textContent = 'Enter a weight between 35 and 250 kg, or the equivalent in pounds.';
+      return;
+    }
+    if (!Number.isFinite(cm) || cm < 120 || cm > 230) {
+      $('validation').textContent = 'Enter a height between 120 and 230 cm, or the equivalent.';
+      return;
     }
 
-    modeButtons.forEach(button => {
-      button.addEventListener("click", () => setMode(button.dataset.mode));
-    });
+    let saunaKcal = 0;
+    let recoveryKcal = 0;
+    let coldKcal = 0;
+    let saunaMinutes = 0;
+    let recoveryMinutes = 0;
+    let coldMinutes = 0;
 
-    heightUnit.addEventListener("change", () => {
-      inchesField.hidden = heightUnit.value !== "ft";
-      if (heightUnit.value === "ft") {
-        heightInput.placeholder = "e.g. 5";
-        heightInput.max = "8";
-      } else if (heightUnit.value === "m") {
-        heightInput.placeholder = "e.g. 1.80";
-        heightInput.max = "2.3";
+    if (mode !== 'cold') {
+      const rounds = Number($('sauna-rounds').value);
+      saunaMinutes = rounds * 10;
+
+      // Reference profile is the mean profile reported in the 90°C study.
+      const referenceBsa = Math.sqrt(85.86 * 179.71 / 3600);
+      const userBsa = Math.sqrt(kg * cm / 3600);
+      const sizeFactor = userBsa / referenceBsa;
+
+      // The 80°C factor is anchored to a separate study's 20-minute estimate.
+      const factorAt80 = 118.55 / (ROUND_KCAL_AT_90C[0] + ROUND_KCAL_AT_90C[1]);
+      const selectedTemperature = Number($('temperature').value);
+      const temperatureFactor = factorAt80 + ((selectedTemperature - 80) / 10) * (1 - factorAt80);
+
+      for (let round = 0; round < rounds; round += 1) {
+        saunaKcal += ROUND_KCAL_AT_90C[round] * temperatureFactor * sizeFactor;
+      }
+
+      // Count a five-minute recovery after each sauna round at an estimated 1 kcal/kg/hour.
+      recoveryMinutes = rounds * 5;
+      recoveryKcal = recoveryMinutes * kg / 60;
+    }
+
+    if (mode !== 'sauna') {
+      coldMinutes = Number($('cold-minutes').value);
+      if (!Number.isFinite(coldMinutes) || coldMinutes < 1 || coldMinutes > 10) {
+        $('validation').textContent = 'Choose an ice bath duration from 1 to 10 minutes.';
+        return;
+      }
+      // Cold immersion adds only a resting baseline here; no extra cold response is assumed.
+      coldKcal = coldMinutes * kg / 60;
+    }
+
+    const totalKcal = Math.round((saunaKcal + recoveryKcal + coldKcal) * 10) / 10;
+    const totalCal = totalKcal * 1000;
+    const totalMinutes = saunaMinutes + recoveryMinutes + coldMinutes;
+
+    $('result-kcal').textContent = formatKcal(totalKcal);
+    $('result-cal').textContent = formatCal(totalCal);
+    $('result-mode').textContent = mode === 'both' ? 'SAUNA + ICE BATH' : mode === 'cold' ? 'ICE BATH' : 'SAUNA';
+    $('result-duration').textContent = 'Estimated session time including recovery: ' + totalMinutes + ' minutes.';
+    $('energy-breakdown').replaceChildren();
+
+    if (mode !== 'cold') {
+      addBreakdownLine(saunaMinutes + ' minutes sauna', saunaKcal);
+      addBreakdownLine(recoveryMinutes + ' minutes recovery', recoveryKcal);
+    }
+    if (mode !== 'sauna') {
+      addBreakdownLine(coldMinutes + ' minutes ice bath baseline', coldKcal);
+    }
+
+    lastSummary = 'SaunaCal estimate: ' + formatKcal(totalKcal) + ' kcal (' + formatCal(totalCal) + ' small cal), ' + totalMinutes + ' minutes total. This is an estimate, not a measurement.';
+    $('copy-status').textContent = '';
+    $('result').hidden = false;
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  $('mode').addEventListener('change', (event) => setMode(event.target.value));
+  $('height-unit').addEventListener('change', updateHeightControl);
+  $('weight-unit').addEventListener('change', updateWeightControl);
+  ['sauna-rounds', 'temperature', 'cold-minutes'].forEach((id) => {
+    $(id).addEventListener('change', updatePreview);
+  });
+
+  document.querySelectorAll('.preset-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const preset = button.dataset.preset;
+      if (preset === 'quick') {
+        $('mode').value = 'sauna';
+        $('sauna-rounds').value = '1';
+        $('temperature').value = '85';
+      } else if (preset === 'rounds') {
+        $('mode').value = 'sauna';
+        $('sauna-rounds').value = '3';
+        $('temperature').value = '90';
       } else {
-        heightInput.placeholder = "e.g. 180";
-        heightInput.max = "230";
+        $('mode').value = 'both';
+        $('sauna-rounds').value = '3';
+        $('temperature').value = '90';
+        $('cold-minutes').value = '3';
       }
+      setMode($('mode').value);
     });
+  });
 
-    temperature.addEventListener("input", () => {
-      temperatureValue.textContent = `${temperature.value}°C`;
+  $('estimate-button').addEventListener('click', calculate);
+  $('copy-result').addEventListener('click', async () => {
+    if (!lastSummary) return;
+    try {
+      await navigator.clipboard.writeText(lastSummary);
+      $('copy-status').textContent = 'Copied.';
+    } catch {
+      $('copy-status').textContent = 'Copy is unavailable in this browser.';
+    }
+  });
+
+  function readConsent() {
+    try { return localStorage.getItem(CONSENT_KEY); }
+    catch { return null; }
+  }
+
+  function saveConsent(value) {
+    try { localStorage.setItem(CONSENT_KEY, value); }
+    catch { /* Analytics choice still applies for this visit. */ }
+  }
+
+  function loadAnalytics() {
+    if (analyticsLoaded || !/^G-[A-Z0-9]{10}$/.test(ANALYTICS_ID)) return;
+    analyticsLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
     });
+    window.gtag('js', new Date());
+    window.gtag('consent', 'update', { analytics_storage: 'granted' });
+    window.gtag('config', ANALYTICS_ID, { send_page_view: true });
 
-    function getWeightKg() {
-      const value = Number(document.getElementById("weight").value);
-      if (!Number.isFinite(value) || value <= 0) return NaN;
-      return document.getElementById("weight-unit").value === "lb"
-        ? value * 0.45359237
-        : value;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(ANALYTICS_ID);
+    document.head.appendChild(script);
+  }
+
+  function showAnalyticsBanner() {
+    $('analytics-banner').hidden = false;
+  }
+
+  function chooseAnalytics(allowed) {
+    const choice = allowed ? 'granted' : 'denied';
+    saveConsent(choice);
+    $('analytics-banner').hidden = true;
+    if (allowed) {
+      loadAnalytics();
+    } else if (analyticsLoaded && window.gtag) {
+      window.gtag('consent', 'update', { analytics_storage: 'denied' });
     }
+  }
 
-    function getHeightCm() {
-      const value = Number(heightInput.value);
-      if (!Number.isFinite(value) || value <= 0) return NaN;
+  $('analytics-accept').addEventListener('click', () => chooseAnalytics(true));
+  $('analytics-decline').addEventListener('click', () => chooseAnalytics(false));
+  $('privacy-settings').addEventListener('click', showAnalyticsBanner);
 
-      if (heightUnit.value === "m") return value * 100;
+  const savedConsent = readConsent();
+  if (savedConsent === 'granted') loadAnalytics();
+  if (savedConsent !== 'granted' && savedConsent !== 'denied') showAnalyticsBanner();
 
-      if (heightUnit.value === "ft") {
-        const inches = Number(document.getElementById("inches").value || 0);
-        return (value * 12 + inches) * 2.54;
-      }
-
-      return value;
-    }
-
-    function formatKcal(value) {
-      return value.toLocaleString("en-US", {
-        minimumFractionDigits: 1,
-        maximumFractionDigits: 1
-      });
-    }
-
-    function formatCal(value) {
-      return Math.round(value).toLocaleString("en-US");
-    }
-
-    function addBreakdownRow(label, value) {
-      const row = document.createElement("div");
-      row.className = "breakdown-row";
-
-      const name = document.createElement("span");
-      name.textContent = label;
-
-      const amount = document.createElement("span");
-      amount.textContent = `${formatKcal(value)} kcal`;
-
-      row.append(name, amount);
-      document.getElementById("breakdown").appendChild(row);
-    }
-
-    document.getElementById("estimate-button").addEventListener("click", () => {
-      error.textContent = "";
-      result.hidden = true;
-      document.getElementById("breakdown").replaceChildren();
-
-      const weightKg = getWeightKg();
-      const heightCm = getHeightCm();
-      const ageValue = document.getElementById("age").value;
-
-      if (!Number.isFinite(weightKg) || weightKg < 35 || weightKg > 250) {
-        error.textContent = "Enter a weight between 35 and 250 kg (or the equivalent in pounds).";
-        return;
-      }
-
-      if (!Number.isFinite(heightCm) || heightCm < 120 || heightCm > 230) {
-        error.textContent = "Enter a height between 120 and 230 cm (or the equivalent).";
-        return;
-      }
-
-      if (ageValue && (Number(ageValue) < 18 || Number(ageValue) > 100)) {
-        error.textContent = "Enter an age from 18 to 100, or leave it blank.";
-        return;
-      }
-
-      let saunaKcal = 0;
-      let recoveryKcal = 0;
-      let coldKcal = 0;
-
-      if (selectedMode !== "cold") {
-        const saunaMinutes = Number(document.getElementById("sauna-minutes").value);
-        const rounds = saunaMinutes / 10;
-
-        // Reported 10-minute round estimates from the 90°C study.
-        const roundEstimates90C = [73.04, 93.82, 114.91, 131.40];
-
-        // Reference profile and body surface area from that study.
-        const referenceWeightKg = 85.86;
-        const referenceHeightCm = 179.71;
-        const referenceBsa = Math.sqrt(
-          referenceWeightKg * referenceHeightCm / 3600
-        );
-        const userBsa = Math.sqrt(weightKg * heightCm / 3600);
-        const bodySizeFactor = userBsa / referenceBsa;
-
-        // The 80°C factor is calibrated to a separate 20-minute study.
-        const firstTwoRoundsAt90C = roundEstimates90C[0] + roundEstimates90C[1];
-        const factorAt80C = 118.55 / firstTwoRoundsAt90C;
-        const selectedTemperature = Number(temperature.value);
-        const temperatureFactor = factorAt80C +
-          ((selectedTemperature - 80) / 10) * (1 - factorAt80C);
-
-        for (let i = 0; i < rounds; i++) {
-          saunaKcal += roundEstimates90C[i] * temperatureFactor * bodySizeFactor;
-        }
-
-        // Approximate resting energy during a five-minute recovery after each round.
-        recoveryKcal = rounds * 5 * weightKg / 60;
-
-        addBreakdownRow(`${saunaMinutes} minutes of sauna`, saunaKcal);
-        addBreakdownRow(`${rounds * 5} minutes of recovery`, recoveryKcal);
-      }
-
-      if (selectedMode !== "sauna") {
-        const coldMinutes = Number(document.getElementById("cold-minutes").value);
-
-        if (!Number.isFinite(coldMinutes) || coldMinutes < 1 || coldMinutes > 20) {
-          error.textContent = "Enter an ice bath duration from 1 to 20 minutes.";
-          return;
-        }
-
-        // Resting baseline only; no additional cold-response estimate is added.
-        coldKcal = coldMinutes * weightKg / 60;
-        addBreakdownRow(`${coldMinutes} minutes of ice bath baseline`, coldKcal);
-      }
-
-      const totalKcal = Math.round((saunaKcal + recoveryKcal + coldKcal) * 10) / 10;
-      const totalCal = totalKcal * 1000;
-
-      document.getElementById("result-kcal").textContent = formatKcal(totalKcal);
-      document.getElementById("result-cal").textContent = formatCal(totalCal);
-
-      const saunaMinutes = selectedMode === "cold"
-        ? 0
-        : Number(document.getElementById("sauna-minutes").value);
-      const coldMinutes = selectedMode === "sauna"
-        ? 0
-        : Number(document.getElementById("cold-minutes").value);
-      const totalMinutes = saunaMinutes + coldMinutes + (saunaMinutes / 10) * 5;
-
-      document.getElementById("result-explanation").textContent =
-        `Approximate session time including recovery: ${totalMinutes} minutes. ` +
-        "This is a total-energy estimate, including a resting baseline.";
-
-      result.hidden = false;
-      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    });
+  updateHeightControl();
+  updateWeightControl();
+  setMode(mode);
+})();
   </script>
 </body>
 </html>
+```
