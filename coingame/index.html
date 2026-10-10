@@ -2,372 +2,553 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Investment Personality — Abhay Bhatia</title>
-<style>
-:root{--bg:#f5f8fd;--surface:#fff;--pale:#edf4ff;--text:#17243a;--muted:#68778d;--line:#dce6f3;--blue:#2864dc;--dark:#1949ac;--green:#167b59;--red:#c24150}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif}
-button,input{font:inherit}button{cursor:pointer}
-.wrap{width:min(940px,calc(100% - 36px));margin:auto}
-header{min-height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);font-size:12px;font-weight:800}
-main{padding:48px 0 75px}
-.eyebrow{color:var(--blue);font-size:12px;font-weight:850;letter-spacing:.13em;text-transform:uppercase}
-h1{font-size:clamp(43px,8.7vw,88px);line-height:.96;letter-spacing:-.07em;margin:20px 0 24px}
-h2{font-size:clamp(27px,5vw,40px);letter-spacing:-.05em;line-height:1.05;margin:0 0 14px}
-p{line-height:1.6}.intro{color:#40516b;font-size:17px;max-width:660px}
-.cards,.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:28px 0}
-.choice-card,.card,.stat{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 5px 20px #29529108}
-.choice-card{border-top:4px solid var(--blue)}
-.tag{color:var(--blue);font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}
-.choice-card h3{font-size:22px;margin:12px 0 8px}
-.choice-card p{color:var(--muted);font-size:14px;margin:0}
-.facts,.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}
-.fact{background:var(--pale);border:1px solid var(--line);border-radius:15px;padding:18px}
-.number,.value{font-size:30px;font-weight:850;letter-spacing:-.06em}
-.label,.fine{color:var(--muted);font-size:12px;margin-top:5px}
-.rules{border-block:1px solid var(--line);padding:20px 0;margin:28px 0}
-.rules p{color:#40516b;margin:7px 0}
-.primary,.secondary{border-radius:999px;padding:14px 22px;font-weight:800;border:1px solid transparent}
-.primary{background:var(--blue);color:#fff}.primary:hover{background:var(--dark)}
-.secondary{background:#fff;color:var(--blue);border-color:var(--line)}
-.hidden{display:none!important}
-.game-head,.chart-top{display:flex;justify-content:space-between;align-items:center;gap:14px}
-.round-tag{font-size:12px;color:var(--muted);white-space:nowrap}
-.progress{height:6px;background:#e3ebf7;border-radius:10px;overflow:hidden;margin:18px 0 24px}
-.progress-fill{height:100%;width:0;background:var(--blue)}
-.balance-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.balance{font-size:clamp(36px,6vw,58px);font-weight:850;letter-spacing:-.07em;margin:8px 0 22px;overflow-wrap:anywhere}
-.section-label{display:block;font-size:13px;font-weight:800;margin:20px 0 10px}
-.side-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.side-button{padding:13px 8px;border:1px solid var(--line);background:white;border-radius:12px;font-weight:800;color:var(--text)}
-.side-button.selected{border-color:var(--blue);background:var(--pale);color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue)}
-.bet-row{display:flex;justify-content:space-between;align-items:center;margin:12px 0}
-.bet-amount{font-size:23px;font-weight:850}.percent{color:var(--blue);font-weight:850}
-input[type=range]{width:100%;accent-color:var(--blue)}
-.range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
-.coin-area{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:320px}
-.coin{width:116px;height:116px;border-radius:50%;display:grid;place-items:center;border:6px solid #b8cff7;background:linear-gradient(145deg,#fff,#dce9ff);color:var(--dark);font-size:17px;font-weight:950;box-shadow:0 8px 24px #2864dc1f;margin-bottom:25px}
-.coin.flip{animation:flip .55s ease-in-out}
-@keyframes flip{50%{transform:rotateY(540deg) scale(1.08)}100%{transform:rotateY(1080deg)}}
-.coin-result{font-size:20px;font-weight:850}.result-detail{color:var(--muted);font-size:13px;min-height:22px}
-.chart-card{margin-top:14px}.chart-title{font-weight:850}
-.legend{font-size:12px;color:var(--muted)}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
-canvas{display:block;width:100%;height:220px}
-.action-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:18px}
-details{border-top:1px solid var(--line);padding-top:15px;margin-top:18px;font-size:13px;color:var(--muted)}
-summary{cursor:pointer;color:var(--text);font-weight:750}
-table{border-collapse:collapse;width:100%;margin-top:12px;font-size:12px}
-th,td{text-align:right;border-bottom:1px solid var(--line);padding:9px 5px;white-space:nowrap}
-th:first-child,td:first-child{text-align:left}
-.stat .value{font-size:clamp(23px,4vw,34px);overflow-wrap:anywhere}
-.positive{color:var(--green)!important}.negative{color:var(--red)!important}
-.personality{padding:25px;margin-top:22px;background:var(--pale);border:1px solid #cbdcf9;border-radius:18px}
-.personality p{color:#40516b}
-.formula{font-size:clamp(22px,4vw,34px);font-weight:850;letter-spacing:-.04em;margin:20px 0}
-footer{border-top:1px solid var(--line);padding:22px 0 32px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between}
-@media(max-width:680px){
-main{padding-top:35px}.cards,.grid,.result-grid{grid-template-columns:1fr}
-.facts{grid-template-columns:1fr;gap:8px}
-.fact{display:flex;justify-content:space-between;align-items:center;padding:14px 17px}
-.fact .label{margin:0;text-align:right}.card,.choice-card{padding:18px}
-.coin-area{min-height:240px}footer{flex-direction:column;gap:8px}
-}
-@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f9ff">
+  <title>Investment Personality — Abhay Bhatia</title>
+  <meta name="description" content="Discover your investing style in a 20-round risk and decision-making experiment.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://abhaybhatia.com/coin/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="How Do You Take Risk? — Investment Personality">
+  <meta property="og:description" content="A short investing simulation about risk, position sizing and compounding.">
+  <meta property="og:url" content="https://abhaybhatia.com/coin/">
+  <meta name="twitter:card" content="summary">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VXQMT8LWCF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VXQMT8LWCF');
+  </script>
+
+  <style>
+    :root {
+      --bg:#f5f8fd; --surface:#fff; --surface-blue:#edf4ff;
+      --text:#17243a; --muted:#68778d; --line:#dce6f3;
+      --blue:#2864dc; --blue-dark:#1949ac; --green:#167b59;
+      --red:#c24150; --radius:18px;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; background:var(--bg); color:var(--text);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    button,input { font:inherit; }
+    button { cursor:pointer; }
+    .wrap { width:min(940px,calc(100% - 36px)); margin:0 auto; }
+    header {
+      min-height:70px; display:flex; align-items:center;
+      justify-content:space-between; border-bottom:1px solid var(--line);
+      font-size:12px; letter-spacing:.04em;
+    }
+    .brand { font-weight:850; }
+    .top-note { color:var(--muted); }
+    main { padding:52px 0 78px; }
+    .eyebrow {
+      color:var(--blue); font-size:12px; font-weight:850;
+      letter-spacing:.13em; text-transform:uppercase;
+    }
+    h1 {
+      font-size:clamp(43px,8.7vw,88px); line-height:.96;
+      letter-spacing:-.07em; margin:20px 0 24px;
+    }
+    h2 {
+      font-size:clamp(27px,5vw,40px); letter-spacing:-.055em;
+      line-height:1.05; margin:0 0 14px;
+    }
+    p { line-height:1.65; }
+    .intro { color:#40516b; font-size:17px; max-width:660px; }
+    .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin:30px 0; }
+    .choice-card,.card,.stat {
+      background:var(--surface); border:1px solid var(--line);
+      border-radius:var(--radius); padding:23px;
+      box-shadow:0 5px 20px rgba(41,82,145,.035);
+    }
+    .choice-card { border-top:4px solid var(--blue); }
+    .choice-card .tag {
+      color:var(--blue); font-size:11px; font-weight:850;
+      letter-spacing:.1em; text-transform:uppercase;
+    }
+    .choice-card h3 { margin:12px 0 8px; font-size:22px; letter-spacing:-.04em; }
+    .choice-card p { margin:0; color:var(--muted); font-size:14px; }
+    .facts { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:30px 0; }
+    .fact { background:var(--surface-blue); border:1px solid var(--line); border-radius:15px; padding:18px; }
+    .number { font-size:30px; font-weight:850; letter-spacing:-.06em; }
+    .label { color:var(--muted); font-size:12px; margin-top:5px; }
+    .rules { border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:20px 0; margin:28px 0; }
+    .rules p { color:#40516b; margin:7px 0; }
+    .primary,.secondary {
+      border-radius:999px; padding:14px 22px; font-weight:800;
+      transition:transform .15s ease,background .15s ease;
+      border:1px solid transparent;
+    }
+    .primary { background:var(--blue); color:white; }
+    .primary:hover { background:var(--blue-dark); transform:translateY(-1px); }
+    .secondary { background:white; color:var(--blue); border-color:var(--line); }
+    .secondary:hover { background:var(--surface-blue); }
+    button:disabled { opacity:.45; cursor:not-allowed; transform:none!important; }
+    .fine { color:var(--muted); font-size:12px; }
+    .hidden { display:none!important; }
+    .game-head { display:flex; justify-content:space-between; align-items:end; gap:16px; margin-bottom:20px; }
+    .round-tag { color:var(--muted); font-size:12px; white-space:nowrap; }
+    .progress { height:6px; background:#e3ebf7; border-radius:10px; overflow:hidden; margin:18px 0 24px; }
+    .progress-fill { height:100%; width:0; background:var(--blue); transition:width .25s ease; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .balance-label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .balance { font-size:clamp(36px,6vw,58px); font-weight:850; letter-spacing:-.07em; margin:7px 0 22px; overflow-wrap:anywhere; }
+    .section-label { display:block; font-size:13px; font-weight:800; margin:20px 0 10px; }
+    .bet-row { display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin:12px 0; }
+    .bet-amount { font-size:23px; font-weight:850; letter-spacing:-.04em; }
+    .percent { color:var(--blue); font-weight:850; }
+    input[type=range] { width:100%; accent-color:var(--blue); }
+    .range-labels { display:flex; justify-content:space-between; color:var(--muted); font-size:11px; }
+    .side-options { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .side-button {
+      border:1px solid var(--line); background:white; color:var(--text);
+      padding:13px 10px; border-radius:13px; font-weight:800;
+    }
+    .side-button.selected {
+      border-color:var(--blue); background:var(--surface-blue); color:var(--blue);
+      box-shadow:inset 0 0 0 1px var(--blue);
+    }
+    .coin-area { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height:330px; }
+    .coin {
+      width:116px; height:116px; border-radius:50%; display:grid; place-items:center;
+      border:6px solid #b8cff7; background:linear-gradient(145deg,#fff,#dce9ff);
+      color:var(--blue-dark); font-size:17px; font-weight:950; letter-spacing:.06em;
+      box-shadow:0 8px 24px rgba(40,100,220,.12); margin-bottom:25px;
+    }
+    .coin.flip { animation:flip .55s ease-in-out; }
+    @keyframes flip {
+      0% { transform:rotateY(0); }
+      50% { transform:rotateY(540deg) scale(1.08); }
+      100% { transform:rotateY(1080deg); }
+    }
+    .coin-result { font-size:20px; font-weight:850; }
+    .result-detail { color:var(--muted); min-height:22px; font-size:13px; }
+    .chart-card { margin-top:14px; }
+    .chart-top { display:flex; justify-content:space-between; gap:16px; align-items:center; margin-bottom:14px; }
+    .chart-title { font-weight:850; }
+    .legend { display:flex; gap:14px; flex-wrap:wrap; color:var(--muted); font-size:12px; }
+    .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px; }
+    canvas { display:block; width:100%; height:220px; }
+    .action-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:18px; }
+    .action-row .fine { margin-left:auto; }
+    details { border-top:1px solid var(--line); padding-top:15px; margin-top:18px; color:var(--muted); font-size:13px; }
+    summary { cursor:pointer; color:var(--text); font-weight:750; }
+    table { border-collapse:collapse; width:100%; margin-top:12px; font-size:12px; }
+    th,td { text-align:right; border-bottom:1px solid var(--line); padding:9px 5px; white-space:nowrap; }
+    th:first-child,td:first-child { text-align:left; }
+    .result-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:25px 0; }
+    .stat .value { font-size:clamp(23px,4vw,34px); font-weight:850; letter-spacing:-.06em; overflow-wrap:anywhere; }
+    .stat .label { font-size:12px; color:var(--muted); }
+    .positive { color:var(--green)!important; }
+    .negative { color:var(--red)!important; }
+    .personality { padding:26px; margin-top:22px; background:var(--surface-blue); border:1px solid #cbdcf9; border-radius:var(--radius); }
+    .personality p { color:#40516b; }
+    .formula { font-size:clamp(22px,4vw,34px); font-weight:850; letter-spacing:-.04em; margin:20px 0; }
+    footer {
+      border-top:1px solid var(--line); padding:22px 0 32px; color:var(--muted);
+      font-size:12px; display:flex; justify-content:space-between; gap:12px;
+    }
+    @media(max-width:680px) {
+      main { padding-top:36px; }
+      .cards,.grid,.result-grid { grid-template-columns:1fr; }
+      .facts { grid-template-columns:1fr; gap:8px; }
+      .fact { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 17px; }
+      .fact .label { text-align:right; margin:0; }
+      .card,.choice-card { padding:19px; }
+      .coin-area { min-height:245px; }
+      .action-row .fine { width:100%; margin-left:0; }
+      footer { flex-direction:column; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
+    }
+  </style>
 </head>
+
 <body>
-<header class="wrap">
-  <div>ABHAY BHATIA <span style="color:var(--blue)">/</span> EXPERIMENTS</div>
-  <div style="color:var(--muted)">INVESTING · DECISION STYLE</div>
-</header>
+  <header class="wrap">
+    <div class="brand">ABHAY BHATIA <span style="color:var(--blue)">/</span> EXPERIMENTS</div>
+    <div class="top-note">INVESTING · DECISION STYLE</div>
+  </header>
 
-<main class="wrap">
-<section id="intro">
-  <div class="eyebrow">Discover your investing style</div>
-  <h1>HOW DO YOU<br>TAKE RISK?</h1>
-  <p class="intro">In investing, you face two broad choices: aim to get the outcome right more often by risking a smaller amount each time, or take larger positions that can produce bigger gains and losses.</p>
+  <main class="wrap">
+    <section id="intro">
+      <div class="eyebrow">Discover your investing style</div>
+      <h1>HOW DO YOU<br>TAKE RISK?</h1>
+      <p class="intro">In investing, you face two broad choices: aim to get the outcome right more often by risking a smaller amount each time, or take larger positions that can produce bigger gains and losses.</p>
 
-  <div class="cards">
-    <div class="choice-card">
-      <div class="tag">Style A · Smaller stakes</div>
-      <h3>Win more often.</h3>
-      <p>Risk a smaller share of your portfolio each time. This limits the impact of individual mistakes.</p>
-    </div>
-    <div class="choice-card">
-      <div class="tag">Style B · Larger stakes</div>
-      <h3>Make each decision count.</h3>
-      <p>Commit more of your portfolio to each view. Correct calls have more impact, but incorrect calls cost more.</p>
-    </div>
-  </div>
-
-  <div class="facts">
-    <div class="fact"><div class="number">$100</div><div class="label">Starting portfolio</div></div>
-    <div class="fact"><div class="number">20</div><div class="label">Rounds</div></div>
-    <div class="fact"><div class="number">60 / 40</div><div class="label">Heads / Tails probability</div></div>
-  </div>
-
-  <div class="rules">
-    <div class="eyebrow">How it works</div>
-    <p><strong>1.</strong> Choose Heads or Tails each round.</p>
-    <p><strong>2.</strong> Choose how much to bet: 1% to 100% of your portfolio.</p>
-    <p><strong>3.</strong> A correct prediction earns your stake. An incorrect prediction loses it.</p>
-    <p><strong>4.</strong> After 20 rounds, discover your investing style.</p>
-  </div>
-  <p class="fine">Heads has a 60% probability; Tails has a 40% probability. This is an educational simulation, not financial advice or a validated psychological assessment.</p>
-  <button class="primary" id="startBtn">Start experiment ↗</button>
-</section>
-
-<section id="game" class="hidden">
-  <div class="game-head">
-    <div><div class="eyebrow">Your decisions</div><h2 style="margin-top:10px">Pick a side. Set your stake.</h2></div>
-    <div class="round-tag" id="roundTag">ROUND 1 OF 20</div>
-  </div>
-  <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
-
-  <div class="grid">
-    <div class="card">
-      <div class="balance-label">Your portfolio</div>
-      <div class="balance" id="balance">$100.00</div>
-      <span class="section-label">1. Choose your prediction</span>
-      <div class="side-options">
-        <button class="side-button selected" id="headsBtn" aria-pressed="true">Heads · 60%</button>
-        <button class="side-button" id="tailsBtn" aria-pressed="false">Tails · 40%</button>
+      <div class="cards">
+        <div class="choice-card">
+          <div class="tag">Style A · Smaller stakes</div>
+          <h3>Win more often.</h3>
+          <p>Choose the outcome you think is more likely and put a smaller share of your portfolio at risk. This limits the impact of each mistake.</p>
+        </div>
+        <div class="choice-card">
+          <div class="tag">Style B · Larger stakes</div>
+          <h3>Make each decision count.</h3>
+          <p>Commit a larger share of your portfolio to each view. Correct calls have more impact, but incorrect calls cost more.</p>
+        </div>
       </div>
-      <span class="section-label">2. Choose your stake</span>
-      <div class="bet-row"><div class="bet-amount" id="betAmount">$20.00</div><div class="percent" id="betPercent">20%</div></div>
-      <input id="stakeSlider" type="range" min="1" max="100" value="20" aria-label="Percentage of portfolio to bet">
-      <div class="range-labels"><span>1% · Smaller stake</span><span>100% · All in</span></div>
-      <p class="fine">Your dollar stake is calculated from your current portfolio each round.</p>
-      <div class="action-row"><button class="primary" id="flipBtn">Flip coin</button><span class="fine">Win: +stake · Lose: −stake</span></div>
-    </div>
-    <div class="card coin-area">
-      <div class="coin" id="coin">READY</div>
-      <div class="coin-result" id="coinResult">Make your first decision.</div>
-      <div class="result-detail" id="resultDetail">Choose a side and a stake.</div>
-    </div>
-  </div>
 
-  <div class="card chart-card">
-    <div class="chart-top"><div class="chart-title">Your portfolio over time</div><div class="legend"><span style="color:var(--blue)">● You</span> &nbsp; <span>● Reference</span></div></div>
-    <canvas id="chart" aria-label="Portfolio comparison chart"></canvas>
-  </div>
+      <div class="facts">
+        <div class="fact"><div class="number">$100</div><div class="label">Starting portfolio</div></div>
+        <div class="fact"><div class="number">20</div><div class="label">Rounds</div></div>
+        <div class="fact"><div class="number">60 / 40</div><div class="label">Heads / Tails probability</div></div>
+      </div>
 
-  <details>
-    <summary>View round-by-round results</summary>
-    <div style="overflow-x:auto"><table><thead><tr><th>Round</th><th>Your pick</th><th>Result</th><th>Stake</th><th>Your portfolio</th><th>Reference</th></tr></thead><tbody id="historyBody"></tbody></table></div>
-  </details>
-</section>
+      <div class="rules">
+        <div class="eyebrow">How the experiment works</div>
+        <p><strong>1.</strong> Choose Heads or Tails for each round.</p>
+        <p><strong>2.</strong> Choose how much of your current portfolio to bet, from 1% to 100%.</p>
+        <p><strong>3.</strong> A correct prediction earns an amount equal to your stake. An incorrect prediction loses your stake.</p>
+        <p><strong>4.</strong> After 20 rounds, see your results and an estimate of your decision-making style.</p>
+      </div>
+      <p class="fine">The coin is biased: Heads has a 60% probability and Tails has a 40% probability. This is a simplified simulation, not financial advice or a validated psychological assessment.</p>
+      <button class="primary" id="startBtn">Start experiment ↗</button>
+    </section>
 
-<section id="outcome" class="hidden">
-  <div class="eyebrow">Your results</div>
-  <h1>YOUR RISK<br>PROFILE.</h1>
-  <p class="intro">Your results reflect how you combined prediction choices with stake size in this simulation.</p>
+    <section id="game" class="hidden">
+      <div class="game-head">
+        <div><div class="eyebrow">Your decisions</div><h2 style="margin-top:10px">Pick a side. Set your stake.</h2></div>
+        <div class="round-tag" id="roundTag">ROUND 1 OF 20</div>
+      </div>
+      <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
 
-  <div class="result-grid">
-    <div class="stat"><div class="value" id="finalBalance">$0.00</div><div class="label">Final portfolio</div><div class="label" id="returnLabel"></div></div>
-    <div class="stat"><div class="value" id="referenceBalance">$0.00</div><div class="label">20% reference strategy</div><div class="label">Same coin outcomes</div></div>
-    <div class="stat"><div class="value" id="difference">$0.00</div><div class="label">Difference vs reference</div><div class="label" id="differenceLabel"></div></div>
-  </div>
+      <div class="grid">
+        <div class="card">
+          <div class="balance-label">Your portfolio</div>
+          <div class="balance" id="balance">$100.00</div>
 
-  <div class="personality">
-    <div class="eyebrow">Your investing personality</div>
-    <h2 id="personalityTitle">Your style</h2>
-    <p id="personalityText"></p>
-    <p class="fine" id="personalityStats"></p>
-  </div>
+          <span class="section-label">1. Choose your prediction</span>
+          <div class="side-options">
+            <button class="side-button selected" id="headsBtn" aria-pressed="true">Heads · 60%</button>
+            <button class="side-button" id="tailsBtn" aria-pressed="false">Tails · 40%</button>
+          </div>
 
-  <div class="card chart-card">
-    <div class="chart-top"><div class="chart-title">Portfolio comparison</div><div class="legend"><span style="color:var(--blue)">● You</span> &nbsp; <span>● Reference</span></div></div>
-    <canvas id="finalChart" aria-label="Final portfolio comparison"></canvas>
-  </div>
+          <span class="section-label">2. Choose your stake</span>
+          <div class="bet-row"><div class="bet-amount" id="betAmount">$20.00</div><div class="percent" id="betPercent">20%</div></div>
+          <input id="stakeSlider" type="range" min="1" max="100" step="1" value="20" aria-label="Percentage of portfolio to bet">
+          <div class="range-labels"><span>1% · Smaller stake</span><span>100% · All in</span></div>
+          <p class="fine">Your dollar stake is calculated from your current portfolio each round.</p>
+          <div class="action-row"><button class="primary" id="flipBtn">Flip coin</button><span class="fine">Win: +stake · Lose: −stake</span></div>
+        </div>
 
-  <p style="margin-top:22px"><button class="primary" id="revealBtn">Reveal the strategy ↗</button> <button class="secondary" id="againBtn">Play again</button></p>
+        <div class="card coin-area">
+          <div class="coin" id="coin">READY</div>
+          <div class="coin-result" id="coinResult">Make your first decision.</div>
+          <div class="result-detail" id="resultDetail">Choose a side and a stake.</div>
+        </div>
+      </div>
 
-  <div id="revealPanel" class="personality hidden">
-    <div class="eyebrow">The maths behind the reference</div>
-    <h2>The Kelly criterion.</h2>
-    <p>The reference strategy bets 20% of its current portfolio on Heads each round. With a 60% chance of winning and an even-money payout, the full Kelly fraction is:</p>
-    <div class="formula">60% − 40% = <span style="color:var(--blue)">20%</span></div>
-    <p>Kelly is designed to maximise expected long-run logarithmic growth when probabilities and payouts are known. It does not guarantee the highest balance over 20 rounds. Random outcomes can favour a different strategy.</p>
-    <p class="fine">This is an educational exercise, not a validated psychological assessment.</p>
-  </div>
-</section>
-</main>
+      <div class="card chart-card">
+        <div class="chart-top"><div class="chart-title">Your portfolio over time</div><div class="legend"><span><i class="dot" style="background:var(--blue)"></i>You</span><span><i class="dot" style="background:#aab7c9"></i>20% reference</span></div></div>
+        <canvas id="chart" aria-label="Chart of your portfolio and a reference strategy"></canvas>
+      </div>
 
-<footer class="wrap"><span>ABHAYBHATIA.COM</span><span>Risk · Decisions · Compounding</span></footer>
+      <details>
+        <summary>View round-by-round results</summary>
+        <div style="overflow-x:auto"><table><thead><tr><th>Round</th><th>Your pick</th><th>Result</th><th>Stake</th><th>Your portfolio</th><th>Reference</th></tr></thead><tbody id="historyBody"></tbody></table></div>
+      </details>
+    </section>
 
-<script>
-(() => {
-  const START=100, ROUNDS=20, P_HEADS=.60, KELLY=.20;
-  const $=id=>document.getElementById(id);
-  const money=n=>new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD',minimumFractionDigits:2,maximumFractionDigits:2}).format(Number.isFinite(n)?n:0);
-  let balance,reference,round,pick,history,referenceHistory,records,busy;
+    <section id="outcome" class="hidden">
+      <div class="eyebrow">Your results</div>
+      <h1>YOUR RISK<br>PROFILE.</h1>
+      <p class="intro">Your results reflect how you combined prediction choices with stake size in this simulation.</p>
 
-  function show(id){
-    ['intro','game','outcome'].forEach(name=>$(name).classList.add('hidden'));
-    $(id).classList.remove('hidden');
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
+      <div class="result-grid">
+        <div class="stat"><div class="value" id="finalBalance">$0.00</div><div class="label">Final portfolio</div><div class="label" id="returnLabel"></div></div>
+        <div class="stat"><div class="value" id="referenceBalance">$0.00</div><div class="label">20% reference strategy</div><div class="label">Same coin outcomes</div></div>
+        <div class="stat"><div class="value" id="difference">$0.00</div><div class="label">Difference vs reference</div><div class="label" id="differenceLabel"></div></div>
+      </div>
 
-  function setPick(side){
-    pick=side;
-    $('headsBtn').classList.toggle('selected',side==='Heads');
-    $('tailsBtn').classList.toggle('selected',side==='Tails');
-    $('headsBtn').setAttribute('aria-pressed',String(side==='Heads'));
-    $('tailsBtn').setAttribute('aria-pressed',String(side==='Tails'));
-  }
+      <div class="personality">
+        <div class="eyebrow">Your investing personality</div>
+        <h2 id="personalityTitle">Calculating your style…</h2>
+        <p id="personalityText"></p>
+        <p class="fine" id="personalityStats"></p>
+      </div>
 
-  function updateStake(){
-    const pct=Number($('stakeSlider').value);
-    $('betAmount').textContent=money(balance*pct/100);
-    $('betPercent').textContent=`${pct}%`;
-    $('flipBtn').disabled=busy||round>=ROUNDS||balance<=0;
-  }
+      <div class="card chart-card">
+        <div class="chart-top"><div class="chart-title">Portfolio comparison</div><div class="legend"><span><i class="dot" style="background:var(--blue)"></i>You</span><span><i class="dot" style="background:#aab7c9"></i>20% reference</span></div></div>
+        <canvas id="finalChart" aria-label="Final chart comparing your portfolio and reference"></canvas>
+      </div>
 
-  function reset(){
-    balance=START;reference=START;round=0;pick='Heads';busy=false;
-    history=[START];referenceHistory=[START];records=[];
-    $('stakeSlider').value=20;setPick('Heads');
-    $('balance').textContent=money(balance);
-    $('coin').textContent='READY';
-    $('coinResult').textContent='Make your first decision.';
-    $('resultDetail').textContent='Choose a side and a stake.';
-    $('progressFill').style.width='0%';
-    $('roundTag').textContent='ROUND 1 OF 20';
-    $('historyBody').innerHTML='';
-    $('revealPanel').classList.add('hidden');
-    $('revealBtn').classList.remove('hidden');
-    updateStake();show('game');
-    requestAnimationFrame(()=>draw($('chart'),history,referenceHistory));
-  }
+      <p style="margin-top:22px"><button class="primary" id="revealBtn">Reveal the strategy ↗</button> <button class="secondary" id="againBtn">Play again</button></p>
 
-  function draw(canvas,a,b){
-    if(!canvas||canvas.getBoundingClientRect().width<2)return;
-    const w=canvas.getBoundingClientRect().width,h=220,dpr=window.devicePixelRatio||1;
-    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
-    const ctx=canvas.getContext('2d');
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
-    const vals=[...a,...b];let min=Math.min(0,...vals),max=Math.max(START,...vals);
-    if(min===max)max=min+1;
-    const pad={l:44,r:8,t:12,b:25};
-    const x=i=>pad.l+i/ROUNDS*(w-pad.l-pad.r);
-    const y=v=>pad.t+(max-v)/(max-min)*(h-pad.t-pad.b);
-    ctx.font='11px system-ui';ctx.textAlign='right';ctx.fillStyle='#748198';
-    for(let i=0;i<=4;i++){
-      const v=min+(max-min)*i/4,yy=y(v);
-      ctx.strokeStyle='#e4ebf5';ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(w-pad.r,yy);ctx.stroke();
-      ctx.fillText(`$${Math.round(v)}`,pad.l-8,yy+4);
+      <div id="revealPanel" class="personality hidden">
+        <div class="eyebrow">The maths behind the reference</div>
+        <h2>The Kelly criterion.</h2>
+        <p>The reference strategy bets 20% of its current portfolio on Heads every round. With a 60% chance of winning and an even-money payout, the full Kelly fraction is:</p>
+        <div class="formula">60% − 40% = <span style="color:var(--blue)">20%</span></div>
+        <p>Kelly is designed to maximise expected long-run logarithmic growth when the probabilities and payouts are known. It does not guarantee the highest balance over just 20 rounds. A short run can favour a different strategy.</p>
+        <p class="fine">This exercise is educational. It does not establish a clinical or scientifically validated personality type, and the simulated coin probabilities are known in advance.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <span>ABHAYBHATIA.COM</span><span>Risk · Decisions · Compounding</span>
+    <span class="fine">Educational simulation only. Google Analytics measures site usage. Completed-game summaries may be emailed to the site owner.</span>
+  </footer>
+
+  <!-- Email integration: FormSubmit requires verification on first use. -->
+  <iframe name="emailResultFrame" title="Email submission" class="hidden" aria-hidden="true"></iframe>
+  <form id="resultEmailForm" action="https://formsubmit.co/public.abhaybhatia@gmail.com" method="POST" target="emailResultFrame" class="hidden">
+    <input type="hidden" name="_subject" value="Investment Personality — completed game">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="Game" value="Investment Personality">
+    <input type="hidden" name="Personality" id="emailPersonality">
+    <input type="hidden" name="Final portfolio (AUD)" id="emailFinalBalance">
+    <input type="hidden" name="Reference portfolio (AUD)" id="emailReferenceBalance">
+    <input type="hidden" name="Return" id="emailReturn">
+    <input type="hidden" name="Average stake" id="emailAverageStake">
+    <input type="hidden" name="Correct predictions" id="emailCorrect">
+    <input type="hidden" name="Rounds completed" id="emailRounds">
+    <input type="hidden" name="Round-by-round summary" id="emailRecords">
+    <input type="hidden" name="Source page" value="https://abhaybhatia.com/coin/">
+  </form>
+
+  <script>
+  (() => {
+    const START = 100, ROUNDS = 20, P_HEADS = 0.60, KELLY = 0.20;
+    const $ = id => document.getElementById(id);
+    const money = n => new Intl.NumberFormat('en-AU', {
+      style:'currency', currency:'AUD',
+      minimumFractionDigits:2, maximumFractionDigits:2
+    }).format(Number.isFinite(n) ? n : 0);
+
+    let balance, reference, round, pick, history, referenceHistory, records, busy;
+
+    function show(id) {
+      ['intro','game','outcome'].forEach(name => $(name).classList.add('hidden'));
+      $(id).classList.remove('hidden');
+      window.scrollTo({top:0,behavior:'smooth'});
     }
-    function line(data,color,width){
-      ctx.beginPath();data.forEach((v,i)=>i?ctx.lineTo(x(i),y(v)):ctx.moveTo(x(i),y(v)));
-      ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineJoin='round';ctx.lineCap='round';ctx.stroke();
+
+    function setPick(side) {
+      pick = side;
+      $('headsBtn').classList.toggle('selected',side === 'Heads');
+      $('tailsBtn').classList.toggle('selected',side === 'Tails');
+      $('headsBtn').setAttribute('aria-pressed',String(side === 'Heads'));
+      $('tailsBtn').setAttribute('aria-pressed',String(side === 'Tails'));
     }
-    line(b,'#aab7c9',2);line(a,'#2864dc',2.8);
-    ctx.textAlign='center';ctx.fillStyle='#748198';
-    ctx.fillText('Start',x(0),h-7);ctx.fillText('Round 10',x(10),h-7);ctx.fillText('Round 20',x(20),h-7);
-  }
 
-  function renderHistory(){
-    $('historyBody').innerHTML=records.map(r=>`
-      <tr><td>${r.round}</td><td>${r.pick}</td><td>${r.result}</td>
-      <td>${money(r.stake)}</td><td>${money(r.balance)}</td><td>${money(r.reference)}</td></tr>
-    `).join('');
-  }
-
-  function describePersonality(){
-    const avg=records.reduce((s,r)=>s+r.pct,0)/Math.max(records.length,1);
-    const large=records.filter(r=>r.pct>=40).length;
-    const small=records.filter(r=>r.pct<=20).length;
-    const heads=records.filter(r=>r.pick==='Heads').length;
-    const correct=records.filter(r=>r.correct).length;
-    let title,text;
-    if(avg<20){
-      title='The Cautious Allocator';
-      text='You tended to protect capital with smaller stakes. This limits the impact of individual losses, but also limits gains from correct predictions.';
-    }else if(avg<40){
-      title='The Measured Strategist';
-      text='You balanced exposure with some protection against losses. Your choices suggest a moderate approach to position sizing in this simulation.';
-    }else if(avg<70){
-      title='The Conviction Investor';
-      text='You gave individual decisions a substantial share of your portfolio. Correct calls can have a greater impact, but incorrect calls cost more.';
-    }else{
-      title='The High-Conviction Risk Taker';
-      text='You committed a large share of your portfolio to individual outcomes. This creates larger swings and leaves less capital after a major loss.';
+    function updateStake() {
+      const pct = Number($('stakeSlider').value);
+      $('betAmount').textContent = money(balance * pct / 100);
+      $('betPercent').textContent = `${pct}%`;
+      $('flipBtn').disabled = busy || round >= ROUNDS || balance <= 0;
     }
-    $('personalityTitle').textContent=title;
-    $('personalityText').textContent=text;
-    $('personalityStats').textContent=`Average stake: ${avg.toFixed(1)}% · Large stakes (40%+): ${large} rounds · Small stakes (20% or less): ${small} rounds · Heads chosen: ${heads}/20 · Correct predictions: ${correct}/20`;
-  }
 
-  function finish(){
-    $('finalBalance').textContent=money(balance);
-    $('referenceBalance').textContent=money(reference);
-    const ret=(balance/START-1)*100;
-    $('returnLabel').textContent=`${ret>=0?'+':''}${ret.toFixed(1)}% return`;
-    $('returnLabel').className=`label ${ret>=0?'positive':'negative'}`;
-    const diff=balance-reference;
-    $('difference').textContent=`${diff>=0?'+':'−'}${money(Math.abs(diff))}`;
-    $('difference').className=`value ${diff>=0?'positive':'negative'}`;
-    $('differenceLabel').textContent=diff>=0?'You finished ahead':'Reference finished ahead';
-    describePersonality();show('outcome');
-    requestAnimationFrame(()=>draw($('finalChart'),history,referenceHistory));
-  }
+    function reset() {
+      balance = START; reference = START; round = 0; pick = 'Heads'; busy = false;
+      history = [START]; referenceHistory = [START]; records = [];
+      $('stakeSlider').value = 20;
+      setPick('Heads');
+      $('balance').textContent = money(balance);
+      $('coin').textContent = 'READY';
+      $('coinResult').textContent = 'Make your first decision.';
+      $('resultDetail').textContent = 'Choose a side and a stake.';
+      $('progressFill').style.width = '0%';
+      $('roundTag').textContent = 'ROUND 1 OF 20';
+      $('historyBody').innerHTML = '';
+      $('revealPanel').classList.add('hidden');
+      $('revealBtn').classList.remove('hidden');
+      updateStake();
+      show('game');
+      requestAnimationFrame(() => draw($('chart'),history,referenceHistory));
+    }
 
-  function flip(){
-    if(busy||round>=ROUNDS||balance<=0)return;
-    busy=true;updateStake();
-    const pct=Number($('stakeSlider').value);
-    const stake=balance*pct/100;
-    const refStake=reference*KELLY;
-    const heads=Math.random()<P_HEADS;
-    const correct=(pick==='Heads'&&heads)||(pick==='Tails'&&!heads);
-    $('coin').classList.remove('flip');void $('coin').offsetWidth;$('coin').classList.add('flip');
-
-    setTimeout(()=>{
-      round++;
-      if(correct){
-        balance+=stake;
-        $('coinResult').textContent=`${heads?'Heads':'Tails'} — correct`;
-        $('resultDetail').textContent=`You gained ${money(stake)}.`;
-      }else{
-        balance-=stake;
-        $('coinResult').textContent=`${heads?'Heads':'Tails'} — incorrect`;
-        $('resultDetail').textContent=`You lost ${money(stake)}.`;
+    function draw(canvas,playerData,refData) {
+      if (!canvas || canvas.getBoundingClientRect().width < 2) return;
+      const w = canvas.getBoundingClientRect().width, h = 220;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(w*dpr); canvas.height = Math.round(h*dpr);
+      const ctx = canvas.getContext('2d');
+      ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+      const vals = [...playerData,...refData];
+      let min = Math.min(0,...vals), max = Math.max(START,...vals);
+      if (min === max) max = min + 1;
+      const pad = {l:44,r:8,t:12,b:25};
+      const x = i => pad.l + i/ROUNDS*(w-pad.l-pad.r);
+      const y = v => pad.t + (max-v)/(max-min)*(h-pad.t-pad.b);
+      ctx.font = '11px system-ui'; ctx.textAlign = 'right'; ctx.fillStyle = '#748198';
+      for (let i=0;i<=4;i++) {
+        const v = min+(max-min)*i/4, yy = y(v);
+        ctx.strokeStyle = '#e4ebf5'; ctx.beginPath();
+        ctx.moveTo(pad.l,yy); ctx.lineTo(w-pad.r,yy); ctx.stroke();
+        ctx.fillText(`$${Math.round(v)}`,pad.l-8,yy+4);
       }
-      // Reference strategy bets 20% on Heads using the same coin outcome.
-      if(heads)reference+=refStake;else reference-=refStake;
-      $('coin').textContent=heads?'HEADS':'TAILS';
-      $('balance').textContent=money(balance);
-      history.push(balance);referenceHistory.push(reference);
-      records.push({round,pick,result:heads?'Heads':'Tails',stake,pct,balance,reference,correct});
-      renderHistory();
-      $('progressFill').style.width=`${round/ROUNDS*100}%`;
-      $('roundTag').textContent=round>=ROUNDS?'20 ROUNDS COMPLETE':`ROUND ${round+1} OF ${ROUNDS}`;
-      draw($('chart'),history,referenceHistory);
-      busy=false;
-      if(round>=ROUNDS||balance<=0)finish();else updateStake();
-    },570);
-  }
+      function line(data,color,width) {
+        ctx.beginPath();
+        data.forEach((v,i) => i ? ctx.lineTo(x(i),y(v)) : ctx.moveTo(x(i),y(v)));
+        ctx.strokeStyle=color; ctx.lineWidth=width; ctx.lineJoin='round'; ctx.lineCap='round'; ctx.stroke();
+      }
+      line(refData,'#aab7c9',2);
+      line(playerData,'#2864dc',2.8);
+      ctx.textAlign='center'; ctx.fillStyle='#748198';
+      ctx.fillText('Start',x(0),h-7);
+      ctx.fillText('Round 10',x(10),h-7);
+      ctx.fillText('Round 20',x(20),h-7);
+    }
 
-  $('startBtn').addEventListener('click',reset);
-  $('headsBtn').addEventListener('click',()=>setPick('Heads'));
-  $('tailsBtn').addEventListener('click',()=>setPick('Tails'));
-  $('stakeSlider').addEventListener('input',updateStake);
-  $('flipBtn').addEventListener('click',flip);
-  $('againBtn').addEventListener('click',reset);
-  $('revealBtn').addEventListener('click',()=>{
-    $('revealPanel').classList.remove('hidden');
-    $('revealBtn').classList.add('hidden');
-    $('revealPanel').scrollIntoView({behavior:'smooth'});
-  });
-  window.addEventListener('resize',()=>{
-    if(!$('game').classList.contains('hidden'))draw($('chart'),history,referenceHistory);
-    if(!$('outcome').classList.contains('hidden'))draw($('finalChart'),history,referenceHistory);
-  });
-  balance=START;updateStake();
-})();
-</script>
+    function renderHistory() {
+      $('historyBody').innerHTML = records.map(r => `
+        <tr><td>${r.round}</td><td>${r.pick}</td><td>${r.result}</td>
+        <td>${money(r.stake)}</td><td>${money(r.balance)}</td><td>${money(r.reference)}</td></tr>
+      `).join('');
+    }
+
+    function describePersonality() {
+      const averageStake = records.reduce((s,r) => s+r.pct,0)/Math.max(records.length,1);
+      const large = records.filter(r => r.pct >= 40).length;
+      const small = records.filter(r => r.pct <= 20).length;
+      const heads = records.filter(r => r.pick === 'Heads').length;
+      const correct = records.filter(r => r.correct).length;
+      let title,text;
+      if (averageStake < 20) {
+        title='The Cautious Allocator';
+        text='You tended to protect your capital by using smaller stakes. This limits the impact of individual losses, although it also limits gains from correct predictions.';
+      } else if (averageStake < 40) {
+        title='The Measured Strategist';
+        text='You balanced meaningful exposure with some protection against losses. Your choices suggest a moderate approach to position sizing in this simulation.';
+      } else if (averageStake < 70) {
+        title='The Conviction Investor';
+        text='You frequently gave individual decisions a substantial share of your portfolio. This can amplify correct calls, but it also makes incorrect calls more costly.';
+      } else {
+        title='The High-Conviction Risk Taker';
+        text='You committed a large share of your portfolio to individual outcomes. This creates substantial swings in wealth and leaves less capital after a major loss.';
+      }
+      $('personalityTitle').textContent=title;
+      $('personalityText').textContent=text;
+      $('personalityStats').textContent=
+        `Average stake: ${averageStake.toFixed(1)}% · Large stakes (40%+): ${large} rounds · Small stakes (20% or less): ${small} rounds · Heads chosen: ${heads}/${records.length} · Correct predictions: ${correct}/${records.length}`;
+    }
+
+    function sendResultEmail(returnPct) {
+      const averageStake = records.reduce((s,r) => s+r.pct,0)/Math.max(records.length,1);
+      const correct = records.filter(r => r.correct).length;
+      $('emailPersonality').value=$('personalityTitle').textContent;
+      $('emailFinalBalance').value=balance.toFixed(2);
+      $('emailReferenceBalance').value=reference.toFixed(2);
+      $('emailReturn').value=`${returnPct >= 0 ? '+' : ''}${returnPct.toFixed(1)}%`;
+      $('emailAverageStake').value=`${averageStake.toFixed(1)}%`;
+      $('emailCorrect').value=`${correct}/${records.length}`;
+      $('emailRounds').value=records.length;
+      $('emailRecords').value=records.map(r =>
+        `Round ${r.round}: pick ${r.pick}; result ${r.result}; stake ${r.pct}%; portfolio ${r.balance.toFixed(2)} AUD; ${r.correct?'correct':'incorrect'}`
+      ).join('\n');
+
+      // The first submission requires verification from FormSubmit.
+      $('resultEmailForm').submit();
+    }
+
+    function finish() {
+      $('finalBalance').textContent=money(balance);
+      $('referenceBalance').textContent=money(reference);
+      const ret=(balance/START-1)*100;
+      $('returnLabel').textContent=`${ret>=0?'+':''}${ret.toFixed(1)}% return`;
+      $('returnLabel').className=`label ${ret>=0?'positive':'negative'}`;
+      const diff=balance-reference;
+      $('difference').textContent=`${diff>=0?'+':'−'}${money(Math.abs(diff))}`;
+      $('difference').className=`value ${diff>=0?'positive':'negative'}`;
+      $('differenceLabel').textContent=diff>=0?'You finished ahead':'Reference finished ahead';
+      describePersonality();
+      show('outcome');
+      sendResultEmail(ret);
+
+      if (typeof gtag === 'function') {
+        gtag('event','game_complete',{
+          personality:$('personalityTitle').textContent,
+          final_balance:Number(balance.toFixed(2)),
+          return_pct:Number(ret.toFixed(1)),
+          rounds_completed:round
+        });
+      }
+      requestAnimationFrame(() => draw($('finalChart'),history,referenceHistory));
+    }
+
+    function flip() {
+      if (busy || round>=ROUNDS || balance<=0) return;
+      busy=true; updateStake();
+      const pct=Number($('stakeSlider').value);
+      const stake=balance*pct/100;
+      const referenceStake=reference*KELLY;
+      const heads=Math.random()<P_HEADS;
+      const correct=(pick==='Heads' && heads)||(pick==='Tails' && !heads);
+      $('coin').classList.remove('flip'); void $('coin').offsetWidth; $('coin').classList.add('flip');
+
+      setTimeout(() => {
+        round++;
+        if (correct) {
+          balance+=stake;
+          $('coinResult').textContent=`${heads?'Heads':'Tails'} — correct`;
+          $('resultDetail').textContent=`You gained ${money(stake)}.`;
+        } else {
+          balance-=stake;
+          $('coinResult').textContent=`${heads?'Heads':'Tails'} — incorrect`;
+          $('resultDetail').textContent=`You lost ${money(stake)}.`;
+        }
+
+        // Reference strategy always bets 20% on Heads using the same outcome.
+        if (heads) reference+=referenceStake;
+        else reference-=referenceStake;
+
+        $('coin').textContent=heads?'HEADS':'TAILS';
+        $('balance').textContent=money(balance);
+        history.push(balance); referenceHistory.push(reference);
+        records.push({round,pick,result:heads?'Heads':'Tails',stake,pct,balance,reference,correct});
+
+        if (typeof gtag === 'function') {
+          gtag('event','round_completed',{
+            round_number:round,
+            prediction:pick,
+            outcome:heads?'Heads':'Tails',
+            correct:correct,
+            stake_pct:pct
+          });
+        }
+
+        renderHistory();
+        $('progressFill').style.width=`${round/ROUNDS*100}%`;
+        $('roundTag').textContent=round>=ROUNDS?'20 ROUNDS COMPLETE':`ROUND ${round+1} OF ${ROUNDS}`;
+        draw($('chart'),history,referenceHistory);
+        busy=false;
+        if (round>=ROUNDS || balance<=0) finish();
+        else updateStake();
+      },570);
+    }
+
+    $('startBtn').addEventListener('click',() => {
+      if (typeof gtag === 'function') gtag('event','game_start',{starting_balance:START,rounds:ROUNDS});
+      reset();
+    });
+    $('headsBtn').addEventListener('click',() => setPick('Heads'));
+    $('tailsBtn').addEventListener('click',() => setPick('Tails'));
+    $('stakeSlider').addEventListener('input',updateStake);
+    $('flipBtn').addEventListener('click',flip);
+    $('againBtn').addEventListener('click',reset);
+    $('revealBtn').addEventListener('click',() => {
+      $('revealPanel').classList.remove('hidden');
+      $('revealBtn').classList.add('hidden');
+      $('revealPanel').scrollIntoView({behavior:'smooth'});
+    });
+    window.addEventListener('resize',() => {
+      if (!$('game').classList.contains('hidden')) draw($('chart'),history,referenceHistory);
+      if (!$('outcome').classList.contains('hidden')) draw($('finalChart'),history,referenceHistory);
+    });
+    balance=START;
+    updateStake();
+  })();
+  </script>
 </body>
 </html>
