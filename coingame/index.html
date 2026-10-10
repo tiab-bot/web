@@ -1,822 +1,555 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A 20-round coin game exploring probability, bankroll risk and Kelly betting.">
-<title>Thought Lab — The Uneven Coin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How Much Would You Bet?</title>
+  <style>
+    :root {
+      --bg: #101010;
+      --panel: #191919;
+      --text: #f5f5f0;
+      --muted: #a4a49c;
+      --line: #343434;
+      --accent: #c7ff4f;
+    }
 
-<style>
-:root {
-  --bg: #0b1020;
-  --panel: #121a2e;
-  --text: #edf2ff;
-  --muted: #a6b1cb;
-  --line: #2b3856;
-  --accent: #8ef0c5;
-  --blue: #9bb8ff;
-  --red: #ff9eaa;
-  --gold: #f6d58a;
-}
+    * { box-sizing: border-box; }
 
-* { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
 
-body {
-  margin: 0;
-  background: radial-gradient(
-    ellipse at 15% 0%, #1b2b4c 0, transparent 42%
-  ), var(--bg);
-  color: var(--text);
-  font: 16px/1.55 system-ui, sans-serif;
-}
+    .wrap {
+      width: min(900px, calc(100% - 36px));
+      margin: auto;
+    }
 
-main {
-  max-width: 1120px;
-  margin: auto;
-  padding: 36px 20px 72px;
-}
+    header {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 800;
+    }
 
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: .16em;
-  font-size: .75rem;
-  color: var(--accent);
-  font-weight: 800;
-}
+    main { padding: 55px 0 80px; }
 
-h1 {
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  line-height: .98;
-  letter-spacing: -.055em;
-  margin: 12px 0 18px;
-  max-width: 850px;
-}
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
 
-h2 {
-  letter-spacing: -.025em;
-  margin: 0 0 12px;
-  font-size: 1.3rem;
-}
+    h1 {
+      font-size: clamp(48px, 10vw, 100px);
+      line-height: .92;
+      letter-spacing: -.07em;
+      margin: 22px 0;
+    }
 
-p {
-  color: var(--muted);
-  margin: 8px 0 14px;
-}
+    h2 {
+      font-size: clamp(28px, 5vw, 42px);
+      letter-spacing: -.05em;
+    }
 
-.lede {
-  font-size: 1.12rem;
-  max-width: 760px;
-}
+    p {
+      color: #d2d2cb;
+      line-height: 1.65;
+    }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1.15fr .85fr;
-  gap: 18px;
-  margin-top: 28px;
-}
+    .intro { max-width: 600px; font-size: 17px; }
 
-.panel {
-  background: linear-gradient(
-    160deg, rgba(24,34,58,.96), rgba(15,22,40,.96)
-  );
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 22px;
-  box-shadow: 0 18px 50px #0002;
-}
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 35px 0;
+    }
 
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin: 18px 0;
-}
+    .fact, .card, .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+    }
 
-.metric {
-  background: #0c1426;
-  border: 1px solid var(--line);
-  border-radius: 13px;
-  padding: 13px;
-}
+    .number {
+      font-size: 32px;
+      font-weight: 850;
+      letter-spacing: -.05em;
+    }
 
-.metric small {
-  display: block;
-  color: var(--muted);
-  font-size: .75rem;
-}
+    .label, .muted {
+      color: var(--muted);
+      font-size: 12px;
+    }
 
-.metric strong {
-  font-size: 1.4rem;
-  letter-spacing: -.03em;
-}
+    .rules {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 20px 0;
+      margin: 30px 0;
+    }
 
-.controls {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 15px 23px;
+      font: inherit;
+      font-weight: 850;
+      cursor: pointer;
+    }
 
-.field label {
-  display: block;
-  font-size: .82rem;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
+    .primary { background: var(--accent); color: #111; }
+    .secondary { background: #252525; color: white; border: 1px solid var(--line); }
+    button:disabled { opacity: .4; cursor: not-allowed; }
+    .hidden { display: none !important; }
 
-.field input,
-.field select {
-  width: 100%;
-  background: #0b1325;
-  color: var(--text);
-  border: 1px solid #394968;
-  border-radius: 10px;
-  padding: 12px;
-  font: inherit;
-}
+    .game-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+    }
 
-.btn {
-  border: 1px solid #415173;
-  background: #202c46;
-  color: var(--text);
-  padding: 11px 14px;
-  border-radius: 11px;
-  font: inherit;
-  font-weight: 750;
-  cursor: pointer;
-  transition: transform .12s, background .12s;
-}
+    .progress {
+      height: 5px;
+      background: #303030;
+      margin: 20px 0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
-.btn:hover {
-  transform: translateY(-1px);
-  background: #2a3959;
-}
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: var(--accent);
+    }
 
-.btn.primary {
-  background: var(--accent);
-  color: #082018;
-  border-color: var(--accent);
-}
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
 
-.btn:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-  transform: none;
-}
+    .balance {
+      font-size: clamp(38px, 6vw, 60px);
+      font-weight: 850;
+      letter-spacing: -.06em;
+      margin: 8px 0 25px;
+    }
 
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 16px;
-}
+    .bet-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0 10px;
+    }
 
-.coin-wrap {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin: 20px 0;
-}
+    .bet-amount { font-size: 24px; font-weight: 800; }
+    .percent { color: var(--accent); font-weight: 800; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
 
-.coin {
-  width: 86px;
-  height: 86px;
-  flex: none;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: radial-gradient(
-    circle at 32% 25%, #fff0bd, #e7b85d 48%, #a66c24
-  );
-  color: #39220a;
-  font-size: 1.05rem;
-  font-weight: 900;
-  border: 4px solid #ffdf8d;
-  box-shadow: 0 8px 28px #0005;
-}
+    .coin-area {
+      min-height: 290px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
 
-.coin.tails {
-  background: radial-gradient(
-    circle at 32% 25%, #dbe7ff, #8aa5e6 48%, #405c9e
-  );
-  border-color: #c3d2ff;
-  color: #101c3a;
-}
+    .coin {
+      width: 115px;
+      height: 115px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 30% 25%, #fff0a2, #d4a72d);
+      border: 7px solid #f0d36a;
+      color: #392a00;
+      font-weight: 950;
+      box-shadow: 0 0 0 6px #5d4b1c;
+      margin-bottom: 25px;
+    }
 
-.status { font-weight: 800; }
-.positive { color: var(--accent); }
-.negative { color: var(--red); }
+    .flip { animation: flip .55s ease-in-out; }
 
-.subtle {
-  font-size: .85rem;
-  color: var(--muted);
-}
+    @keyframes flip {
+      50% { transform: rotateY(540deg) scale(1.08); }
+      100% { transform: rotateY(1080deg); }
+    }
 
-.progress {
-  height: 7px;
-  background: #0a1222;
-  border-radius: 99px;
-  overflow: hidden;
-  margin: 10px 0 16px;
-}
+    .chart-card { margin-top: 14px; }
+    .chart-heading { display: flex; justify-content: space-between; gap: 12px; }
+    canvas { width: 100%; height: 220px; display: block; }
+    .legend { color: var(--muted); font-size: 12px; }
+    .accent { color: var(--accent); }
+    .grey { color: #aaa; }
 
-.progress span {
-  display: block;
-  height: 100%;
-  width: 0;
-  background: var(--accent);
-  transition: width .2s;
-}
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 25px 0;
+    }
 
-.history {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: .9rem;
-  margin-top: 12px;
-}
+    .stat .number { font-size: clamp(23px, 4vw, 34px); overflow-wrap: anywhere; }
+    .positive { color: var(--accent); }
+    .negative { color: #ff7777; }
 
-.history th,
-.history td {
-  text-align: left;
-  padding: 10px 7px;
-  border-bottom: 1px solid var(--line);
-}
+    .reveal {
+      margin-top: 25px;
+      padding: 25px;
+      background: #171d10;
+      border: 1px solid #4b5f26;
+      border-radius: 16px;
+    }
 
-.history th {
-  font-size: .75rem;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  color: var(--muted);
-}
+    .formula {
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 850;
+      letter-spacing: -.04em;
+      margin: 25px 0;
+    }
 
-.history td:last-child,
-.history th:last-child {
-  text-align: right;
-}
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 22px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
 
-.history-wrap { overflow-x: auto; }
+    @media (max-width: 650px) {
+      main { padding-top: 35px; }
+      .facts, .grid, .result-grid { grid-template-columns: 1fr; }
+      .fact { display: flex; justify-content: space-between; align-items: center; }
+      .fact .label { text-align: right; }
+      .card { padding: 18px; }
+    }
 
-.pill {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 99px;
-  font-size: .75rem;
-  font-weight: 800;
-  background: #25344d;
-  color: var(--blue);
-}
-
-.pill.win {
-  background: #153b32;
-  color: var(--accent);
-}
-
-.pill.loss {
-  background: #482832;
-  color: var(--red);
-}
-
-.formula {
-  font-family: ui-monospace, monospace;
-  background: #0a1222;
-  border: 1px solid var(--line);
-  padding: 12px;
-  border-radius: 10px;
-  color: #dce7ff;
-  overflow-wrap: anywhere;
-}
-
-.wide { margin-top: 18px; }
-
-.bars {
-  display: grid;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.barrow {
-  display: grid;
-  grid-template-columns: 110px 1fr 55px;
-  gap: 10px;
-  align-items: center;
-  font-size: .86rem;
-}
-
-.bar {
-  height: 10px;
-  background: #0a1222;
-  border-radius: 99px;
-  overflow: hidden;
-}
-
-.bar span {
-  display: block;
-  height: 100%;
-  background: var(--blue);
-}
-
-.barrow:first-child .bar span {
-  background: var(--accent);
-}
-
-.notice {
-  border-left: 3px solid var(--gold);
-  padding: 8px 0 8px 13px;
-  color: var(--muted);
-  font-size: .88rem;
-}
-
-.footer {
-  margin-top: 30px;
-  color: var(--muted);
-  font-size: .8rem;
-}
-
-@media(max-width:780px) {
-  .grid { grid-template-columns: 1fr; }
-  .metrics {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .metric { padding: 10px; }
-  .metric strong { font-size: 1.15rem; }
-}
-
-@media(max-width:460px) {
-  main { padding: 26px 14px 52px; }
-  .panel { padding: 16px; }
-  .controls { grid-template-columns: 1fr; }
-  .metrics { gap: 6px; }
-  .metric strong { font-size: 1rem; }
-  .coin { width: 68px; height: 68px; }
-  .barrow { grid-template-columns: 88px 1fr 48px; }
-}
-</style>
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
-
 <body>
-<main>
-  <div class="eyebrow">
-    Thought Lab / Probability & decisions
-  </div>
+  <header class="wrap">ABHAY BHATIA / EXPERIMENTS</header>
 
-  <h1>The uneven coin.</h1>
+  <main class="wrap">
+    <section id="intro">
+      <div class="eyebrow">A 20-round experiment</div>
+      <h1>HOW MUCH<br>WOULD YOU BET?</h1>
 
-  <p class="lede">
-    You have $100. The coin favours Heads. Can you turn a
-    statistical edge into a larger bankroll without betting
-    yourself out of the game?
-  </p>
-
-  <div class="metrics">
-    <div class="metric">
-      <small>Heads probability</small>
-      <strong>60%</strong>
-    </div>
-    <div class="metric">
-      <small>Tails probability</small>
-      <strong>40%</strong>
-    </div>
-    <div class="metric">
-      <small>Maximum rounds</small>
-      <strong>20</strong>
-    </div>
-  </div>
-
-  <div class="grid">
-    <section class="panel">
-      <h2>Your next move</h2>
-      <p>
-        Choose a side and stake part of your current bankroll.
-        The result is randomly generated using the weighted odds.
+      <p class="intro">
+        You have $100 and 20 rounds to grow your portfolio.
+        The coin is biased in your favour. Your decision is how
+        much of your money to risk on each flip.
       </p>
 
-      <div class="coin-wrap">
-        <div id="coin" class="coin">READY</div>
+      <div class="facts">
+        <div class="fact"><div class="number">$100</div><div class="label">Starting portfolio</div></div>
+        <div class="fact"><div class="number">20</div><div class="label">Rounds</div></div>
+        <div class="fact"><div class="number">60 / 40</div><div class="label">Heads / Tails probability</div></div>
+      </div>
+
+      <div class="rules">
+        <div class="eyebrow">The rules</div>
+        <p><strong>Heads wins.</strong> Heads has a 60% probability. Tails has a 40% probability.</p>
+        <p><strong>Always bet on Heads.</strong> You cannot change the side.</p>
+        <p><strong>Choose your stake.</strong> Set the percentage of your current portfolio to bet.</p>
+        <p><strong>Win:</strong> gain the amount bet. <strong>Lose:</strong> lose the amount bet.</p>
+      </div>
+
+      <p class="intro">
+        A reference strategy will use the same coin results and bet
+        20% of its portfolio each round. The comparison is revealed at the end.
+      </p>
+
+      <button class="primary" id="start">Start experiment ↗</button>
+      <p class="muted">A probability simulation. No real money is involved.</p>
+    </section>
+
+    <section id="game" class="hidden">
+      <div class="game-head">
         <div>
-          <div id="status" class="status">Round 1 is ready.</div>
-          <div id="resultText" class="subtle">
-            Set your stake, then flip.
+          <div class="eyebrow">Experiment in progress</div>
+          <h2>Choose your stake.</h2>
+        </div>
+        <div class="muted" id="roundTag">ROUND 1 OF 20</div>
+      </div>
+
+      <div class="progress"><div class="progress-fill" id="progress"></div></div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="label">Your portfolio</div>
+          <div class="balance" id="balance">$100.00</div>
+          <div class="label">Percentage of portfolio to bet</div>
+          <div class="bet-row">
+            <div class="bet-amount" id="betAmount">$20.00</div>
+            <div class="percent" id="betPercent">20%</div>
           </div>
+          <input id="stake" type="range" min="1" max="100" value="20" aria-label="Percentage of portfolio to bet">
+          <div class="muted">1% · Cautious <span style="float:right">100% · All in</span></div>
+          <p class="muted">Your stake is recalculated from your current portfolio before each round. Every bet is on Heads.</p>
+          <button class="primary" id="flipButton">Flip coin</button>
+        </div>
+
+        <div class="card coin-area">
+          <div class="coin" id="coin">HEADS</div>
+          <div id="coinResult"><strong>Ready when you are.</strong></div>
+          <p class="muted" id="detail">Set your stake, then flip.</p>
         </div>
       </div>
 
-      <div class="progress">
-        <span id="progress"></span>
-      </div>
-
-      <div class="subtle" id="roundLabel">
-        0 of 20 rounds played
-      </div>
-
-      <div class="controls" style="margin-top:18px">
-        <div class="field">
-          <label for="side">Your prediction</label>
-          <select id="side">
-            <option value="Heads">Heads (60% chance)</option>
-            <option value="Tails">Tails (40% chance)</option>
-          </select>
+      <div class="card chart-card">
+        <div class="chart-heading">
+          <strong>Portfolio over time</strong>
+          <div class="legend"><span class="accent">● You</span> &nbsp; <span class="grey">● Reference</span></div>
         </div>
-
-        <div class="field">
-          <label for="stakeMode">Stake input</label>
-          <select id="stakeMode">
-            <option value="percent">Percentage of bankroll</option>
-            <option value="dollars">Dollar amount</option>
-          </select>
-        </div>
-
-        <div class="field" style="grid-column:1/-1">
-          <label for="stake" id="stakeLabel">
-            Stake (% of bankroll)
-          </label>
-          <input
-            id="stake"
-            type="number"
-            min="0.1"
-            max="100"
-            step="0.1"
-            value="20"
-          >
-        </div>
+        <canvas id="chart"></canvas>
       </div>
 
-      <p class="subtle" id="stakePreview"></p>
-
-      <div class="actions">
-        <button id="flip" class="btn primary">Flip coin</button>
-        <button id="stop" class="btn">Stop and keep bankroll</button>
-        <button id="reset" class="btn">Reset experiment</button>
-      </div>
-
-      <p class="notice" style="margin-top:18px">
-        Rules: a correct prediction earns profit equal to your
-        stake. An incorrect prediction loses your stake.
-        Your original stake is returned on a win. You cannot
-        stake more than your current bankroll.
-      </p>
+      <details style="margin-top:18px">
+        <summary>View round-by-round results</summary>
+        <div style="overflow-x:auto">
+          <table id="history" style="width:100%;margin-top:12px;text-align:left;font-size:12px">
+            <thead><tr><th>Round</th><th>Flip</th><th>Stake</th><th>Your portfolio</th><th>Reference</th></tr></thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+        </div>
+      </details>
     </section>
 
-    <section class="panel">
-      <h2>Live bankroll</h2>
+    <section id="outcome" class="hidden">
+      <div class="eyebrow">Experiment complete</div>
+      <h1>YOUR FINAL<br>PORTFOLIO.</h1>
+      <p class="intro">Here is how your decisions performed against the reference strategy.</p>
 
-      <div class="metrics" style="grid-template-columns:1fr 1fr">
-        <div class="metric">
-          <small>Current bankroll</small>
-          <strong id="bankroll">$100.00</strong>
+      <div class="result-grid">
+        <div class="stat">
+          <div class="number" id="finalBalance">$0.00</div>
+          <div class="label">Your portfolio</div>
+          <p class="label" id="return">0% return</p>
         </div>
-        <div class="metric">
-          <small>Net result</small>
-          <strong id="net">$0.00</strong>
+        <div class="stat">
+          <div class="number" id="referenceBalance">$0.00</div>
+          <div class="label">Reference portfolio</div>
+          <p class="label">20% stake each round</p>
         </div>
-        <div class="metric">
-          <small>Win rate</small>
-          <strong id="winRate">—</strong>
-        </div>
-        <div class="metric">
-          <small>Largest stake</small>
-          <strong id="largest">$0.00</strong>
+        <div class="stat">
+          <div class="number" id="difference">$0.00</div>
+          <div class="label">Difference vs reference</div>
+          <p class="label" id="differenceLabel"></p>
         </div>
       </div>
 
-      <h2 style="margin-top:18px">The Kelly benchmark</h2>
-
-      <p>
-        For a 60% chance to win even-money bets, the full
-        Kelly fraction is:
-      </p>
-
-      <div class="formula">
-        f* = (bp − q) / b
-        = (1 × 0.60 − 0.40) / 1
-        = 20%
+      <div class="card chart-card">
+        <div class="chart-heading">
+          <strong>Portfolio comparison</strong>
+          <div class="legend"><span class="accent">● You</span> &nbsp; <span class="grey">● Reference</span></div>
+        </div>
+        <canvas id="finalChart"></canvas>
       </div>
 
       <p>
-        Kelly maximises long-run expected logarithmic wealth
-        under its assumptions. It does not maximise the chance
-        of winning every session, and it can produce substantial
-        drawdowns.
+        <button class="primary" id="revealButton">Reveal the strategy ↗</button>
+        <button class="secondary" id="again">Play again</button>
       </p>
 
-      <div class="bars">
-        <div class="barrow">
-          <span>Full Kelly</span>
-          <div class="bar"><span style="width:20%"></span></div>
-          <strong>20%</strong>
-        </div>
-        <div class="barrow">
-          <span>Half Kelly</span>
-          <div class="bar"><span style="width:10%"></span></div>
-          <strong>10%</strong>
-        </div>
-        <div class="barrow">
-          <span>Quarter Kelly</span>
-          <div class="bar"><span style="width:5%"></span></div>
-          <strong>5%</strong>
-        </div>
-      </div>
-
-      <p class="subtle">
-        Stake fractions are recalculated against the current
-        bankroll after every round.
-      </p>
-    </section>
-  </div>
-
-  <section class="panel wide">
-    <h2>Round-by-round ledger</h2>
-
-    <p>
-      Every flip is recorded so the final outcome can be
-      compared with the starting bankroll and betting choices.
-    </p>
-
-    <div class="history-wrap">
-      <table class="history">
-        <thead>
-          <tr>
-            <th>Round</th>
-            <th>Prediction</th>
-            <th>Outcome</th>
-            <th>Stake</th>
-            <th>Net P/L</th>
-            <th>Bankroll</th>
-          </tr>
-        </thead>
-        <tbody id="history">
-          <tr>
-            <td colspan="6" class="subtle">
-              No rounds played yet.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="panel wide">
-    <h2>What the odds imply</h2>
-
-    <div class="grid" style="margin-top:8px">
-      <div>
+      <div id="reveal" class="reveal hidden">
+        <div class="eyebrow">The strategy behind the benchmark</div>
+        <h2>The Kelly criterion.</h2>
         <p>
-          For every $1 staked on Heads, expected net profit is:
+          The reference strategy used the Kelly criterion, a formula for choosing
+          the fraction of a portfolio to wager when the probabilities and payouts are known.
+          Under this experiment's assumptions, the full Kelly stake is 20% of the current portfolio.
         </p>
-
         <div class="formula">
-          0.60 × $1 − 0.40 × $1 = +$0.20
+          Stake fraction = probability of win − probability of loss<br>
+          <span class="accent">20% = 60% − 40%</span>
         </div>
-
         <p>
-          That is a 20% expected return on the amount staked
-          per bet, before considering volatility.
+          A win earns the amount staked and a loss loses the amount staked.
+          With a 60% chance of winning, the Kelly fraction is 0.60 − 0.40 = 0.20.
+        </p>
+        <p>
+          Betting too little can limit growth. Betting too much increases the damage
+          caused by losses and can reduce long-term compound growth. Kelly maximises
+          expected long-run logarithmic growth under the model's assumptions.
+        </p>
+        <p>
+          <strong>Kelly does not guarantee the highest final balance in 20 rounds.</strong>
+          Random outcomes can make another strategy finish ahead. One short simulation
+          is not proof that a strategy is superior.
+        </p>
+        <p class="muted">
+          Assumptions: independent flips, known 60% Heads probability, even-money payouts,
+          and no fees or deposits.
         </p>
       </div>
+    </section>
+  </main>
 
-      <div>
-        <p>
-          Over 20 independent flips, the expected number
-          of Heads is:
-        </p>
+  <footer class="wrap">ABHAYBHATIA.COM · Probability · Risk · Compounding</footer>
 
-        <div class="formula">20 × 0.60 = 12 Heads</div>
+  <script>
+    (() => {
+      const START = 100, ROUNDS = 20, P = 0.60, KELLY = 0.20;
+      const $ = id => document.getElementById(id);
+      const money = n => new Intl.NumberFormat('en-AU', {
+        style: 'currency', currency: 'AUD',
+        minimumFractionDigits: 2, maximumFractionDigits: 2
+      }).format(Number.isFinite(n) ? n : 0);
 
-        <p>
-          This is an average across many simulated games.
-          Any single run can vary considerably.
-        </p>
-      </div>
-    </div>
+      let you, ref, round, youHistory, refHistory, records, busy;
 
-    <p class="notice">
-      This is an educational probability simulation, not a
-      prediction about financial markets or a guarantee of
-      profit. The 60/40 bias is assumed to be real and stable.
-    </p>
-  </section>
+      function show(id) {
+        ['intro', 'game', 'outcome'].forEach(x => $(x).classList.add('hidden'));
+        $(id).classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
 
-  <div class="footer">
-    THOUGHT LAB · An experiment in probability, risk and decisions.
-  </div>
-</main>
+      function reset() {
+        you = START; ref = START; round = 0; busy = false;
+        youHistory = [START]; refHistory = [START]; records = [];
+        $('stake').value = 20;
+        $('balance').textContent = money(you);
+        $('coin').textContent = 'HEADS';
+        $('coinResult').innerHTML = '<strong>Ready when you are.</strong>';
+        $('detail').textContent = 'Set your stake, then flip.';
+        $('progress').style.width = '0%';
+        $('roundTag').textContent = 'ROUND 1 OF 20';
+        $('historyBody').innerHTML = '';
+        $('reveal').classList.add('hidden');
+        $('revealButton').classList.remove('hidden');
+        updateStake();
+        show('game');
+        requestAnimationFrame(() => draw($('chart'), youHistory, refHistory));
+      }
 
-<script>
-(() => {
-  const START = 100;
-  const MAX_ROUNDS = 20;
-  const P_HEADS = 0.6;
+      function updateStake() {
+        const fraction = Number($('stake').value) / 100;
+        $('betAmount').textContent = money(you * fraction);
+        $('betPercent').textContent = `${$('stake').value}%`;
+        $('flipButton').disabled = busy || round >= ROUNDS || you <= 0;
+      }
 
-  let bankroll = START;
-  let rounds = [];
-  let stopped = false;
+      function draw(canvas, a, b) {
+        if (!canvas || canvas.getBoundingClientRect().width < 2) return;
+        const w = canvas.getBoundingClientRect().width, h = 220;
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        const ctx = canvas.getContext('2d');
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, w, h);
+        const vals = [...a, ...b];
+        let min = Math.min(0, ...vals), max = Math.max(START, ...vals);
+        if (max === min) max = min + 1;
+        const pad = { l: 43, r: 8, t: 12, b: 25 };
+        const x = i => pad.l + i / ROUNDS * (w - pad.l - pad.r);
+        const y = v => pad.t + (max - v) / (max - min) * (h - pad.t - pad.b);
 
-  const $ = id => document.getElementById(id);
+        ctx.font = '11px system-ui'; ctx.textAlign = 'right';
+        ctx.fillStyle = '#999';
+        for (let i = 0; i <= 4; i++) {
+          const v = min + (max - min) * i / 4, yy = y(v);
+          ctx.strokeStyle = '#303030'; ctx.beginPath();
+          ctx.moveTo(pad.l, yy); ctx.lineTo(w - pad.r, yy); ctx.stroke();
+          ctx.fillText(`$${Math.round(v)}`, pad.l - 7, yy + 4);
+        }
 
-  const money = n =>
-    n.toLocaleString('en-AU', {
-      style: 'currency',
-      currency: 'AUD'
-    });
+        function line(data, color, width) {
+          ctx.beginPath();
+          data.forEach((v, i) => i ? ctx.lineTo(x(i), y(v)) : ctx.moveTo(x(i), y(v)));
+          ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke();
+        }
+        line(b, '#8c8c8c', 2);
+        line(a, '#c7ff4f', 2.8);
+        ctx.textAlign = 'center'; ctx.fillStyle = '#999';
+        ctx.fillText('Start', x(0), h - 7);
+        ctx.fillText('Round 10', x(10), h - 7);
+        ctx.fillText('Round 20', x(20), h - 7);
+      }
 
-  const stakeMode = $('stakeMode');
-  const stakeInput = $('stake');
-  const sideInput = $('side');
+      function finish() {
+        $('finalBalance').textContent = money(you);
+        $('referenceBalance').textContent = money(ref);
+        const ret = (you / START - 1) * 100;
+        $('return').textContent = `${ret >= 0 ? '+' : ''}${ret.toFixed(1)}% return`;
+        $('return').className = `label ${ret >= 0 ? 'positive' : 'negative'}`;
+        const diff = you - ref;
+        $('difference').textContent = `${diff >= 0 ? '+' : '−'}${money(Math.abs(diff))}`;
+        $('difference').className = `number ${diff >= 0 ? 'positive' : 'negative'}`;
+        $('differenceLabel').textContent = diff >= 0 ? 'You finished ahead' : 'Reference finished ahead';
+        show('outcome');
+        requestAnimationFrame(() => draw($('finalChart'), youHistory, refHistory));
+      }
 
-  function getStake() {
-    const raw = Math.max(0, Number(stakeInput.value) || 0);
+      function flip() {
+        if (busy || round >= ROUNDS || you <= 0) return;
+        busy = true; updateStake();
+        const stake = you * Number($('stake').value) / 100;
+        const refStake = ref * KELLY;
+        const heads = Math.random() < P;
+        $('coin').classList.remove('flip');
+        void $('coin').offsetWidth;
+        $('coin').classList.add('flip');
 
-    if (stakeMode.value === 'percent') {
-      return bankroll * Math.min(100, raw) / 100;
-    }
+        setTimeout(() => {
+          round++;
+          if (heads) {
+            you += stake; ref += refStake;
+            $('coinResult').innerHTML = `<strong>Heads — you win ${money(stake)}</strong>`;
+            $('detail').textContent = 'Your stake earned an equal amount.';
+          } else {
+            you -= stake; ref -= refStake;
+            $('coinResult').innerHTML = `<strong>Tails — you lose ${money(stake)}</strong>`;
+            $('detail').textContent = 'Your stake was lost.';
+          }
 
-    return Math.min(bankroll, raw);
-  }
+          $('coin').textContent = heads ? 'HEADS' : 'TAILS';
+          $('balance').textContent = money(you);
+          youHistory.push(you); refHistory.push(ref);
+          records.push({ round, heads, stake, you, ref });
+          $('historyBody').innerHTML = records.map(r =>
+            `<tr><td>${r.round}</td><td>${r.heads ? 'Heads' : 'Tails'}</td><td>${money(r.stake)}</td><td>${money(r.you)}</td><td>${money(r.ref)}</td></tr>`
+          ).join('');
+          $('progress').style.width = `${round / ROUNDS * 100}%`;
+          $('roundTag').textContent = round >= ROUNDS ? '20 ROUNDS COMPLETE' : `ROUND ${round + 1} OF ${ROUNDS}`;
+          draw($('chart'), youHistory, refHistory);
+          busy = false;
+          if (round >= ROUNDS || you <= 0) finish();
+          else updateStake();
+        }, 570);
+      }
 
-  function render() {
-    $('bankroll').textContent = money(bankroll);
-
-    $('net').textContent =
-      (bankroll >= START ? '+' : '') +
-      money(bankroll - START);
-
-    $('net').className =
-      bankroll >= START ? 'positive' : 'negative';
-
-    const wins = rounds.filter(r => r.win).length;
-
-    $('winRate').textContent = rounds.length
-      ? `${Math.round(wins / rounds.length * 100)}%`
-      : '—';
-
-    $('largest').textContent = money(
-      rounds.reduce((m, r) => Math.max(m, r.stake), 0)
-    );
-
-    $('roundLabel').textContent =
-      `${rounds.length} of ${MAX_ROUNDS} rounds played`;
-
-    $('progress').style.width =
-      `${rounds.length / MAX_ROUNDS * 100}%`;
-
-    $('history').innerHTML = rounds.length
-      ? rounds.map(r => `
-          <tr>
-            <td>${r.n}</td>
-            <td>${r.prediction}</td>
-            <td>
-              <span class="pill ${r.win ? 'win' : 'loss'}">
-                ${r.outcome}
-              </span>
-            </td>
-            <td>${money(r.stake)}</td>
-            <td class="${r.pnl >= 0 ? 'positive' : 'negative'}">
-              ${r.pnl >= 0 ? '+' : ''}${money(r.pnl)}
-            </td>
-            <td>${money(r.bankroll)}</td>
-          </tr>
-        `).reverse().join('')
-      : `
-          <tr>
-            <td colspan="6" class="subtle">
-              No rounds played yet.
-            </td>
-          </tr>
-        `;
-
-    const stake = getStake();
-
-    $('stakePreview').textContent =
-      `Stake: ${money(stake)} · ` +
-      `${bankroll ? (stake / bankroll * 100).toFixed(1) : '0.0'}% of bankroll`;
-
-    const done =
-      stopped ||
-      rounds.length >= MAX_ROUNDS ||
-      bankroll <= 0;
-
-    $('flip').disabled = done || stake <= 0 || stake > bankroll;
-    $('stop').disabled = done;
-    $('stake').disabled = done;
-    $('side').disabled = done;
-    $('stakeMode').disabled = done;
-
-    if (done && !stopped) {
-      $('status').textContent =
-        bankroll <= 0 ? 'Bankroll depleted.' : 'Experiment complete.';
-
-      $('resultText').textContent =
-        bankroll <= 0
-          ? 'No bankroll remains to wager.'
-          : `Final bankroll: ${money(bankroll)} after ${rounds.length} rounds.`;
-    }
-  }
-
-  function updateStakeLabel() {
-    $('stakeLabel').textContent =
-      stakeMode.value === 'percent'
-        ? 'Stake (% of bankroll)'
-        : 'Stake (AUD)';
-
-    stakeInput.max =
-      stakeMode.value === 'percent' ? 100 : bankroll;
-
-    stakeInput.value =
-      stakeMode.value === 'percent'
-        ? 20
-        : Math.min(20, bankroll).toFixed(2);
-
-    render();
-  }
-
-  $('flip').addEventListener('click', () => {
-    const stake = getStake();
-
-    if (
-      !stake ||
-      stake > bankroll ||
-      rounds.length >= MAX_ROUNDS ||
-      stopped
-    ) return;
-
-    const outcome =
-      Math.random() < P_HEADS ? 'Heads' : 'Tails';
-
-    const prediction = sideInput.value;
-    const win = outcome === prediction;
-    const pnl = win ? stake : -stake;
-
-    bankroll = Math.max(0, bankroll + pnl);
-
-    rounds.push({
-      n: rounds.length + 1,
-      prediction,
-      outcome,
-      stake,
-      pnl,
-      bankroll,
-      win
-    });
-
-    $('coin').textContent = outcome.toUpperCase();
-
-    $('coin').className =
-      'coin' + (outcome === 'Tails' ? ' tails' : '');
-
-    $('status').textContent =
-      win ? 'Correct prediction.' : 'Incorrect prediction.';
-
-    $('status').className =
-      'status ' + (win ? 'positive' : 'negative');
-
-    $('resultText').textContent =
-      `${outcome} appeared. ` +
-      `${win ? 'You gained ' : 'You lost '}${money(Math.abs(pnl))}.`;
-
-    if (stakeMode.value === 'dollars') {
-      stakeInput.max = bankroll;
-    }
-
-    render();
-  });
-
-  $('stop').addEventListener('click', () => {
-    stopped = true;
-
-    $('status').textContent = 'Experiment stopped.';
-
-    $('resultText').textContent =
-      `You kept ${money(bankroll)} after ${rounds.length} rounds.`;
-
-    render();
-  });
-
-  $('reset').addEventListener('click', () => {
-    bankroll = START;
-    rounds = [];
-    stopped = false;
-
-    $('coin').textContent = 'READY';
-    $('coin').className = 'coin';
-
-    $('status').textContent = 'Round 1 is ready.';
-    $('status').className = 'status';
-
-    $('resultText').textContent = 'Set your stake, then flip.';
-
-    $('side').disabled = false;
-    $('stakeMode').disabled = false;
-    $('stake').disabled = false;
-
-    updateStakeLabel();
-  });
-
-  stakeMode.addEventListener('change', updateStakeLabel);
-  stakeInput.addEventListener('input', render);
-  sideInput.addEventListener('change', render);
-
-  render();
-})();
-</script>
+      $('start').addEventListener('click', reset);
+      $('flipButton').addEventListener('click', flip);
+      $('stake').addEventListener('input', updateStake);
+      $('again').addEventListener('click', reset);
+      $('revealButton').addEventListener('click', () => {
+        $('reveal').classList.remove('hidden');
+        $('revealButton').classList.add('hidden');
+        $('reveal').scrollIntoView({ behavior: 'smooth' });
+      });
+      window.addEventListener('resize', () => {
+        if (!$('game').classList.contains('hidden')) draw($('chart'), youHistory, refHistory);
+        if (!$('outcome').classList.contains('hidden')) draw($('finalChart'), youHistory, refHistory);
+      });
+      updateStake();
+    })();
+  </script>
 </body>
 </html>
-
