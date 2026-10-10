@@ -1,0 +1,821 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A 20-round coin game exploring probability, bankroll risk and Kelly betting.">
+<title>Thought Lab — The Uneven Coin</title>
+
+<style>
+:root {
+  --bg: #0b1020;
+  --panel: #121a2e;
+  --text: #edf2ff;
+  --muted: #a6b1cb;
+  --line: #2b3856;
+  --accent: #8ef0c5;
+  --blue: #9bb8ff;
+  --red: #ff9eaa;
+  --gold: #f6d58a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: radial-gradient(
+    ellipse at 15% 0%, #1b2b4c 0, transparent 42%
+  ), var(--bg);
+  color: var(--text);
+  font: 16px/1.55 system-ui, sans-serif;
+}
+
+main {
+  max-width: 1120px;
+  margin: auto;
+  padding: 36px 20px 72px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-size: .75rem;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: .98;
+  letter-spacing: -.055em;
+  margin: 12px 0 18px;
+  max-width: 850px;
+}
+
+h2 {
+  letter-spacing: -.025em;
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+}
+
+p {
+  color: var(--muted);
+  margin: 8px 0 14px;
+}
+
+.lede {
+  font-size: 1.12rem;
+  max-width: 760px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.panel {
+  background: linear-gradient(
+    160deg, rgba(24,34,58,.96), rgba(15,22,40,.96)
+  );
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 18px 50px #0002;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.metric {
+  background: #0c1426;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  padding: 13px;
+}
+
+.metric small {
+  display: block;
+  color: var(--muted);
+  font-size: .75rem;
+}
+
+.metric strong {
+  font-size: 1.4rem;
+  letter-spacing: -.03em;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field label {
+  display: block;
+  font-size: .82rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  background: #0b1325;
+  color: var(--text);
+  border: 1px solid #394968;
+  border-radius: 10px;
+  padding: 12px;
+  font: inherit;
+}
+
+.btn {
+  border: 1px solid #415173;
+  background: #202c46;
+  color: var(--text);
+  padding: 11px 14px;
+  border-radius: 11px;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+  transition: transform .12s, background .12s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  background: #2a3959;
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: #082018;
+  border-color: var(--accent);
+}
+
+.btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.coin-wrap {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 20px 0;
+}
+
+.coin {
+  width: 86px;
+  height: 86px;
+  flex: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+    circle at 32% 25%, #fff0bd, #e7b85d 48%, #a66c24
+  );
+  color: #39220a;
+  font-size: 1.05rem;
+  font-weight: 900;
+  border: 4px solid #ffdf8d;
+  box-shadow: 0 8px 28px #0005;
+}
+
+.coin.tails {
+  background: radial-gradient(
+    circle at 32% 25%, #dbe7ff, #8aa5e6 48%, #405c9e
+  );
+  border-color: #c3d2ff;
+  color: #101c3a;
+}
+
+.status { font-weight: 800; }
+.positive { color: var(--accent); }
+.negative { color: var(--red); }
+
+.subtle {
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+.progress {
+  height: 7px;
+  background: #0a1222;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 10px 0 16px;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: width .2s;
+}
+
+.history {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+  margin-top: 12px;
+}
+
+.history th,
+.history td {
+  text-align: left;
+  padding: 10px 7px;
+  border-bottom: 1px solid var(--line);
+}
+
+.history th {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
+
+.history td:last-child,
+.history th:last-child {
+  text-align: right;
+}
+
+.history-wrap { overflow-x: auto; }
+
+.pill {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 99px;
+  font-size: .75rem;
+  font-weight: 800;
+  background: #25344d;
+  color: var(--blue);
+}
+
+.pill.win {
+  background: #153b32;
+  color: var(--accent);
+}
+
+.pill.loss {
+  background: #482832;
+  color: var(--red);
+}
+
+.formula {
+  font-family: ui-monospace, monospace;
+  background: #0a1222;
+  border: 1px solid var(--line);
+  padding: 12px;
+  border-radius: 10px;
+  color: #dce7ff;
+  overflow-wrap: anywhere;
+}
+
+.wide { margin-top: 18px; }
+
+.bars {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.barrow {
+  display: grid;
+  grid-template-columns: 110px 1fr 55px;
+  gap: 10px;
+  align-items: center;
+  font-size: .86rem;
+}
+
+.bar {
+  height: 10px;
+  background: #0a1222;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  background: var(--blue);
+}
+
+.barrow:first-child .bar span {
+  background: var(--accent);
+}
+
+.notice {
+  border-left: 3px solid var(--gold);
+  padding: 8px 0 8px 13px;
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+.footer {
+  margin-top: 30px;
+  color: var(--muted);
+  font-size: .8rem;
+}
+
+@media(max-width:780px) {
+  .grid { grid-template-columns: 1fr; }
+  .metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .metric { padding: 10px; }
+  .metric strong { font-size: 1.15rem; }
+}
+
+@media(max-width:460px) {
+  main { padding: 26px 14px 52px; }
+  .panel { padding: 16px; }
+  .controls { grid-template-columns: 1fr; }
+  .metrics { gap: 6px; }
+  .metric strong { font-size: 1rem; }
+  .coin { width: 68px; height: 68px; }
+  .barrow { grid-template-columns: 88px 1fr 48px; }
+}
+</style>
+</head>
+
+<body>
+<main>
+  <div class="eyebrow">
+    Thought Lab / Probability & decisions
+  </div>
+
+  <h1>The uneven coin.</h1>
+
+  <p class="lede">
+    You have $100. The coin favours Heads. Can you turn a
+    statistical edge into a larger bankroll without betting
+    yourself out of the game?
+  </p>
+
+  <div class="metrics">
+    <div class="metric">
+      <small>Heads probability</small>
+      <strong>60%</strong>
+    </div>
+    <div class="metric">
+      <small>Tails probability</small>
+      <strong>40%</strong>
+    </div>
+    <div class="metric">
+      <small>Maximum rounds</small>
+      <strong>20</strong>
+    </div>
+  </div>
+
+  <div class="grid">
+    <section class="panel">
+      <h2>Your next move</h2>
+      <p>
+        Choose a side and stake part of your current bankroll.
+        The result is randomly generated using the weighted odds.
+      </p>
+
+      <div class="coin-wrap">
+        <div id="coin" class="coin">READY</div>
+        <div>
+          <div id="status" class="status">Round 1 is ready.</div>
+          <div id="resultText" class="subtle">
+            Set your stake, then flip.
+          </div>
+        </div>
+      </div>
+
+      <div class="progress">
+        <span id="progress"></span>
+      </div>
+
+      <div class="subtle" id="roundLabel">
+        0 of 20 rounds played
+      </div>
+
+      <div class="controls" style="margin-top:18px">
+        <div class="field">
+          <label for="side">Your prediction</label>
+          <select id="side">
+            <option value="Heads">Heads (60% chance)</option>
+            <option value="Tails">Tails (40% chance)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="stakeMode">Stake input</label>
+          <select id="stakeMode">
+            <option value="percent">Percentage of bankroll</option>
+            <option value="dollars">Dollar amount</option>
+          </select>
+        </div>
+
+        <div class="field" style="grid-column:1/-1">
+          <label for="stake" id="stakeLabel">
+            Stake (% of bankroll)
+          </label>
+          <input
+            id="stake"
+            type="number"
+            min="0.1"
+            max="100"
+            step="0.1"
+            value="20"
+          >
+        </div>
+      </div>
+
+      <p class="subtle" id="stakePreview"></p>
+
+      <div class="actions">
+        <button id="flip" class="btn primary">Flip coin</button>
+        <button id="stop" class="btn">Stop and keep bankroll</button>
+        <button id="reset" class="btn">Reset experiment</button>
+      </div>
+
+      <p class="notice" style="margin-top:18px">
+        Rules: a correct prediction earns profit equal to your
+        stake. An incorrect prediction loses your stake.
+        Your original stake is returned on a win. You cannot
+        stake more than your current bankroll.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Live bankroll</h2>
+
+      <div class="metrics" style="grid-template-columns:1fr 1fr">
+        <div class="metric">
+          <small>Current bankroll</small>
+          <strong id="bankroll">$100.00</strong>
+        </div>
+        <div class="metric">
+          <small>Net result</small>
+          <strong id="net">$0.00</strong>
+        </div>
+        <div class="metric">
+          <small>Win rate</small>
+          <strong id="winRate">—</strong>
+        </div>
+        <div class="metric">
+          <small>Largest stake</small>
+          <strong id="largest">$0.00</strong>
+        </div>
+      </div>
+
+      <h2 style="margin-top:18px">The Kelly benchmark</h2>
+
+      <p>
+        For a 60% chance to win even-money bets, the full
+        Kelly fraction is:
+      </p>
+
+      <div class="formula">
+        f* = (bp − q) / b
+        = (1 × 0.60 − 0.40) / 1
+        = 20%
+      </div>
+
+      <p>
+        Kelly maximises long-run expected logarithmic wealth
+        under its assumptions. It does not maximise the chance
+        of winning every session, and it can produce substantial
+        drawdowns.
+      </p>
+
+      <div class="bars">
+        <div class="barrow">
+          <span>Full Kelly</span>
+          <div class="bar"><span style="width:20%"></span></div>
+          <strong>20%</strong>
+        </div>
+        <div class="barrow">
+          <span>Half Kelly</span>
+          <div class="bar"><span style="width:10%"></span></div>
+          <strong>10%</strong>
+        </div>
+        <div class="barrow">
+          <span>Quarter Kelly</span>
+          <div class="bar"><span style="width:5%"></span></div>
+          <strong>5%</strong>
+        </div>
+      </div>
+
+      <p class="subtle">
+        Stake fractions are recalculated against the current
+        bankroll after every round.
+      </p>
+    </section>
+  </div>
+
+  <section class="panel wide">
+    <h2>Round-by-round ledger</h2>
+
+    <p>
+      Every flip is recorded so the final outcome can be
+      compared with the starting bankroll and betting choices.
+    </p>
+
+    <div class="history-wrap">
+      <table class="history">
+        <thead>
+          <tr>
+            <th>Round</th>
+            <th>Prediction</th>
+            <th>Outcome</th>
+            <th>Stake</th>
+            <th>Net P/L</th>
+            <th>Bankroll</th>
+          </tr>
+        </thead>
+        <tbody id="history">
+          <tr>
+            <td colspan="6" class="subtle">
+              No rounds played yet.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel wide">
+    <h2>What the odds imply</h2>
+
+    <div class="grid" style="margin-top:8px">
+      <div>
+        <p>
+          For every $1 staked on Heads, expected net profit is:
+        </p>
+
+        <div class="formula">
+          0.60 × $1 − 0.40 × $1 = +$0.20
+        </div>
+
+        <p>
+          That is a 20% expected return on the amount staked
+          per bet, before considering volatility.
+        </p>
+      </div>
+
+      <div>
+        <p>
+          Over 20 independent flips, the expected number
+          of Heads is:
+        </p>
+
+        <div class="formula">20 × 0.60 = 12 Heads</div>
+
+        <p>
+          This is an average across many simulated games.
+          Any single run can vary considerably.
+        </p>
+      </div>
+    </div>
+
+    <p class="notice">
+      This is an educational probability simulation, not a
+      prediction about financial markets or a guarantee of
+      profit. The 60/40 bias is assumed to be real and stable.
+    </p>
+  </section>
+
+  <div class="footer">
+    THOUGHT LAB · An experiment in probability, risk and decisions.
+  </div>
+</main>
+
+<script>
+(() => {
+  const START = 100;
+  const MAX_ROUNDS = 20;
+  const P_HEADS = 0.6;
+
+  let bankroll = START;
+  let rounds = [];
+  let stopped = false;
+
+  const $ = id => document.getElementById(id);
+
+  const money = n =>
+    n.toLocaleString('en-AU', {
+      style: 'currency',
+      currency: 'AUD'
+    });
+
+  const stakeMode = $('stakeMode');
+  const stakeInput = $('stake');
+  const sideInput = $('side');
+
+  function getStake() {
+    const raw = Math.max(0, Number(stakeInput.value) || 0);
+
+    if (stakeMode.value === 'percent') {
+      return bankroll * Math.min(100, raw) / 100;
+    }
+
+    return Math.min(bankroll, raw);
+  }
+
+  function render() {
+    $('bankroll').textContent = money(bankroll);
+
+    $('net').textContent =
+      (bankroll >= START ? '+' : '') +
+      money(bankroll - START);
+
+    $('net').className =
+      bankroll >= START ? 'positive' : 'negative';
+
+    const wins = rounds.filter(r => r.win).length;
+
+    $('winRate').textContent = rounds.length
+      ? `${Math.round(wins / rounds.length * 100)}%`
+      : '—';
+
+    $('largest').textContent = money(
+      rounds.reduce((m, r) => Math.max(m, r.stake), 0)
+    );
+
+    $('roundLabel').textContent =
+      `${rounds.length} of ${MAX_ROUNDS} rounds played`;
+
+    $('progress').style.width =
+      `${rounds.length / MAX_ROUNDS * 100}%`;
+
+    $('history').innerHTML = rounds.length
+      ? rounds.map(r => `
+          <tr>
+            <td>${r.n}</td>
+            <td>${r.prediction}</td>
+            <td>
+              <span class="pill ${r.win ? 'win' : 'loss'}">
+                ${r.outcome}
+              </span>
+            </td>
+            <td>${money(r.stake)}</td>
+            <td class="${r.pnl >= 0 ? 'positive' : 'negative'}">
+              ${r.pnl >= 0 ? '+' : ''}${money(r.pnl)}
+            </td>
+            <td>${money(r.bankroll)}</td>
+          </tr>
+        `).reverse().join('')
+      : `
+          <tr>
+            <td colspan="6" class="subtle">
+              No rounds played yet.
+            </td>
+          </tr>
+        `;
+
+    const stake = getStake();
+
+    $('stakePreview').textContent =
+      `Stake: ${money(stake)} · ` +
+      `${bankroll ? (stake / bankroll * 100).toFixed(1) : '0.0'}% of bankroll`;
+
+    const done =
+      stopped ||
+      rounds.length >= MAX_ROUNDS ||
+      bankroll <= 0;
+
+    $('flip').disabled = done || stake <= 0 || stake > bankroll;
+    $('stop').disabled = done;
+    $('stake').disabled = done;
+    $('side').disabled = done;
+    $('stakeMode').disabled = done;
+
+    if (done && !stopped) {
+      $('status').textContent =
+        bankroll <= 0 ? 'Bankroll depleted.' : 'Experiment complete.';
+
+      $('resultText').textContent =
+        bankroll <= 0
+          ? 'No bankroll remains to wager.'
+          : `Final bankroll: ${money(bankroll)} after ${rounds.length} rounds.`;
+    }
+  }
+
+  function updateStakeLabel() {
+    $('stakeLabel').textContent =
+      stakeMode.value === 'percent'
+        ? 'Stake (% of bankroll)'
+        : 'Stake (AUD)';
+
+    stakeInput.max =
+      stakeMode.value === 'percent' ? 100 : bankroll;
+
+    stakeInput.value =
+      stakeMode.value === 'percent'
+        ? 20
+        : Math.min(20, bankroll).toFixed(2);
+
+    render();
+  }
+
+  $('flip').addEventListener('click', () => {
+    const stake = getStake();
+
+    if (
+      !stake ||
+      stake > bankroll ||
+      rounds.length >= MAX_ROUNDS ||
+      stopped
+    ) return;
+
+    const outcome =
+      Math.random() < P_HEADS ? 'Heads' : 'Tails';
+
+    const prediction = sideInput.value;
+    const win = outcome === prediction;
+    const pnl = win ? stake : -stake;
+
+    bankroll = Math.max(0, bankroll + pnl);
+
+    rounds.push({
+      n: rounds.length + 1,
+      prediction,
+      outcome,
+      stake,
+      pnl,
+      bankroll,
+      win
+    });
+
+    $('coin').textContent = outcome.toUpperCase();
+
+    $('coin').className =
+      'coin' + (outcome === 'Tails' ? ' tails' : '');
+
+    $('status').textContent =
+      win ? 'Correct prediction.' : 'Incorrect prediction.';
+
+    $('status').className =
+      'status ' + (win ? 'positive' : 'negative');
+
+    $('resultText').textContent =
+      `${outcome} appeared. ` +
+      `${win ? 'You gained ' : 'You lost '}${money(Math.abs(pnl))}.`;
+
+    if (stakeMode.value === 'dollars') {
+      stakeInput.max = bankroll;
+    }
+
+    render();
+  });
+
+  $('stop').addEventListener('click', () => {
+    stopped = true;
+
+    $('status').textContent = 'Experiment stopped.';
+
+    $('resultText').textContent =
+      `You kept ${money(bankroll)} after ${rounds.length} rounds.`;
+
+    render();
+  });
+
+  $('reset').addEventListener('click', () => {
+    bankroll = START;
+    rounds = [];
+    stopped = false;
+
+    $('coin').textContent = 'READY';
+    $('coin').className = 'coin';
+
+    $('status').textContent = 'Round 1 is ready.';
+    $('status').className = 'status';
+
+    $('resultText').textContent = 'Set your stake, then flip.';
+
+    $('side').disabled = false;
+    $('stakeMode').disabled = false;
+    $('stake').disabled = false;
+
+    updateStakeLabel();
+  });
+
+  stakeMode.addEventListener('change', updateStakeLabel);
+  stakeInput.addEventListener('input', render);
+  sideInput.addEventListener('change', render);
+
+  render();
+})();
+</script>
+</body>
+</html>
