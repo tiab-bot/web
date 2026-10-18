@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f8fd">
+<meta name="description" content="Abhay Bhatia — personal projects, tools and experiments.">
+<title>Abhay Bhatia | Projects & Experiments</title>
 
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VXQMT8LWCF"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -11,87 +15,146 @@ gtag('js', new Date());
 gtag('config', 'G-VXQMT8LWCF');
 </script>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>English Translation | Abhay Bhatia</title>
-
 <style>
-
-body{
-    margin:0;
-    background:#f7f9fc;
-    color:#222;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+:root {
+  --bg:#f5f8fd;
+  --white:#fff;
+  --ink:#17243a;
+  --muted:#68778d;
+  --line:#dce6f3;
+  --blue:#2864dc;
+  --pale:#edf4ff;
 }
-
-.container{
-    max-width:700px;
-    margin:0 auto;
-    padding:110px 28px;
-    text-align:center;
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-
-h1{
-    font-size:42px;
-    font-weight:600;
-    margin-bottom:18px;
+a { color:inherit; }
+.wrap { width:min(1050px,calc(100% - 40px)); margin:auto; }
+nav {
+  height:76px; display:flex; align-items:center;
+  justify-content:space-between; border-bottom:1px solid var(--line);
 }
-
-.subtitle{
-    font-size:18px;
-    color:#666;
-    line-height:1.8;
-    max-width:560px;
-    margin:0 auto 56px;
+.logo { text-decoration:none; font-weight:850; letter-spacing:-.5px; }
+.logo span { color:var(--blue); }
+.navlinks { display:flex; gap:22px; }
+.navlinks a { text-decoration:none; color:var(--muted); font-size:13px; }
+.hero { padding:90px 0 65px; }
+.eyebrow {
+  color:var(--blue); font-size:11px; font-weight:800;
+  letter-spacing:2px; text-transform:uppercase;
 }
-
-.button{
-    display:inline-block;
-    padding:16px 34px;
-    background:#111;
-    color:#fff;
-    text-decoration:none;
-    border-radius:999px;
-    font-size:17px;
-    font-weight:500;
-    transition:0.2s;
+h1 {
+  font-size:clamp(46px,8vw,84px); line-height:.98;
+  letter-spacing:-5px; margin:22px 0;
 }
-
-.button:hover{
-    background:#333;
+.hero p {
+  max-width:620px; color:#53627a; font-size:18px; line-height:1.7;
 }
-
-.footer{
-    margin-top:90px;
-    font-size:14px;
-    color:#999;
+.section-head {
+  display:flex; justify-content:space-between;
+  align-items:end; gap:16px; margin-bottom:20px;
 }
-
+h2 { font-size:25px; letter-spacing:-1px; margin:0; }
+.section-head p { font-size:13px; color:var(--muted); margin:0; }
+.grid {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px; padding-bottom:65px;
+}
+.card {
+  display:flex; flex-direction:column; min-height:240px;
+  padding:26px; background:var(--white); border:1px solid var(--line);
+  border-radius:20px; text-decoration:none;
+  transition:transform .2s,border-color .2s;
+}
+.card:hover { transform:translateY(-3px); border-color:#9dbbe9; }
+.tag {
+  color:var(--blue); font-size:11px; font-weight:800;
+  letter-spacing:1.2px;
+}
+h3 { font-size:27px; letter-spacing:-1px; margin:20px 0 8px; }
+.card p { color:var(--muted); font-size:14px; line-height:1.7; margin:0 0 24px; }
+.card .link { margin-top:auto; color:var(--blue); font-weight:750; font-size:13px; }
+.featured { background:var(--pale); }
+footer {
+  border-top:1px solid var(--line); padding:24px 0 30px;
+  color:var(--muted); font-size:12px;
+  display:flex; justify-content:space-between; gap:12px;
+}
+@media(max-width:650px) {
+  .hero { padding:65px 0 45px; }
+  h1 { letter-spacing:-3px; }
+  .grid { grid-template-columns:1fr; }
+  .card { min-height:205px; }
+  .section-head { align-items:start; flex-direction:column; }
+  .navlinks { gap:12px; }
+  .navlinks a { font-size:12px; }
+  footer { flex-direction:column; }
+}
 </style>
-
 </head>
-
 <body>
+<div class="wrap">
+<nav>
+  <a class="logo" href="/">ABHAY BHATIA<span>.</span></a>
+  <div class="navlinks">
+    <a href="#projects">Projects</a>
+    <a href="/swim/">Swimming</a>
+    <a href="mailto:public.abhaybhatia@gmail.com">Contact</a>
+  </div>
+</nav>
 
-<div class="container">
+<main>
+<section class="hero">
+  <div class="eyebrow">Personal site · Perth, Australia</div>
+  <h1>Ideas, experiments<br>& things in progress.</h1>
+  <p>A collection of personal projects, practical tools and experiments in finance, wellbeing and decision-making.</p>
+</section>
 
-<h1>Section 1: English Translation</h1>
-
-<div class="subtitle">
-A translated edition of my grandfather's work, preserved here for family, friends, and future generations. Please access using link below.
+<section id="projects">
+<div class="section-head">
+  <h2>Explore projects</h2>
+  <p>Built and maintained by Abhay Bhatia</p>
 </div>
 
-<a class="button"
-href="https://www.icloud.com/iclouddrive/04d1-ai7xTaZqUH3Fwwar1V2Q#PDF_English_July-2026"
-target="_blank">
-Read the Book
-</a>
+<div class="grid">
+  <a class="card" href="/sauna/">
+    <div class="tag">01 / WELLBEING</div>
+    <h3>SaunaCal</h3>
+    <p>A tool for tracking sauna, cold-plunge and contrast sessions.</p>
+    <span class="link">Open SaunaCal ↗</span>
+  </a>
 
-<div class="footer">
-© Abhay Bhatia
-</div>
-</div>
+  <a class="card" href="/coingame/">
+    <div class="tag">02 / FINANCE & DECISIONS</div>
+    <h3>Investment Personality</h3>
+    <p>A 20-round coin-toss experiment exploring risk, position sizing and compounding.</p>
+    <span class="link">Play the experiment ↗</span>
+  </a>
 
+  <a class="card" href="/swim/">
+    <div class="tag">03 / PERSONAL CHALLENGE</div>
+    <h3>Busselton Jetty Swim</h3>
+    <p>My training log and plan to build towards the 3.6 km open-water swim.</p>
+    <span class="link">View swim plan ↗</span>
+  </a>
+
+  <a class="card featured" href="https://www.icloud.com/iclouddrive/04d1-ai7xTaZqUH3Fwwar1V2Q#PDF_English_July-2026" target="_blank" rel="noopener noreferrer">
+    <div class="tag">04 / FAMILY ARCHIVE</div>
+    <h3>Grandfather’s book</h3>
+    <p>An English translation of my grandfather’s work, preserved for family and future generations.</p>
+    <span class="link">Read the book ↗</span>
+  </a>
+</div>
+</section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> Abhay Bhatia</span>
+  <span>Personal projects · GitHub Pages</span>
+</footer>
+</div>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body>
 </html>
